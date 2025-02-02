@@ -11,8 +11,9 @@ in rec {
     description = "Fan Speed Service";
     serviceConfig = {
       Type="simple";
-      ExecStart=''${fanControl}/fanControl'';
-      Restart="on-failure";
+      ExecStart=''${fanControl}/bin/tempChecker'';
+      Restart="always";
+      RuntimeMaxSec="30m";
       RestartSec="1s";
       SyslogIdentifier="fanControl";
       User="root";
