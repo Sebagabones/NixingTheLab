@@ -1,19 +1,25 @@
-# default.nix
+# fanControl.nix
 { pkgs, config, lib, ... }:
-# let
-#   nixpkgs = fetchTarball {
-#     url = "https://github.com/NixOS/nixpkgs/tarball/nixos-24.11";
-#     sha256 = "sha256:02cpqb4zdirzxfj210viim1lknpp0flvwcc1a2knmrmhl1f9dgz8";
-#   };
-#   system = "x86_64-linux";
-#   pkgs = import nixpkgs {inherit system; config = {}; overlays = []; };
-# in
+
 let fanControl = pkgs.callPackage ./package.nix { inherit pkgs lib; };
 in rec {
 
   environment.systemPackages = [ fanControl ];
   systemd.services."fanControl" = {
     enable = true;
-    after = ["network.target"]
+    after = ["network.target"];
+    description = "Fan Speed Service";
+    serviceConfig = {
+      Type="simple";
+      WorkingDirectory=/home/bones/Storage/Software/IBM-xSeries-server-fan-control;
+      ExecStart="/bin/bash -c fanControl";
+      Restart="always";
+      StandardOutput="syslog";
+      StandardError="syslog";
+      SyslogIdentifier="fanControl";
+      User="root";
+      Group="root";
+      Environment="PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin";
+    };
   };
 }

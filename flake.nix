@@ -13,7 +13,6 @@
       disko,
       nixos-hardware,
       deploy-rs,
-      # fanControl,
       ...
     }:
 
