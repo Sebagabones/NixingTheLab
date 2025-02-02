@@ -11,7 +11,7 @@ in rec {
     description = "Fan Speed Service";
     serviceConfig = {
       Type="simple";
-      ExecStart="fanControl";
+      ExecStart=''${fanControl}/fanControl'';
       Restart="on-failure";
       RestartSec="1s";
       SyslogIdentifier="fanControl";
