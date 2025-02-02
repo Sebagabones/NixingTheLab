@@ -12,10 +12,9 @@ in rec {
     serviceConfig = {
       Type="simple";
       WorkingDirectory=/home/bones/Storage/Software/IBM-xSeries-server-fan-control;
-      ExecStart="/bin/bash -c fanControl";
-      Restart="always";
-      StandardOutput="syslog";
-      StandardError="syslog";
+      ExecStart="fanControl";
+      Restart="on-failure";
+      RestartSec="1s";
       SyslogIdentifier="fanControl";
       User="root";
       Group="root";
