@@ -1,3 +1,7 @@
+/*
+ * God this is terrible code - I wrote this years ago when I was going through a C is the best thing ever and is totally good for scripting - I now know better
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,12 +10,12 @@
 #include <stdbool.h>
 #include <getopt.h>
 /* #include "fanTester.h" */
-#define	OPTLIST		"dvhts:"
+#define	OPTLIST		"dvh:"
 
 bool verbose = false;
 bool dryRun = false;
 bool fanTest = false;
-int seconds = 5;
+int seconds = 4;
 int temps(int numCores)
 {
 	FILE *fp;
@@ -88,7 +92,7 @@ int main(int argc, char * argv[])
         }
 		else if(opt == 'h')
 		{
-			printf("Run with -v for verbose, or -d for a dry run, t for fan noise testing, and if you want the fans to run longer when testing us -s (INT) for number of seconds to run for\n");
+			printf("Run with -v for verbose, or -d for a dry run\n");
 			exit(0);
 		}
 		else if(opt == 'd')
@@ -141,6 +145,8 @@ int main(int argc, char * argv[])
 //	else
 //	{
 //		printf("fan %i\n", fan);
+	while(1)
+	{
 		int numberOfCores = (get_nprocs() / 2);
 		if(verbose)
 		{
@@ -173,7 +179,8 @@ int main(int argc, char * argv[])
 				printf("(highest fan speed)\n");
 			}
 		}
-		return 0;
-//	}
+		/* return 0; */
+		sleep(seconds);
+	}
 	return 0;
 }

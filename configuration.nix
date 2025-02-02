@@ -4,7 +4,7 @@
 {
 
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix") ./disk-config.nix  ./pkgs/fanControl/default.nix];
+    [ (modulesPath + "/installer/scan/not-detected.nix") ./disk-config.nix  ./pkgs/fanControl/fanControl.nix];
 
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -54,8 +54,7 @@
     gcc
     btop
     screen
-    ipmitool
-
+    bat
   ];
 
   programs.fish.enable = true;
