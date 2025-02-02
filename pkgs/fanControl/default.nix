@@ -1,4 +1,4 @@
-# fanControl.nix
+# default.nix
 { pkgs, config, lib, ... }:
 
 let fanControl = pkgs.callPackage ./package.nix { inherit pkgs lib; };
