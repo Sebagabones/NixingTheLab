@@ -6,6 +6,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./diskConfig.nix
     ./pkgs/fanControl/default.nix
+    # ./mdadm.nix
   ];
 
   boot.loader.grub = {
