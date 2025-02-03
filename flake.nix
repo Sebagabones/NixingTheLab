@@ -4,6 +4,8 @@
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
+  # inputs.microvm.url = "github:astro/microvm.nix";
+  # inputs.microvm.inputs.nixpkgs.follows = "nixpkgs";
 
 
   outputs =
@@ -13,6 +15,7 @@
       disko,
       nixos-hardware,
       deploy-rs,
+      # microvm,
       ...
     }:
 
@@ -23,6 +26,7 @@
         modules = [
           disko.nixosModules.disko
           ./configuration.nix
+          # microvm.nixosModules.microvm
 
           {
             imports = [
@@ -32,7 +36,7 @@
         ];
       };
       deploy.nodes.generic = {
-      hostname = "mahoosively.gay";
+        hostname = "mahoosively.gay";
 
       profiles.deploy = {
         user = "root";

@@ -1,10 +1,12 @@
 { modulesPath, lib, pkgs, ... }:
 
-
 {
 
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix") ./diskConfig.nix  ./pkgs/fanControl/default.nix];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./diskConfig.nix
+    ./pkgs/fanControl/default.nix
+  ];
 
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -25,6 +27,14 @@
     };
   };
 
+  # Cockpit
+  services.cockpit = {
+    enable = true;
+    port = 9090;
+    openFirewall = true;
+    settings = { WebService = { AllowUnencrypted = true; }; };
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Networking
@@ -33,11 +43,8 @@
   networking.domain = "lab.mahoosively.gay";
   networking.defaultGateway = "192.168.1.1";
 
-  #My pkgs
 
-
-
-
+  # Package
   environment.systemPackages = with pkgs; [
     curl
     wget
@@ -55,10 +62,14 @@
     btop
     screen
     bat
+    cockpit
   ];
+  nixpkgs.config.allowUnfree = true;
+
 
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
+
 
   # Users
   users.mutableUsers = false;
