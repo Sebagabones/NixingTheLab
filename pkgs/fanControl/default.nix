@@ -9,6 +9,9 @@ in rec {
     enable = true;
     after = ["network.target"];
     description = "Fan Speed Service";
+    unitConfig = {
+      Type = "simple";
+    };
     serviceConfig = {
       Type="simple";
       ExecStart=''${fanControl}/bin/tempChecker'';
