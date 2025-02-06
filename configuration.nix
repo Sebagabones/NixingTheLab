@@ -38,7 +38,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = ["root" "@wheel"];
-
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   # Networking
   networking.networkmanager.enable = true;
   networking.hostName = "bonesboundhome";
