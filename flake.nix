@@ -43,7 +43,7 @@
         sshUser = "root";
         sshOpts = ["-p" "8909" ];
         path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.generic;
-
+        remoteBuild = true;
       };
     };
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;

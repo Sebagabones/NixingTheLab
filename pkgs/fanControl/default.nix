@@ -19,5 +19,6 @@ in rec {
       User="root";
       Group="root";
     };
+    wantedBy = [ "multi-user.target" ];
   };
 }
