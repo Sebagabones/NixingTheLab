@@ -1,33 +1,6 @@
 { modulesPath, lib, pkgs, ... }:
 
 {
-
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ./diskConfig.nix
-    ./pkgs/fanControl/default.nix
-    # ./mdadm.nix
-  ];
-
-  boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
-    efiSupport = true;
-    # efiInstallAsRemovable = true;
-  };
-
-  # SSH
-  services.openssh = {
-    enable = true;
-    ports = [ 8909 ];
-    settings = {
-      PasswordAuthentication = false;
-      X11Forwarding = false;
-      PermitRootLogin =
-        "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
-    };
-  };
-
   # Cockpit
   services.cockpit = {
     enable = true;
@@ -36,18 +9,24 @@
     settings = { WebService = { AllowUnencrypted = true; }; };
   };
 
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = ["root" "@wheel"];
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  # Networking
-  networking.networkmanager.enable = true;
-  networking.hostName = "bonesboundhome";
-  networking.domain = "lab.mahoosively.gay";
-  networking.defaultGateway = "192.168.1.1";
 
 
-  # Package
+  # SSH
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      X11Forwarding = false;
+      PermitRootLogin =
+        "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+    };
+  };
+
+
+  # Packages
   environment.systemPackages = with pkgs; [
     curl
     wget
@@ -69,9 +48,14 @@
   ];
   nixpkgs.config.allowUnfree = true;
 
-
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
+
+
+  # Networking
+  networking.networkmanager.enable = true;
+  networking.domain = "lab.mahoosively.gay";
+  networking.defaultGateway = "192.168.1.1";
 
 
   # Users
@@ -96,6 +80,4 @@
     hashedPassword =
       "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
   };
-
-  system.stateVersion = "24.11";
 }
