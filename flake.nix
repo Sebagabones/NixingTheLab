@@ -35,6 +35,7 @@
           }
         ];
       };
+
       deploy.nodes.generic = {
         hostname = "mahoosively.gay";
 
