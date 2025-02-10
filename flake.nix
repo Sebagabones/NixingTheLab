@@ -6,13 +6,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     deploy-rs.url = "github:serokell/deploy-rs";
     lollypops.url = "github:pinpox/lollypops";
-    # inputs.microvm.url = "github:astro/microvm.nix";
-    # inputs.microvm.inputs.nixpkgs.follows = "nixpkgs";
+    microvm.url = "github:astro/microvm.nix";
+    microvm.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, disko, nixos-hardware, deploy-rs, lollypops,
-    # microvm,
-    ... }:
+  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops    , microvm, ... }:
 
     {
       nixosConfigurations = {
@@ -23,7 +21,7 @@
             lollypops.nixosModules.lollypops
             disko.nixosModules.disko
             ./configurations/bonesboundhome/configuration.nix
-            # microvm.nixosModules.microvm
+            microvm.nixosModules.microvm
 
             { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
           ];
