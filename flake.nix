@@ -10,7 +10,7 @@
     microvm.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops    , microvm, ... }:
+  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops, microvm, ... }:
 
     {
       nixosConfigurations = {
@@ -20,13 +20,14 @@
           modules = [
             lollypops.nixosModules.lollypops
             disko.nixosModules.disko
+            microvm.nixosModules.host
             ./configurations/bonesboundhome/configuration.nix
-            microvm.nixosModules.microvm
 
             { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
           ];
         };
       };
+
       apps."x86_64-linux".default =
         lollypops.apps."x86_64-linux".default { configFlake = self; };
 

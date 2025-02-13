@@ -1,4 +1,4 @@
-{ modulesPath, lib, pkgs, ... }:
+{ modulesPath, lib, pkgs, nixpkgs, ... }:
 
 {
   imports = [
@@ -6,10 +6,17 @@
     ./../../diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
+    ./vms/boneswebhome.nix
     # ./mdadm.nix
   ];
 
+
+
   config = {
+  #   nixConfig = {
+  #     extra-substituters = [ "https://microvm.cachix.org" ];
+  #     extra-trusted-public-keys = [ "microvm.cachix.org-1:oXnBc6hRE3eX5rSYdRyMYXnfzcCxC7yKPTbZXALsqys=" ];
+  #   };
 
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -29,6 +36,13 @@
   networking.hostName = "bonesboundhome";
 
   system.stateVersion = "24.11";
+
+  # VMs
+  microvm.autostart = [
+    "boneswebhome"
+  ];
+
+
   };
 
 }
