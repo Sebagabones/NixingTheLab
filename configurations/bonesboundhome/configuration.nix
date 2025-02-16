@@ -35,7 +35,7 @@
       DHCP = "ipv4";
       IPv6AcceptRA = true;
     };
-    # linkConfig.RequiredForOnline = "routable";
+      linkConfig.RequiredForOnline = "no";
   };
 
   systemd.network.networks."10-lan" = {
