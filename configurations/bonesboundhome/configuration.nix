@@ -26,6 +26,18 @@
   };
 
   # Networking
+  systemd.network.networks."5-lan" = {
+    matchConfig.Name = ["eno2" "eno4"];
+    networkConfig = {
+      # Name = ["eno2" "eno4"];
+      Gateway = "192.168.1.1";
+      DNS = [ "192.168.1.2" ];
+      DHCP = "ipv4";
+      IPv6AcceptRA = true;
+    };
+    # linkConfig.RequiredForOnline = "routable";
+  };
+
   systemd.network.networks."10-lan" = {
     matchConfig.Name = [ "eno5" "vm-*" ];
     networkConfig = { Bridge = "br0"; };
