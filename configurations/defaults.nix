@@ -9,10 +9,8 @@
     settings = { WebService = { AllowUnencrypted = true; }; };
   };
 
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = ["root" "@wheel"];
-
+  nix.settings.trusted-users = [ "root" "@wheel" ];
 
   # SSH
   services.openssh = {
@@ -24,7 +22,6 @@
         "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
   };
-
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -51,12 +48,12 @@
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
 
-
   # Networking
-  networking.networkmanager.enable = true;
-  networking.domain = "lab.mahoosively.gay";
-  networking.defaultGateway = "192.168.1.1";
+  systemd.network.enable = true;
+  networking.useNetworkd = true;
 
+  networking.domain = "lab.mahoosively.gay";
+  # networking.defaultGateway = "192.168.1.1";
 
   # Users
   users.mutableUsers = false;
