@@ -9,9 +9,6 @@
     settings = { WebService = { AllowUnencrypted = true; }; };
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "@wheel" ];
-
   # SSH
   services.openssh = {
     enable = true;
@@ -56,6 +53,9 @@
   # networking.defaultGateway = "192.168.1.1";
 
   # Users
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "@wheel" ];
+
   users.mutableUsers = false;
   users.defaultUserShell = pkgs.fish;
 

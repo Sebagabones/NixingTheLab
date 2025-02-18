@@ -1,4 +1,6 @@
 { microvm, nixpkgs, ... }: {
+  imports = [ ./../../defaults.nix ];
+
   microvm.vms = {
     boneswebhome = {
       # The package set to use for the microvm. This also determines the microvm's architecture.
@@ -9,6 +11,7 @@
 
       # The configuration for the MicroVM.
       # Multiple definitions will be merged as expected.
+
       config = {
         # It is highly recommended to share the host's nix-store
         # with the VMs to prevent building huge images.
@@ -17,7 +20,7 @@
           source = "/nix/store";
           mountPoint = "/nix/.ro-store";
         }];
-        networking.hostName = "boneswebhome";
+
         microvm = {
           hypervisor = "qemu";
           vcpu = 4;
@@ -27,10 +30,33 @@
           #   mountPoint = "/tmp";
           #   size = "15360";
           # }];
+          interfaces = [{
+            type = "tap";
+            id = "boneswebhome";
+            mac = "02:00:00:00:00:01";
+          }];
         };
-        # Any other configuration for your MicroVM
-        # [...]
+
+        system.stateVersion = "24.11";
+
+        networking.hostName = "boneswebhome";
+        networking.firewall.enable = false;
+
+        systemd.network.enable = true;
+        systemd.network.networks."10-lan" = {
+          matchConfig.Type = "ether";
+          networkConfig = {
+            Address = [ "192.168.1.151/24" ];
+            Gateway = "192.168.1.1";
+            DNS = [ "192.168.1.2" ];
+            IPv6AcceptRA = true;
+            DHCP = "no";
+          };
+        };
       };
+      # Any other configuration for your MicroVM
+      # [...]
+      
     };
   };
 }

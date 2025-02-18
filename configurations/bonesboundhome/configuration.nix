@@ -6,7 +6,7 @@
     ./../../diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
-    ./vms/boneswebhome.nix
+    # ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
 
@@ -64,7 +64,21 @@
 
 
   # SSH
-  services.openssh.ports = [ 8909 ];
+  services.openssh = {
+
+  ports = [ 8909 ];
+  openFirewall = true;
+  listenAddresses = [
+  {
+    addr = "192.168.1.117";
+    port = 8909;
+  }
+  {
+    addr = "0.0.0.0";
+    port = 8909;
+  }
+  ];
+  };
 
   environment.systemPackages = with pkgs; [
     lazygit                     # This is here to make sure defaults works as expected, at some point move to default install packages for dev machines probably
@@ -72,8 +86,17 @@
 
   # Networking
   networking.hostName = "bonesboundhome";
+  networking.firewall = {
+  enable = false;
+  allowedTCPPorts = [ 8909 9090 ];
+  allowedUDPPorts = [ 8909 9090 ];
+};
+
+
 
   system.stateVersion = "24.11";
+
+
 
   # VMs
   microvm.autostart = [
