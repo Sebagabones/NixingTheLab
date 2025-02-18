@@ -6,7 +6,7 @@
     ./../../diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
-    # ./vms/boneswebhome.nix
+    ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
 
