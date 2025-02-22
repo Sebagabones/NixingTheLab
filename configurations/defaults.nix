@@ -49,8 +49,10 @@
   systemd.network.enable = true;
   networking.useNetworkd = true;
 
-  # networking.domain = "lab.mahoosively.gay";
-  # networking.defaultGateway = "192.168.1.1";
+  # System
+  nixpkgs.hostPlatform = "x86_64-linux";
+
+
 
   # Users
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

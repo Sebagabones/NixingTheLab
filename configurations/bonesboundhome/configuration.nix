@@ -6,7 +6,7 @@
     ./../../diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
-    ./vms/boneswebhome.nix
+    # ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
 
@@ -98,11 +98,11 @@
 
 
 
-  # VMs
-  microvm.autostart = [
-    "boneswebhome"
-    # "bonesdevhome"
-  ];
+  # # VMs
+  # microvm.autostart = [
+  #   "boneswebhome"
+  #   # "bonesdevhome"
+  # ];
 
   };
 

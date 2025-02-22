@@ -1,7 +1,9 @@
 { modulesPath, microvm, self, nixpkgs, lib, pkgs, ... }: {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix") ./../../defaults.nix ];
 
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+        ./../../defaults.nix
+  ];
   # The package set to use for the microvm. This also determines the microvm's architecture.
   # Defaults to the host system's package set if not given.
 
@@ -10,10 +12,8 @@
 
   # The configuration for the MicroVM.
   # Multiple definitions will be merged as expected.
-  config = {
-    microvm.vms = {
-      boneswebhome = {
         config = {
+
           # It is highly recommended to share the host's nix-store
           # with the VMs to prevent building huge images.
           microvm.shares = [{
@@ -55,9 +55,7 @@
             };
           };
         };
+
         # Any other configuration for your MicroVM
         # [...]
-      };
-    };
-  };
 }
