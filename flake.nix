@@ -26,14 +26,14 @@
           ];
         };
 
-      #   boneswebhome = nixpkgs.lib.nixosSystem {
-      #             modules = [
-      #   lollypops.nixosModules.lollypops
-      #   disko.nixosModules.disko
-      #   microvm.nixosModules.microvm
-      #   ./configurations/bonesboundhome/vms/boneswebhome.nix
-      #             ];
-      # };
+        boneswebhome = nixpkgs.lib.nixosSystem {
+                  modules = [
+        lollypops.nixosModules.lollypops
+        disko.nixosModules.disko
+        microvm.nixosModules.microvm
+        ./configurations/bonesboundhome/vms/boneswebhome.nix
+                  ];
+      };
 
       #   boneswebhome = nixpkgs.lib.nixosSystem {
       #     system = "x86_64-linux";

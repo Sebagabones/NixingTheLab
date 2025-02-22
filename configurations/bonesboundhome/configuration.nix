@@ -93,11 +93,6 @@
 };
 
 
-
-  system.stateVersion = "24.11";
-
-
-
   # # VMs
   # microvm.autostart = [
   #   "boneswebhome"
