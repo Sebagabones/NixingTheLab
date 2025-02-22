@@ -6,7 +6,7 @@
     ./../../diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
-    # ./vms/boneswebhome.nix
+    ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
 
@@ -26,6 +26,12 @@
   };
 
   # Networking
+  networking.useDHCP = false;
+  networking.interfaces.br0.useDHCP = true;
+  networking.interfaces.eno2.useDHCP = true;
+  networking.interfaces.eno3.useDHCP = true;
+  networking.interfaces.eno5.useDHCP = true;
+
   systemd.network.networks."5-lan" = {
     matchConfig.Name = ["eno2" "eno4"];
     networkConfig = {
