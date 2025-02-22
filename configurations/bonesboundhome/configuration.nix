@@ -6,7 +6,7 @@
     ./../../diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
-    ./vms/vmbaseinstall.nix
+    ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
 
@@ -62,6 +62,8 @@
    environment.systemPackages = with pkgs; [
      lazygit                     # This is here to make sure defaults works as expected, at some point move to default install packages for dev machines probably
    ];
+
+   nixpkgs.config.allowUnfree = true;
 
    # Networking
    networking.hostName = "bonesboundhome";

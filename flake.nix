@@ -25,15 +25,6 @@
             { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
           ];
         };
-
-        boneswebhome = nixpkgs.lib.nixosSystem {
-                  modules = [
-        lollypops.nixosModules.lollypops
-        disko.nixosModules.disko
-        microvm.nixosModules.microvm
-        ./configurations/bonesboundhome/vms/configs/boneswebhome.nix
-                  ];
-        };
       };
 
       apps."x86_64-linux".default =
