@@ -24,9 +24,10 @@
     screen
     bat
     sapling
-    nm-applet
+    networkmanagerapplet
     i3
     lightdm
+    gzip
   ];
 
 
@@ -47,7 +48,6 @@
         enable = true;
         greeters.slick.enable = true;
       };
-      defaultSession = "none+i3";
     };
 
     windowManager.i3 = {
@@ -60,6 +60,7 @@
      ];
     };
   };
+  services.displayManager.defaultSession = "none+i3";
 
   # Networking
   networking.networkmanager.enable = true;

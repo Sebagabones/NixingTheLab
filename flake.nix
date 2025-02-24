@@ -32,7 +32,7 @@
             lollypops.nixosModules.lollypops
             disko.nixosModules.disko
             ./configurations/dudeWheresMySkin/configuration.nix
-            { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
+            { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" "${nixos-hardware}/common/pc/laptop/hdd" ]; }
           ];
         };
       };
