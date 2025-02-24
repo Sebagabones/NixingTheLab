@@ -3,7 +3,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./intialInstall/diskConfig.nix
+    ./initialInstall/diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
     ./vms/boneswebhome.nix

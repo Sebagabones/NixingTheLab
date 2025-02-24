@@ -25,6 +25,16 @@
             { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
           ];
         };
+
+      dudeWheresMySkin = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            lollypops.nixosModules.lollypops
+            disko.nixosModules.disko
+            ./configurations/dudeWheresMySkin/configuration.nix
+            { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
+          ];
+        };
       };
 
       apps."x86_64-linux".default =
@@ -38,7 +48,7 @@
         deploy-method = "copy";
 
         # SSH connection parameters
-        ssh.host = "${self.networking.hostName}";
+        ssh.host = "${self.networking.hostName}"; # One day you should setup a ssh config so that the network hostname points to localhost
         ssh.user = "root";
         ssh.command = "ssh";
         ssh.opts = [ "-p" "${builtins.elemAt self.services.openssh.ports 0}" ];
