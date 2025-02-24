@@ -32,7 +32,7 @@
 
   # Nix Settings
   nix.settings = {
-    download-buffer-size = 671088640
+    download-buffer-size = 671088640;
   };
   };
 }
