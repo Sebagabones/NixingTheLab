@@ -3,14 +3,12 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./../../diskConfig.nix
+    ./intialInstall/diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults.nix
     ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
-
-
 
   config = {
   boot.loader.grub = {

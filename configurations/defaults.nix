@@ -39,6 +39,7 @@
     screen
     bat
     cockpit
+    sapling
   ];
 
 
