@@ -5,7 +5,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./initialInstall/diskConfig.nix
     ./../../pkgs/fanControl/default.nix
-    ./../defaults.nix
+    ./../defaultsServer.nix
     ./vms/boneswebhome.nix
     # ./vms/bonesdevhome.nix
   ];
