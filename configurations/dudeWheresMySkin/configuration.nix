@@ -1,4 +1,4 @@
-{ modulesPath, lib, pkgs, nixpkgs, ... }:
+{ modulesPath, lib, pkgs, nixpkgs, disko, ... }:
 
 {
   imports = [
@@ -6,5 +6,12 @@
     ./initialInstall/diskConfig.nix
     ./../defaultsLaptops.nix
   ];
+  config = {
+    boot.loader.grub = {
+      efiSupport = true;
+    };
 
+    nixpkgs.config.allowUnfree = true;
+
+  };
 }
