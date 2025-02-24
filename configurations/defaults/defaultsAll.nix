@@ -30,5 +30,9 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
 
+  # Nix Settings
+  nix.settings = {
+    download-buffer-size = 671088640
+  };
   };
 }
