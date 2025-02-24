@@ -4,7 +4,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./initialInstall/diskConfig.nix
-    ./../defaultsLaptops.nix
+    ./../defaults/defaultsLaptops.nix
   ];
   config = {
     boot.loader.grub = {

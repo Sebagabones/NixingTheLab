@@ -1,7 +1,7 @@
 { modulesPath, microvm, config, self, nixpkgs, options, lib, pkgs, ... }:
 
 let # Please do this better sometime - you should be able to use a custom module or something to import these - but for now urgh
-  defaults = import ../../defaultsServer.nix;
+  defaults = import ../../defaults/defaultsServer.nix;
 in
 {
 

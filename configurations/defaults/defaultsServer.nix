@@ -3,6 +3,7 @@
 {
    imports = [
      ./defaultUsers.nix
+     ./defaultsAll.nix
    ];
 
   # Cockpit
@@ -26,38 +27,13 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    curl
-    wget
-    git
-    lm_sensors
-    dhcpcd
-    fishPlugins.done
-    fishPlugins.fzf-fish
-    fishPlugins.forgit
-    fishPlugins.hydro
-    fzf
-    fishPlugins.grc
-    grc
-    gcc
-    btop
-    screen
-    bat
     cockpit
-    sapling
   ];
 
-
-  programs.fish.enable = true;
-  programs.fish.useBabelfish = true;
 
   # Networking
   systemd.network.enable = true;
   networking.useNetworkd = true;
-
-  # System
-  nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion = "24.11";
-
 
   # # Users
   # nix.settings.experimental-features = [ "nix-command" "flakes" ];
