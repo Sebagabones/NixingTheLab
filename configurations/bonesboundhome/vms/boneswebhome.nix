@@ -48,17 +48,17 @@ in
             networkConfig.DHCP = "yes";
           };
 
-          systemd.tmpfiles.settings = {
-            "lollipops" = {
-              "/var/src/lollypops" = {
-                d = {
-                  group = "root";
-                  mode = "0755";
-                  user = "root";
-                };
-              };
-            };
-          };
+          # systemd.tmpfiles.settings = {
+          #   "lollipops" = {
+          #     "/var/src/lollypops" = {
+          #       d = {
+          #         group = "root";
+          #         mode = "0755";
+          #         user = "root";
+          #       };
+          #     };
+          #   };
+          # };
 
           }
           # Including the external default install

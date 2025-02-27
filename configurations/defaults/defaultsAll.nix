@@ -50,5 +50,20 @@
   nix.settings = {
     download-buffer-size = 671088640;
   };
+
+  # Lollypops
+  systemd.tmpfiles.settings = {
+            "lollipops" = {
+              "/var/src/lollypops" = {
+                d = {
+                  group = "root";
+                  mode = "0755";
+                  user = "root";
+                };
+              };
+            };
+          };
+
+
   };
 }
