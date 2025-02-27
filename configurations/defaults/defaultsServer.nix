@@ -14,17 +14,6 @@
     settings = { WebService = { AllowUnencrypted = true; }; };
   };
 
-  # SSH
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      X11Forwarding = false;
-      PermitRootLogin =
-        "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
-    };
-  };
-
   # Packages
   environment.systemPackages = with pkgs; [
     cockpit
