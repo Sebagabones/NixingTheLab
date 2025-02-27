@@ -12,6 +12,7 @@
     };
 
     nixpkgs.config.allowUnfree = true;
+    networking.hostName = "dudeWheresMySkin";
 
   };
 }
