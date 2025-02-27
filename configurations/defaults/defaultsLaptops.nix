@@ -12,7 +12,10 @@
     networkmanagerapplet
     i3
     lightdm
-    bash
+    konsole
+    firefox
+    spotify
+    discord
   ];
 
 

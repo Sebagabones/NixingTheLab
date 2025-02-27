@@ -20,7 +20,12 @@
     btop
     screen
     bat
+    zellij
+    bat-extras
     sapling
+    rg
+    fd
+    delta
       ];
 
   programs.fish.enable = true;

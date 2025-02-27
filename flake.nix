@@ -1,16 +1,23 @@
                                                                             {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";
+
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     deploy-rs.url = "github:serokell/deploy-rs";
     lollypops.url = "github:pinpox/lollypops";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+
     microvm.url = "github:astro/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops, microvm, ... }:
+  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops, microvm, home-manager, ... }:
 
     {
       nixosConfigurations = {
@@ -21,7 +28,7 @@
             lollypops.nixosModules.lollypops
             disko.nixosModules.disko
             microvm.nixosModules.host
-            ./configurations/bonesboundhome/configuration.nix
+            ./configurations/${self.networking.hostName}/configuration.nix
             { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
           ];
         };
@@ -31,8 +38,12 @@
           modules = [
             lollypops.nixosModules.lollypops
             disko.nixosModules.disko
-            ./configurations/dudeWheresMySkin/configuration.nix
-            { imports = [ "${nixos-hardware}/common/cpu/intel/default.nix" "${nixos-hardware}/common/pc/laptop/hdd" ]; }
+            home-manager.nixosModules.home-manager
+            # ./configurations/${self.networking.hostName}/home.nix
+            ./configurations/${self.networking.hostName}/configuration.nix
+            {
+              imports = [ "${nixos-hardware}/common/cpu/intel/default.nix" "${nixos-hardware}/common/pc/laptop/hdd" ];
+            }
           ];
         };
       };
