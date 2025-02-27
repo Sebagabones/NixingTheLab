@@ -21,9 +21,8 @@
     screen
     bat
     zellij
-    bat-extras
     sapling
-    rg
+    ripgrep
     fd
     delta
       ];
