@@ -28,7 +28,7 @@
             lollypops.nixosModules.lollypops
             disko.nixosModules.disko
             microvm.nixosModules.host
-            ./configurations/${self.networking.hostName}/configuration.nix
+            ./configurations/bonesboundhome/configuration.nix
             { imports = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ]; }
           ];
         };
@@ -40,7 +40,7 @@
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             # ./configurations/${self.networking.hostName}/home.nix
-            ./configurations/${self.networking.hostName}/configuration.nix
+            ./configurations/dudeWheresMySkin/configuration.nix
             {
               imports = [ "${nixos-hardware}/common/cpu/intel/default.nix" "${nixos-hardware}/common/pc/laptop/hdd" ];
             }
