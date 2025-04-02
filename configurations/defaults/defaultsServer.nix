@@ -1,4 +1,4 @@
-{ modulesPath, lib, pkgs, nixpkgs, ... }:
+{ modulesPath, lib, pkgs, nixpkgs, home-manager, ... }:
 
 {
    imports = [

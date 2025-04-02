@@ -1,4 +1,4 @@
-{ modulesPath, microvm, config, self, nixpkgs, options, lib, pkgs, ... }:
+{ modulesPath, microvm, config, self, nixpkgs, options, lib, pkgs, home-manager, ... }:
 
 let # Please do this better sometime - you should be able to use a custom module or something to import these - but for now urgh
   defaults = import ../../defaults/defaultsLaptops.nix;

@@ -30,6 +30,9 @@
   };
 
   # Home Manager
+
+  home-manager.useGlobalPkgs = true;
+
   home-manager.users.bones = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
 

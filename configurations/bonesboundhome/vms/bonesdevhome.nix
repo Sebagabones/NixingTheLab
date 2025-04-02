@@ -1,4 +1,4 @@
-{ microvm, nixpkgs, ... }: {
+{ microvm, nixpkgs, home-manager, ... }: {
   microvm.vms = {
     bonesdevhome = {
       # The package set to use for the microvm. This also determines the microvm's architecture.

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, ... }:
+{ config, lib, pkgs,  ... }:
 
 {
     # Packages
@@ -35,8 +35,6 @@
   system.stateVersion = "24.11";
   time.timeZone = "Australia/Perth";
 
-  #Home Manager
-  home-manager.useGlobalPkgs = true;
 
   # SSH
   services.openssh = {
