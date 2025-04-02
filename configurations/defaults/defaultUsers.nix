@@ -1,5 +1,4 @@
-{ modulesPath, lib, pkgs, nixpkgs, ... }:
-{
+{ modulesPath, lib, pkgs, nixpkgs, home-manager, ... }: {
 
   # Users
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -28,5 +27,14 @@
     ];
     hashedPassword =
       "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
+  };
+
+  # Home Manager
+  home-manager.users.bones = { pkgs, ... }: {
+    home.packages = [ pkgs.atool pkgs.httpie ];
+
+    # The state version is required and should stay at the version you
+    # originally installed.
+    home.stateVersion = "24.11";
   };
 }

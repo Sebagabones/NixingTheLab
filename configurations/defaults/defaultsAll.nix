@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, home-manager, ... }:
 
 {
     # Packages
@@ -33,6 +33,10 @@
   # System
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
+  time.timeZone = "Australia/Perth";
+
+  #Home Manager
+  home-manager.useGlobalPkgs = true;
 
   # SSH
   services.openssh = {
