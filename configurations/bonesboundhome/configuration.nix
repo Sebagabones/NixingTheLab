@@ -6,6 +6,7 @@
     ./initialInstall/diskConfig.nix
     ./../../pkgs/fanControl/default.nix
     ./../defaults/defaultsServer.nix
+    ./../defaults/defaulthomeManager.nix
     ./vms/boneswebhome.nix
     ./vms/nixtest.nix
     # ./vms/bonesdevhome.nix
