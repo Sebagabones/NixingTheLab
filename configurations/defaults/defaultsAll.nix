@@ -25,7 +25,6 @@
     ripgrep
     fd
     delta
-    home-manager
       ];
 
   programs.fish.enable = true;
