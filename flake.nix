@@ -31,6 +31,11 @@
           ];
           microvm = false;
         };
+        vmtesting = {
+          system = "x86_64-linux";
+          hardware = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ];
+          microvm = false;
+        };
       };
 
       mkSystem = hostname: cfg:
