@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -27,11 +27,6 @@
             "${nixos-hardware}/common/cpu/intel/default.nix"
             "${nixos-hardware}/common/pc/laptop/hdd"
           ];
-          microvm = false;
-        };
-        vmtesting = {
-          system = "x86_64-linux";
-          hardware = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ];
           microvm = false;
         };
       };
