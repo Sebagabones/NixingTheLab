@@ -11,7 +11,8 @@
     microvm.url = "github:astro/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops, microvm, home-manager, ... }:
+  outputs = { self, nixpkgs, disko, nixos-hardware, lollypops, microvm
+    , home-manager, ... }:
     let
       # Define hosts and configurations
       hosts = {
@@ -28,24 +29,27 @@
           ];
           microvm = false;
         };
+        vmtesting = {
+          system = "x86_64-linux";
+          microvm = false;
+        };
       };
 
-
-      mkSystem = hostname: cfg: nixpkgs.lib.nixosSystem {
-        system = cfg.system;
-        modules = [
-          lollypops.nixosModules.lollypops
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          ./configurations/${hostname}/configuration.nix
-          {
-            networking.hostName = hostname;
-            imports = cfg.hardware;
-          }
-        ] ++ (if cfg.microvm then [ microvm.nixosModules.host ] else []);
-      };
-    in
-    {
+      mkSystem = hostname: cfg:
+        nixpkgs.lib.nixosSystem {
+          system = cfg.system;
+          modules = [
+            lollypops.nixosModules.lollypops
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            ./configurations/${hostname}/configuration.nix
+            {
+              networking.hostName = hostname;
+              imports = cfg.hardware;
+            }
+          ] ++ (if cfg.microvm then [ microvm.nixosModules.host ] else [ ]);
+        };
+    in {
       # Generate nixosConfigurations for all hosts
       nixosConfigurations = nixpkgs.lib.mapAttrs mkSystem hosts;
 
