@@ -29,18 +29,4 @@
       "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
   };
 
-  users.users.alech = {
-    isNormalUser = true;
-    home = "/home/alech";
-    description = "Alec";
-    extraGroups = [ "qemu-libvirtd" "libvirtd" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/tDV1v2CN6VqwEgq86fV5M9k7/L5pEFNbe1XYe28P+ bones@revitalised"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN12V+UEifCUlKMCvngUp96LgUrw/aDp0zKLgVnHJ0Op bones@sanity"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHptYZoEd0jYsARmRZgqtqyD7+e4aNfTIX1PW7aA1XUI alech@Alecs-Macbook.modem"
-    ];
-    hashedPassword =
-      "$y$j9T$Kp6CdprmJjT9dqFL7Czz//$ioBXcMKdjQN7uPGhRrpcdsmz5tPB0sSMFWRFAkPEIr9";
-  };
-
 }

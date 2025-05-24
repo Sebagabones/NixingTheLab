@@ -46,4 +46,5 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = true;
 
+  lollypops.deployment.group = "Personal";
 }

@@ -18,7 +18,7 @@
   # Networking
   systemd.network.enable = true;
   networking.useNetworkd = true;
-
+  lollypops.deployment.group = "Servers";
   # # Users
   # nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # nix.settings.trusted-users = [ "root" "@wheel" ];

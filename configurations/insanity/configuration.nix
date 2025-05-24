@@ -11,7 +11,7 @@
     boot.loader.efi.canTouchEfiVariables = true;
 
     nixpkgs.config.allowUnfree = true;
-    networking.hostName = "insanity.lab.mahoosively.gay";
+    networking.hostName = "insanity";
 
   };
 }
