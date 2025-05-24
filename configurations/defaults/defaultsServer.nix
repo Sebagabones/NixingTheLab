@@ -1,10 +1,7 @@
 { modulesPath, lib, pkgs, nixpkgs, home-manager, ... }:
 
 {
-   imports = [
-     ./defaultUsers.nix
-     ./defaultsAll.nix
-   ];
+  imports = [ ./defaultUsers.nix ./defaultsAll.nix ];
 
   # Cockpit
   services.cockpit = {
@@ -13,12 +10,10 @@
     openFirewall = true;
     settings = { WebService = { AllowUnencrypted = true; }; };
   };
-
+  virtualisation.libvirtd.enable = true;
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
   # Packages
-  environment.systemPackages = with pkgs; [
-    cockpit
-  ];
-
+  environment.systemPackages = with pkgs; [ cockpit vagrant ];
 
   # Networking
   systemd.network.enable = true;

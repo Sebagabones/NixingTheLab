@@ -2,14 +2,13 @@
 
 let # Please do this better sometime - you should be able to use a custom module or something to import these - but for now urgh
   defaults = import ../../defaults/defaultsServer.nix;
-in
-{
+in {
 
-    microvm.vms = {
-      nixtest = {
+  microvm.vms = {
+    nixtest = {
 
-        config = lib.mkMerge [
-          {
+      config = lib.mkMerge [
+        {
           microvm.shares = [{
             tag = "ro-store";
             source = "/nix/store";
@@ -20,20 +19,20 @@ in
             hypervisor = "qemu";
             vcpu = 4;
             mem = 8192;
-            interfaces = [ {
+            interfaces = [{
               type = "tap";
               id = "vm-nixtest";
               mac = "02:00:00:00:00:02";
-            } ];
+            }];
           };
 
           microvm.writableStoreOverlay = "/tmp/.nixtest-rw-store";
 
-          microvm.volumes = [ {
+          microvm.volumes = [{
             image = "nixtest-nix-store-overlay.img";
             mountPoint = "/tmp/.nixtest-rw-store";
             size = 2048;
-          } ];
+          }];
 
           system.switch.enable = true;
 
@@ -44,7 +43,7 @@ in
           systemd.network.enable = true;
 
           systemd.network.networks."20-eth0" = {
-            matchConfig.Name = ["eth0"];
+            matchConfig.Name = [ "eth0" ];
             networkConfig.DHCP = "yes";
           };
 
@@ -60,11 +59,11 @@ in
           #   };
           # };
 
-          }
-          # # Including the external default install
-          # defaults
-        ];
-      };
+        }
+        # # Including the external default install
+        defaults
+      ];
     };
+  };
   # };
 }
