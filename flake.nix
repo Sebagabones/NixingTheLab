@@ -31,6 +31,17 @@
           ];
           microvm = false;
         };
+        insanity = {
+          system = "x86_64-linux";
+          hardware = [
+            "${nixos-hardware}/common/cpu/intel/alder-lake"
+            "${nixos-hardware}/common/pc/ssd"
+            "${nixos-hardware}/common/gpu/amd"
+            "${nixos-hardware}/common/pc"
+
+          ];
+          microvm = false;
+        };
         vmtesting = {
           system = "x86_64-linux";
           hardware = [ "${nixos-hardware}/common/cpu/intel/sandy-bridge" ];
