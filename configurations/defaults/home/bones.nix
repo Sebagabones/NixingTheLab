@@ -84,7 +84,7 @@ let
           "${cfg.config.modifier}+Shift+c" = "reload";
           "${cfg.config.modifier}+Shift+r" = "restart";
           "${cfg.config.modifier}+Shift+e" =
-            "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
+            "exec i3-nagbar -t warning -m 'Are you sure you wish to exit i3?' -b 'Yes' 'i3-msg exit'";
 
           "${cfg.config.modifier}+r" = "mode resize";
         };
@@ -202,26 +202,26 @@ let
 in {
   meta.maintainers = with lib.maintainers; [ sumnerevans ];
 
-  options = {
-    xsession.windowManager.i3 = {
-      enable = lib.mkEnableOption "i3 window manager";
+  # options = {
+  #   xsession.windowManager.i3 = {
+  #     enable = lib.mkEnableOption "i3 window manager";
 
-      package = lib.mkPackageOption pkgs "i3" { nullable = true; };
+  #     package = lib.mkPackageOption pkgs "i3" { nullable = true; };
 
-      config = mkOption {
-        type = types.nullOr configModule;
-        default = { };
-        description = "i3 configuration options.";
-      };
+  #     config = mkOption {
+  #       type = types.nullOr configModule;
+  #       default = { };
+  #       description = "i3 configuration options.";
+  #     };
 
-      extraConfig = mkOption {
-        type = types.lines;
-        default = "";
-        description =
-          "Extra configuration lines to add to ~/.config/i3/config.";
-      };
-    };
-  };
+  #     extraConfig = mkOption {
+  #       type = types.lines;
+  #       default = "";
+  #       description =
+  #         "Extra configuration lines to add to ~/.config/i3/config.";
+  #     };
+  #   };
+  # };
 
   config = mkIf cfg.enable (lib.mkMerge [
     {

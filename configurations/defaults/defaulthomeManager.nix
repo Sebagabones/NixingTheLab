@@ -8,7 +8,6 @@
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "25.05";
-    imports =
-      [ (modulesPath + "/installer/scan/not-detected.nix") ./home/bones.nix ];
+    imports = [ ./home/bones.nix ];
   };
 }

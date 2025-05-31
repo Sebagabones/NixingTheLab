@@ -1,7 +1,7 @@
-{ modulesPath, lib, pkgs, nixpkgs, ... }:
+{ modulesPath, lib, pkgs, nixpkgs, home-manager, ... }:
 
 {
-  imports = [ ./defaultUsers.nix ./defaultsAll.nix ];
+  imports = [ ./defaultUsers.nix ./defaultsAll.nix ./defaulthomeManager.nix ];
 
   # Packages
   environment.systemPackages = with pkgs; [
