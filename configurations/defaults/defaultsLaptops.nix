@@ -13,6 +13,7 @@
     spotify
     discord
     wezterm
+    arandr
   ];
 
   environment.pathsToLink =
@@ -27,6 +28,7 @@
       lightdm = {
         enable = true;
         greeters.slick.enable = true;
+        background = ../../assests/backgroundFR.jpg;
       };
     };
 
