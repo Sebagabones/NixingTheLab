@@ -1,6 +1,6 @@
 { microvm, nixpkgs, home-manager, ... }:
 let # Please do this better sometime - you should be able to use a custom module or something to import these - but for now urgh
-  defaults = import ../../defaults/defaultsServer.nix;
+  defaults = import ../../defaults/defaultsServerVM.nix;
 in {
   microvm.vms = {
     bonesdevhome = {
