@@ -1,7 +1,19 @@
-{ modulesPath, lib, pkgs, nixpkgs, home-manager, ... }:
+{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+  networking.hostName = "insanity";
+  system.stateVersion = "24.11";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
-{
-  imports = [ ./defaultUsers.nix ./defaultsAll.nix ./defaulthomeManager.nix ];
+  imports = [
+    flake.nixosModules.base
+    ./disk.nix
+    "${inputs.nixos-hardware}/common/cpu/intel/alder-lake"
+    "${inputs.nixos-hardware}/common/pc/ssd"
+    "${inputs.nixos-hardware}/common/gpu/amd"
+    "${inputs.nixos-hardware}/common/pc"
+  ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -28,7 +40,7 @@
       lightdm = {
         enable = true;
         greeters.slick.enable = true;
-        background = ../../assests/backgroundFR.jpg;
+        background = ./backgroundFR.jpg;
       };
     };
 
