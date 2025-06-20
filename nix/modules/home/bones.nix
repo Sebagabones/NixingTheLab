@@ -2,7 +2,7 @@
 
 {
   home.stateVersion = "24.11";
-  imports = [ ./i3setup.nix ];
+  imports = [ ./sway.nix ];
   home.packages = [ pkgs.atool pkgs.httpie ];
 
 }

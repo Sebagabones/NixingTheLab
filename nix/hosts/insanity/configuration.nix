@@ -15,12 +15,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  programs.dconf.enable = true;
   # Packages
   environment.systemPackages = with pkgs; [
     networkmanagerapplet
     i3
     lightdm
-    konsole
+    kdePackages.konsole
     firefox
     spotify
     discord
@@ -39,6 +40,7 @@
     displayManager = {
       lightdm = {
         enable = true;
+
         greeters.slick = { enable = true; };
         background = ./backgroundFR.png;
       };

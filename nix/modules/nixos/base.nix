@@ -68,6 +68,7 @@
     ripgrep
     fd
     delta
+    uutils-coreutils
   ];
 
   programs.fish.enable = true;
