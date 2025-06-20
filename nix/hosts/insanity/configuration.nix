@@ -39,8 +39,8 @@
     displayManager = {
       lightdm = {
         enable = true;
-        greeters.slick.enable = true;
-        background = ./backgroundFR.jpg;
+        greeters.slick = { enable = true; };
+        background = ./backgroundFR.png;
       };
     };
 
