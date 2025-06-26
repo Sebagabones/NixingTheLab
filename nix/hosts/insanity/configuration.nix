@@ -8,14 +8,14 @@
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/alder-lake"
     "${inputs.nixos-hardware}/common/pc/ssd"
-    "${inputs.nixos-hardware}/common/gpu/amd"
+    # "${inputs.nixos-hardware}/common/gpu/amd"
     "${inputs.nixos-hardware}/common/pc"
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "kvm_intel" ];
-
+  boot.initrd.kernelModules = [ "amdgpu" ];
   programs.xwayland.enable = true;
   # Packages
   environment.systemPackages = with pkgs; [
