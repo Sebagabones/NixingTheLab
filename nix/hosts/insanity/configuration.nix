@@ -30,6 +30,11 @@
     wezterm
     arandr
   ];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  hardware.graphics.extraPackages = with pkgs; [ amdvlk ];
 
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
