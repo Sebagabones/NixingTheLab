@@ -16,8 +16,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "kvm_intel" ];
 
-  programs.dconf.enable = true;
-
+  programs.xwayland.enable = true;
   # Packages
   environment.systemPackages = with pkgs; [
     networkmanagerapplet
@@ -28,7 +27,7 @@
     spotify
     discord
     wezterm
-    arandr
+    wlr-randr
   ];
   hardware.graphics = {
     enable = true;
@@ -50,35 +49,35 @@
     pulse.enable = true;
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "amd" ];
-    desktopManager = { xterm.enable = false; };
+  # services.xserver = {
+  #   enable = true;
+  #   videoDrivers = [ "amd" ];
+  #   desktopManager = { xterm.enable = false; };
 
-    # displayManager = {
-    #   lightdm = {
-    #     enable = true;
+  # displayManager = {
+  #   lightdm = {
+  #     enable = true;
 
-    #     greeters.slick = {
-    #       enable = true;
-    #       extraConfig = ''
-    #         enable-hidpi=off
-    #         xft-dpi=81.59'';
-    #     };
-    #     background = ./backgroundFR.png;
-    #   };
-    # };
+  #     greeters.slick = {
+  #       enable = true;
+  #       extraConfig = ''
+  #         enable-hidpi=off
+  #         xft-dpi=81.59'';
+  #     };
+  #     background = ./backgroundFR.png;
+  #   };
+  # };
 
-    #   windowManager.i3 = {
-    #     enable = true;
-    #     extraPackages = with pkgs; [
-    #       dmenu # application launcher most people use
-    #       i3status # gives you the default i3 status bar
-    #       i3lock # default i3 screen locker
-    #       i3blocks # if you are planning on using i3blocks over i3status
-    #     ];
-    #   };
-  };
+  #   windowManager.i3 = {
+  #     enable = true;
+  #     extraPackages = with pkgs; [
+  #       dmenu # application launcher most people use
+  #       i3status # gives you the default i3 status bar
+  #       i3lock # default i3 screen locker
+  #       i3blocks # if you are planning on using i3blocks over i3status
+  #     ];
+  #   };
+  # };
   # services.displayManager.defaultSession = "none+i3";
   services.libinput.enable = true;
   services.greetd = {

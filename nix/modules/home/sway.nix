@@ -60,8 +60,8 @@ in {
             text = "playerctl ${cmd}";
           };
       in lib.mkOptionDefault {
-        "${modifier}+shift+Right" = "move right";
-        "${modifier}+shift+l" = "exec ${lib.getExe pkgs.swaylock} -d";
+        # "${modifier}+shift+Right" = "move right";
+        # "${modifier}+shift+l" = "exec ${lib.getExe pkgs.swaylock} -d";
         "${modifier}+alt+v" = exec {
           name = "clipboard-picker";
           runtimeInputs = [ pkgs.cliphist pkgs.wmenu ];
@@ -99,8 +99,4 @@ in {
     };
   };
 
-  # swayidle w/ chayang
-  # rbw menu?
-  # gestures? via libinput-gestures
-  # workstyle for icons
 }
