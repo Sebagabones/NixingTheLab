@@ -28,7 +28,7 @@ in {
           allow-inhibiting = false;
           action.toggle-keyboard-shortcuts-inhibit = { };
         };
-        "Ctrl+Alt+Delete".action.quit = { };
+        "Mod+Shift+E".action.quit = { };
 
         # Focus movement
         "Mod+H".action.focus-column-left = { };
@@ -293,7 +293,7 @@ in {
       screenshot-path = "~/tmp/Screenshot from %Y-%m-%d %H-%M-%S.png";
       hotkey-overlay.skip-at-startup = true;
       clipboard.disable-primary = true;
-      # overview.backdrop-color = config.lib.stylix.colors.withHashtag.base00;
+      overview.backdrop-color = config.lib.stylix.colors.withHashtag.base00;
       input.keyboard.xkb.options = "caps:swapescape";
       layout.border.enable = false;
       layout.gaps = 8;
@@ -306,9 +306,8 @@ in {
     };
     Service = {
       Type = "simple";
-      ExecStart = "${lib.getExe pkgs.swaybg} --image ${
-          ./../../hosts/insanity/backgroundFR.png
-        }";
+      ExecStart =
+        "${lib.getExe pkgs.swaybg} --image ${config.stylix.image} --mode fill";
       Restart = "on-failure";
     };
     Install.WantedBy = [ "niri.service" ];

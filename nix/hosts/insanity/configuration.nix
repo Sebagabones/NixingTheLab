@@ -49,8 +49,6 @@
     pulse.enable = true;
   };
 
-  services.displayManager.defaultSession = "niri";
-
   services.xserver = {
     enable = true;
     videoDrivers = [ "amd" ];
@@ -60,12 +58,7 @@
       lightdm = {
         enable = true;
 
-        greeters.slick = {
-          enable = true;
-          extraConfig = ''
-            enable-hidpi=off
-            xft-dpi=81.59'';
-        };
+        greeters.slick = { enable = true; };
         background = ./backgroundFR.png;
       };
     };
@@ -80,6 +73,7 @@
     #     ];
     #   };
   };
+  # services.displayManager.defaultSession = "niri";
   services.libinput.enable = true;
   # services.greetd = {
   #   enable = true;
@@ -99,4 +93,5 @@
 
   lollypops.deployment.group = "Personal";
   # home-manager.backupFileExtension = "backup";
+
 }

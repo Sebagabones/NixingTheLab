@@ -1,6 +1,6 @@
 { modulesPath, config, lib, pkgs, inputs, nixpkgs, home-manager, ... }: {
 
-  imports = [ inputs.lollypops.nixosModules.lollypops ];
+  imports = [ inputs.lollypops.nixosModules.lollypops ./themeing.nix ];
 
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
