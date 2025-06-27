@@ -59,7 +59,7 @@
         enable = true;
 
         greeters.slick = { enable = true; };
-        background = ../../assests/background.png;
+        # background = ../../assests/background.png;
       };
     };
 
