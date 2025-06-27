@@ -11,6 +11,7 @@
     pkgs.btop
     pkgs.fastfetch
     pkgs.lazygit
+    pkgs.difftastic
   ];
 
 }

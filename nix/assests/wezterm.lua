@@ -14,7 +14,7 @@ config.cursor_blink_rate = 0
 config.cursor_blink_ease_in = 'Constant'
 config.cursor_blink_ease_out = 'Constant'
 config.window_background_opacity = 0.95
-config.font = wezterm.font 'OverpassM Nerd Font Mono'
+config.font = wezterm.font 'JetBrains Mono NF'
 config.enable_tab_bar = true
 config.show_tab_index_in_tab_bar = false
 -- This will hold the configuration.
