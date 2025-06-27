@@ -8,13 +8,13 @@
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/alder-lake"
     "${inputs.nixos-hardware}/common/pc/ssd"
-    # "${inputs.nixos-hardware}/common/gpu/amd"
+    "${inputs.nixos-hardware}/common/gpu/amd"
     "${inputs.nixos-hardware}/common/pc"
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "kvm_intel" ];
+  # boot.kernelModules = [ "kvm_intel" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
   programs.xwayland.enable = true;
   # Packages
@@ -29,6 +29,7 @@
     wezterm
     wlr-randr
   ];
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -49,46 +50,46 @@
     pulse.enable = true;
   };
 
-  # services.xserver = {
-  #   enable = true;
-  #   videoDrivers = [ "amd" ];
-  #   desktopManager = { xterm.enable = false; };
-
-  # displayManager = {
-  #   lightdm = {
-  #     enable = true;
-
-  #     greeters.slick = {
-  #       enable = true;
-  #       extraConfig = ''
-  #         enable-hidpi=off
-  #         xft-dpi=81.59'';
-  #     };
-  #     background = ./backgroundFR.png;
-  #   };
-  # };
-
-  #   windowManager.i3 = {
-  #     enable = true;
-  #     extraPackages = with pkgs; [
-  #       dmenu # application launcher most people use
-  #       i3status # gives you the default i3 status bar
-  #       i3lock # default i3 screen locker
-  #       i3blocks # if you are planning on using i3blocks over i3status
-  #     ];
-  #   };
-  # };
-  # services.displayManager.defaultSession = "none+i3";
-  services.libinput.enable = true;
-  services.greetd = {
+  services.xserver = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-        user = "greeter";
+    videoDrivers = [ "amd" ];
+    desktopManager = { xterm.enable = false; };
+
+    displayManager = {
+      lightdm = {
+        enable = true;
+
+        greeters.slick = {
+          enable = true;
+          extraConfig = ''
+            enable-hidpi=off
+            xft-dpi=81.59'';
+        };
+        background = ./backgroundFR.png;
       };
     };
+
+    #   windowManager.i3 = {
+    #     enable = true;
+    #     extraPackages = with pkgs; [
+    #       dmenu # application launcher most people use
+    #       i3status # gives you the default i3 status bar
+    #       i3lock # default i3 screen locker
+    #       i3blocks # if you are planning on using i3blocks over i3status
+    #     ];
+    #   };
   };
+  # services.displayManager.defaultSession = "none+i3";
+  services.libinput.enable = true;
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+  #       user = "greeter";
+  #     };
+  #   };
+  # };
   # services.displayManager.defaultSession = "sway";
   # Networking
   networking.networkmanager.enable = true;

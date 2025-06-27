@@ -15,9 +15,24 @@
   };
 
   # Users
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "@wheel" ];
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "50%";
 
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "@wheel" ];
+      min-free = 100 * 1024 * 1024;
+      max-free = 1024 * 1024 * 1024;
+    };
+    gc = {
+      automatic = true;
+      randomizedDelaySec = "1800";
+      options = "--delete-older-than 7d";
+    };
+    optimise.automatic = true;
+
+  };
   users.mutableUsers = false;
   users.defaultUserShell = pkgs.fish;
 
@@ -76,7 +91,7 @@
 
   # System
   time.timeZone = "Australia/Perth";
-
+  hardware.enableRedistributableFirmware = true;
   # SSH
   services.openssh = {
     enable = true;

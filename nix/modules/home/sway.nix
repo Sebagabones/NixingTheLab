@@ -4,9 +4,10 @@ let
   terminal = "wezterm";
   modifier = "Mod4"; # Super
 in {
-  home.packages = [ pkgs.bemenu pkgs.wezterm ];
+  home.packages = [ pkgs.bemenu ];
 
   wayland.windowManager.sway = {
+    checkConfig = true;
     enable = true;
     wrapperFeatures = {
       base = true;
@@ -66,7 +67,7 @@ in {
           name = "clipboard-picker";
           runtimeInputs = [ pkgs.cliphist pkgs.wmenu ];
           text =
-            "cliphist list | wmenu -l5 -pclipboard -i | cliphist decode | wl-copy";
+            "cliphist list | bemenu -l5 -pclipboard -i | cliphist decode | wl-copy";
         };
         "${modifier}+alt+shift+v" = exec {
           name = "clipboard-delete-picker";
@@ -75,6 +76,7 @@ in {
             cliphist list | wmenu -l5 -p"clipboard delete" -i | cliphist-delete'';
         };
         "${modifier}+w" = "exec ${lib.getExe pkgs.firefox}";
+        "${modifier}+d" = "exec ${lib.getExe pkgs.bemenu}";
 
         XF86AudioRaiseVolume = swayosd "output-volume raise";
         XF86AudioLowerVolume = swayosd "output-volume lower";
