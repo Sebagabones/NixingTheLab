@@ -77,7 +77,6 @@
     fishPlugins.grc
     grc
     gcc
-    btop
     screen
     bat
     ripgrep
