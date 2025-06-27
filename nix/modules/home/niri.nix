@@ -1,6 +1,9 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, perSystem, ... }:
 
-{
+let
+  terminal = lib.getExe pkgs.wezterm;
+  bemenu = lib.getExe pkgs.bemenu;
+in {
   imports = [ inputs.niri.homeModules.niri ];
 
   programs.niri = {
@@ -198,7 +201,7 @@
         #   ];
         #   text = ''cliphist list | wmenu -l5 -p"clipboard delete" -i | cliphist-delete'';
         # };
-        "Mod+D".action.spawn = lib.getExe config.programs.bemenu
+        "Mod+D".action.spawn = [ bemenu ];
 
         "XF86AudioRaiseVolume" = {
           allow-when-locked = true;
@@ -290,32 +293,22 @@
       screenshot-path = "~/tmp/Screenshot from %Y-%m-%d %H-%M-%S.png";
       hotkey-overlay.skip-at-startup = true;
       clipboard.disable-primary = true;
-      overview.backdrop-color = config.lib.stylix.colors.withHashtag.base00;
+      # overview.backdrop-color = config.lib.stylix.colors.withHashtag.base00;
       input.keyboard.xkb.options = "caps:swapescape";
       layout.border.enable = false;
       layout.gaps = 8;
     };
   };
-    systemd.user.services.swaybg = {
+  systemd.user.services.swaybg = {
     Unit = {
       Description = "Background image for Wayland";
       After = [ "niri.service" ];
     };
     Service = {
       Type = "simple";
-      ExecStart = "${lib.getExe pkgs.swaybg} --image ${./../../hosts/insanity/backgroundFR.png}";
-      Restart = "on-failure";
-    };
-    Install.WantedBy = [ "niri.service" ];
-  };
-      systemd.user.services.swaybg = {
-    Unit = {
-      Description = "Background image for Wayland";
-      After = [ "niri.service" ];
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = "${lib.getExe pkgs.swaybg} --image ${config.stylix.image} --mode fill";
+      ExecStart = "${lib.getExe pkgs.swaybg} --image ${
+          ./../../hosts/insanity/backgroundFR.png
+        }";
       Restart = "on-failure";
     };
     Install.WantedBy = [ "niri.service" ];

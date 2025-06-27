@@ -1,8 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, flake, ... }:
 
 {
   home.stateVersion = "24.11";
-  imports = [ ./sway.nix ./wezterm.nix ];
+  programs.home-manager.enable = true;
+  imports = [ flake.homeModules.niri ./wezterm.nix ];
   home.packages = [ pkgs.atool pkgs.httpie pkgs.wezterm ];
 
 }

@@ -20,7 +20,6 @@
   # Packages
   environment.systemPackages = with pkgs; [
     networkmanagerapplet
-    i3
     lightdm
     kdePackages.konsole
     firefox
@@ -49,6 +48,8 @@
     alsa.enable = true;
     pulse.enable = true;
   };
+
+  services.displayManager.defaultSession = "niri";
 
   services.xserver = {
     enable = true;
@@ -79,21 +80,23 @@
     #     ];
     #   };
   };
-  # services.displayManager.defaultSession = "none+i3";
   services.libinput.enable = true;
   # services.greetd = {
   #   enable = true;
   #   settings = {
   #     default_session = {
-  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${
+  #           lib.getExe pkgs.niri
+  #         }-session";
   #       user = "greeter";
   #     };
   #   };
   # };
-  # services.displayManager.defaultSession = "sway";
+
   # Networking
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = true;
 
   lollypops.deployment.group = "Personal";
+  # home-manager.backupFileExtension = "backup";
 }

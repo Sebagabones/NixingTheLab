@@ -17,6 +17,11 @@
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
     microvm.url = "github:astro/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "";
+    };
   };
 
   outputs = inputs:

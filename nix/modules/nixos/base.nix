@@ -119,4 +119,6 @@
     };
   };
 
+  programs.niri.enable = true;
+
 }
