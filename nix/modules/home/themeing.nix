@@ -1,34 +1,33 @@
 { inputs, config, lib, pkgs, ... }:
 
 {
-  # imports = [ inputs.stylix.homeModules ];
+  imports = [ inputs.stylix.homeModules ];
 
   stylix = {
-    autoEnable = true;
-    targets = { bat.enable = true; };
+    autoEnable = f;
     # image = wallpaper;
     # base16Scheme = theme;
 
-    #   enable = true;
-    #   # polarity = "dark";
-    #   base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+    enable = true;
+    # polarity = "dark";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
-    #   image = ../../assests/background.png;
+    image = ../../assests/background.png;
 
-    #   cursor = {
-    #     package = pkgs.banana-cursor;
-    #     name = "banana-cursor";
-    #     size = 24;
-    #   };
+    cursor = {
+      package = pkgs.banana-cursor;
+      name = "banana-cursor";
+      size = 24;
+    };
 
-    #   fonts = {
+    fonts = {
 
-    #     monospace = {
-    #       # package = pkgs.commit-mono;
-    #       # name = "Commit Mono";
-    #       package = pkgs.nerd-fonts.jetbrains-mono;
-    #       name = "JetBrains Mono NF";
-    #     };
-    #   };
+      monospace = {
+        # package = pkgs.commit-mono;
+        # name = "Commit Mono";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrains Mono NF";
+      };
+    };
   };
 }

@@ -81,5 +81,9 @@ config.keys = {
      },
   },
 }
-
+config.set_environment_variables = {
+  TERMINFO_DIRS = '/home/bones/.nix-profile/share/terminfo',
+  WSLENV = 'TERMINFO_DIRS',
+}
+config.term = 'wezterm'
 return config

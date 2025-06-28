@@ -64,32 +64,21 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    wezterm.terminfo
     curl
-    wget
-    git
-    lm_sensors
     dhcpcd
+    lm_sensors
+    gcc
+    grc
+    wget
+    screen
+    uutils-coreutils
     fishPlugins.done
+    fishPlugins.grc
     fishPlugins.fzf-fish
     fishPlugins.forgit
     fishPlugins.hydro
-    fzf
-    fishPlugins.grc
-    grc
-    gcc
-    screen
-    bat
-    ripgrep
-    fd
-    delta
-    uutils-coreutils
-    wezterm
-    btop
-    fastfetch
-    lazygit
-    difftastic
   ];
-
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
 
@@ -122,7 +111,5 @@
       };
     };
   };
-
-  programs.niri.enable = true;
-
+  home-manager.backupFileExtension = "backup";
 }
