@@ -1,5 +1,34 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
-  stylix.autoEnable = true;
+  # imports = [ inputs.stylix.homeModules ];
+
+  stylix = {
+    autoEnable = true;
+    targets = { bat.enable = true; };
+    # image = wallpaper;
+    # base16Scheme = theme;
+
+    #   enable = true;
+    #   # polarity = "dark";
+    #   base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
+
+    #   image = ../../assests/background.png;
+
+    #   cursor = {
+    #     package = pkgs.banana-cursor;
+    #     name = "banana-cursor";
+    #     size = 24;
+    #   };
+
+    #   fonts = {
+
+    #     monospace = {
+    #       # package = pkgs.commit-mono;
+    #       # name = "Commit Mono";
+    #       package = pkgs.nerd-fonts.jetbrains-mono;
+    #       name = "JetBrains Mono NF";
+    #     };
+    #   };
+  };
 }

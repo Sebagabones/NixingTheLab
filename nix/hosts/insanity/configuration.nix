@@ -21,7 +21,7 @@
   environment.systemPackages = with pkgs; [
     networkmanagerapplet
     lightdm
-    kdePackages.konsole
+    # kdePackages.konsole
     firefox
     spotify
     discord

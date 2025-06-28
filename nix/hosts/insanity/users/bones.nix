@@ -1,5 +1,5 @@
-{ flake, config, lib, pkgs, ... }:
+{ inputs, flake, config, lib, pkgs, ... }:
 
 {
-  imports = [ flake.homeModules.bones ];
+  imports = [ inputs.self.homeModules.bones ];
 }

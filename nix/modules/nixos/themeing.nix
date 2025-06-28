@@ -4,6 +4,8 @@
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   stylix = {
+    homeManagerIntegration.followSystem = true;
+    homeManagerIntegration.autoImport = true;
     autoEnable = true;
     # image = wallpaper;
     # base16Scheme = theme;

@@ -83,6 +83,11 @@
     fd
     delta
     uutils-coreutils
+    wezterm
+    btop
+    fastfetch
+    lazygit
+    difftastic
   ];
 
   programs.fish.enable = true;
