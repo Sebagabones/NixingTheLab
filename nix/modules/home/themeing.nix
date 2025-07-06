@@ -1,13 +1,8 @@
-{ inputs, config, lib, pkgs, ... }:
+{pkgs, ... }:
 
 {
-  imports = [ inputs.stylix.homeModules ];
 
   stylix = {
-    autoEnable = f;
-    # image = wallpaper;
-    # base16Scheme = theme;
-
     enable = true;
     # polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
@@ -18,7 +13,7 @@
       package = pkgs.banana-cursor;
       name = "banana-cursor";
       size = 24;
-    };
+     };
 
     fonts = {
 

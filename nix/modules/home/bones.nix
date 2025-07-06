@@ -5,34 +5,29 @@
   programs.home-manager.enable = true;
 
   imports = [
-    flake.homeModules.niri
-    ./wezterm.nix
-    # ./themeing.nix
-    # flake.nixos.themeing
+    flake.homeModules.themeing
+    flake.homeModules.gui
   ];
   home.packages = with pkgs; [
-    wezterm.terminfo
+    ghostty.terminfo
     atool
     httpie
     delta
     difftastic
     procs
-    elvish
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
 
   programs = {
-    niri.enable = true;
+
     fzf.enable = true;
-    wezterm.enable = true;
     btop = {
       enable = true;
       settings = { update_ms = 100; };
     };
     fastfetch.enable = true;
     lazygit.enable = true;
-    bemenu.enable = true;
   };
 
   programs.fd.enable = true;

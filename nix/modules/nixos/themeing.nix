@@ -21,9 +21,7 @@
       name = "banana-cursor";
       size = 24;
     };
-
     fonts = {
-
       monospace = {
         # package = pkgs.commit-mono;
         # name = "Commit Mono";

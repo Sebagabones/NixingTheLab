@@ -63,29 +63,9 @@
       };
     };
 
-    #   windowManager.i3 = {
-    #     enable = true;
-    #     extraPackages = with pkgs; [
-    #       dmenu # application launcher most people use
-    #       i3status # gives you the default i3 status bar
-    #       i3lock # default i3 screen locker
-    #       i3blocks # if you are planning on using i3blocks over i3status
-    #     ];
-    #   };
+
   };
-  # services.displayManager.defaultSession = "niri";
   services.libinput.enable = true;
-  # services.greetd = {
-  #   enable = true;
-  #   settings = {
-  #     default_session = {
-  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${
-  #           lib.getExe pkgs.niri
-  #         }-session";
-  #       user = "greeter";
-  #     };
-  #   };
-  # };
 
   # Networking
   networking.networkmanager.enable = true;
@@ -94,4 +74,5 @@
   lollypops.deployment.group = "Personal";
   # home-manager.backupFileExtension = "backup";
 
+  stylix.enable = true;
 }

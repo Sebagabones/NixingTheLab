@@ -1,7 +1,7 @@
-{ config, lib, pkgs, inputs, perSystem, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
-  terminal = lib.getExe pkgs.wezterm;
+  terminal = lib.getExe config.programs.ghostty.package;
   bemenu = lib.getExe pkgs.bemenu;
 in {
   imports = [ inputs.niri.homeModules.niri ];
