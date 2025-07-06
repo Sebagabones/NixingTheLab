@@ -1,18 +1,8 @@
 { flake, pkgs, ... }:
 
 {
-  imports = [ flake.homeModules.niri flake.nixosModules.theming ];
+  imports = [ flake.homeModules.niri flake.nixosModules.theming flake.nixosModules.themingGUI ];
 
-  stylix = {
-
-    image = ../../assests/background.png;
-
-    cursor = {
-      package = pkgs.banana-cursor;
-      name = "banana-cursor";
-      size = 24;
-    };
-  };
   programs.niri = { enable = true; };
 
   programs.bemenu = { enable = true; };
