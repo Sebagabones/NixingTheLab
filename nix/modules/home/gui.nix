@@ -1,4 +1,4 @@
-{ flake, ...}:
+{ flake, pkgs, ...}:
 
 {
     imports = [
@@ -26,5 +26,25 @@
       gtk-single-instance = true;
     };
   };
-
+  programs.networkmanagerapplet = {
+    enabled = true;
+  };
+    programs.lightdm = {
+    enabled = true;
+  };
+    programs.firefox  = {
+    enabled = true;
+  };
+    programs.spotify = {
+    enabled = true;
+  };
+    programs.discord = {
+    enabled = true;
+  };
+    programs.wlr-randr = {
+    enabled = true;
+    };
+  environment.systemPackages = with pkgs; [
+    discord
+  ];
 }

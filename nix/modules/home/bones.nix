@@ -6,7 +6,7 @@
 
   imports = [
     flake.homeModules.themeing
-    flake.homeModules.gui
+    # flake.homeModules.gui
   ];
   home.packages = with pkgs; [
     ghostty.terminfo

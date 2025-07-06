@@ -78,6 +78,10 @@
     fishPlugins.fzf-fish
     fishPlugins.forgit
     fishPlugins.hydro
+    ripgrep
+    bat
+    git
+    fd
   ];
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;

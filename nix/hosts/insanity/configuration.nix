@@ -5,6 +5,7 @@
 
   imports = [
     flake.nixosModules.base
+    flake.nixosModules.gui
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/alder-lake"
     "${inputs.nixos-hardware}/common/pc/ssd"
@@ -18,16 +19,8 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   programs.xwayland.enable = true;
   # Packages
-  environment.systemPackages = with pkgs; [
-    networkmanagerapplet
-    lightdm
-    # kdePackages.konsole
-    firefox
-    spotify
-    discord
-    wezterm
-    wlr-randr
-  ];
+  # environment.systemPackages = with pkgs; [
+  # ];
 
   hardware.graphics = {
     enable = true;
@@ -61,8 +54,16 @@
         greeters.slick = { enable = true; };
         # background = ../../assests/background.png;
       };
+      session =
+        [ { manage = "desktop";
+            name = "default";
+            start = ''
+            ${pkgs.niri}/bin/niri-session &
+            waitPID=$!
+            '';
+          }
+        ];
     };
-
 
   };
   services.libinput.enable = true;
