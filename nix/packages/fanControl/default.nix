@@ -1,24 +1,17 @@
 # default.nix
-{ pkgs, config, lib, ... }:
+{ pkgs, ... }:
 
-let fanControl = pkgs.callPackage ./package.nix { inherit pkgs lib; };
-in rec {
-  environment.systemPackages = [ fanControl ];
-
-  systemd.services."fanControl" = {
-    enable = true;
-    after = ["network.target"];
-    description = "Fan Speed Service";
-    serviceConfig = {
-      Type="simple";
-      ExecStart=''${fanControl}/bin/tempChecker'';
-      Restart="always";
-      RuntimeMaxSec="30m";
-      RestartSec="1s";
-      SyslogIdentifier="fanControl";
-      User="root";
-      Group="root";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+pkgs.stdenv.mkDerivation {
+  pname = "fanControl";
+  version = "0.0.2";
+  src = ./tempChecker.c;
+  # system = "x86_64-linux";
+  nativeBuildInputs = [];
+  buildInputs = [pkgs.ipmitool pkgs.lm_sensors pkgs.gcc];
+  dontUnpack = true;
+  buildPhase = ''gcc -DIPMITOOL_PATH='"${pkgs.ipmitool}/bin/ipmitool"' -DSENSORS_PATH='"${pkgs.lm_sensors}/bin/sensors"' $src -o tempChecker'';
+  installPhase = ''
+  mkdir -p $out/bin
+  cp tempChecker $out/bin
+  '';
 }

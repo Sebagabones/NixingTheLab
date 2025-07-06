@@ -8,9 +8,6 @@
     config-dir = "/var/src/lollypops";
     deploy-method = "copy";
     ssh.host = "${config.networking.hostName}";
-    ssh.user = "root";
-    ssh.command = "ssh";
-    ssh.opts = [ "-p" "22" ];
     sudo.enable = false;
   };
 
@@ -83,6 +80,7 @@
     git
     fd
     btop
+    nixfmt # move this to emacs when you have set it up
   ];
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
