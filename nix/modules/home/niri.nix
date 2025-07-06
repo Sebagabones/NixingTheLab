@@ -2,7 +2,8 @@
 
 let
   terminal = lib.getExe config.programs.ghostty.package;
-  bemenu = lib.getExe pkgs.bemenu;
+  bemenu = lib.getExe config.programs.bemenu.package;
+  firefox =  lib.getExe config.programs.firefox.package;
 in {
   imports = [ inputs.niri.homeModules.niri ];
 
@@ -17,6 +18,7 @@ in {
         # Terminal and basic window management
         "Mod+Return".action.spawn = [ terminal ];
         "Mod+Q".action.close-window = { };
+        "Mod+W".action.spawn = [ firefox ];
 
         # System actions
         "Mod+Shift+Slash".action.show-hotkey-overlay = { };
@@ -81,7 +83,8 @@ in {
         "Mod+BracketLeft".action.consume-or-expel-window-left = { };
         "Mod+BracketRight".action.consume-or-expel-window-right = { };
         "Mod+C".action.center-column = { };
-        "Mod+W".action.toggle-column-tabbed-display = { };
+
+        # "Mod+W".action.toggle-column-tabbed-display = { }; Need to rebind this to something else
 
         # Window sizing
         "Mod+R".action.switch-preset-column-width = { };

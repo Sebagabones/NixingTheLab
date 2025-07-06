@@ -82,6 +82,7 @@
     bat
     git
     fd
+    btop
   ];
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;

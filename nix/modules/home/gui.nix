@@ -3,7 +3,6 @@
 {
     imports = [
       flake.homeModules.niri
-      # flake.nixosModules.gui
     ];
   programs.niri = {
       enable = true;
