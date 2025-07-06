@@ -14,13 +14,13 @@
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-night-dark.yaml";
 
-    image = ../../assests/background.png;
-
-    cursor = {
-      package = pkgs.banana-cursor;
-      name = "banana-cursor";
-      size = 24;
-    };
+    # image = ../../assests/background.png;
+    #
+    # cursor = {
+    #   package = pkgs.banana-cursor;
+    #   name = "banana-cursor";
+    #   size = 24;
+    # };
     fonts = {
       monospace = {
         # package = pkgs.commit-mono;

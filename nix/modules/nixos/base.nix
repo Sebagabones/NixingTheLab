@@ -1,6 +1,6 @@
 { modulesPath, config, lib, pkgs, inputs, nixpkgs, home-manager, ... }: {
 
-  imports = [ inputs.lollypops.nixosModules.lollypops ./themeing.nix ];
+  imports = [ inputs.lollypops.nixosModules.lollypops ./theming.nix ];
 
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
@@ -80,7 +80,7 @@
     git
     fd
     btop
-    nixfmt # move this to emacs when you have set it up
+    nixfmt-classic # move this to emacs when you have set it up
   ];
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;

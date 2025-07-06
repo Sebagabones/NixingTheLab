@@ -9,12 +9,12 @@
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/sandy-bridge"
     "${inputs.nixos-hardware}/common/pc/ssd"
-    "${inputs.nixos-hardware}/common/pc/hdd"
-    "${inputs.nixos-hardware}/common/pc"
+    # "${inputs.nixos-hardware}/common/pc"
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = { efiSupport = true; };
 
   # Networking
   systemd.network = {
@@ -40,7 +40,6 @@
   networking.interfaces.eno5.useDHCP = true;
 
   # SSH
-
   services.openssh = {
 
     ports = [ 8909 ];
@@ -61,6 +60,23 @@
     [
       perSystem.self.fanControl # Fan control for the IBM servers
     ];
+
+  systemd.services."fanControl" = {
+    enable = true;
+    after = [ "network.target" ];
+    description = "Fan Speed Service";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${perSystem.self.fanControl}/bin/tempChecker";
+      Restart = "always";
+      RuntimeMaxSec = "30m";
+      RestartSec = "1s";
+      SyslogIdentifier = "fanControl";
+      User = "root";
+      Group = "root";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 

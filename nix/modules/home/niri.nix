@@ -3,7 +3,7 @@
 let
   terminal = lib.getExe config.programs.ghostty.package;
   bemenu = lib.getExe config.programs.bemenu.package;
-  firefox =  lib.getExe config.programs.firefox.package;
+  firefox = lib.getExe config.programs.firefox.package;
 in {
   imports = [ inputs.niri.homeModules.niri ];
 
@@ -281,6 +281,7 @@ in {
         "Print".action.screenshot = { };
         "Ctrl+Print".action.screenshot-screen = { };
         "Alt+Print".action.screenshot-window = { };
+
       };
 
       # spawn-at-startup = [
@@ -292,14 +293,19 @@ in {
       #     ];
       #   }
       # ];
+      window-rule = { open-maximized = true; };
 
       screenshot-path = "~/tmp/Screenshot from %Y-%m-%d %H-%M-%S.png";
       hotkey-overlay.skip-at-startup = true;
       clipboard.disable-primary = true;
       overview.backdrop-color = config.lib.stylix.colors.withHashtag.base00;
-      input.keyboard.xkb.options = "caps:swapescape";
-      layout.border.enable = false;
-      layout.gaps = 8;
+      layout.border = with config.lib.stylix.colors.withHashtag; {
+        enable = true;
+        active = { color = base0D; };
+        inactive = { color = base03; };
+      };
+
+      layout.gaps = 5;
     };
   };
   systemd.user.services.swaybg = {

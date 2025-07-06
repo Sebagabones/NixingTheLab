@@ -5,7 +5,7 @@
   programs.home-manager.enable = true;
 
   imports = [
-    flake.homeModules.themeing
+    flake.homeModules.theming
     # flake.homeModules.gui
   ];
   home.packages = with pkgs; [
