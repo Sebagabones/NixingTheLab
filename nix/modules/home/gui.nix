@@ -3,6 +3,7 @@
 {
     imports = [
       flake.homeModules.niri
+      # flake.nixosModules.gui
     ];
   programs.niri = {
       enable = true;
@@ -26,25 +27,21 @@
       gtk-single-instance = true;
     };
   };
-  programs.networkmanagerapplet = {
-    enabled = true;
-  };
-    programs.lightdm = {
-    enabled = true;
-  };
+
+
     programs.firefox  = {
-    enabled = true;
+    enable = true;
   };
-    programs.spotify = {
-    enabled = true;
+    programs.spotify-player = {
+    enable = true;
   };
-    programs.discord = {
-    enabled = true;
-  };
-    programs.wlr-randr = {
-    enabled = true;
+    programs.autorandr = {
+    enable = true;
     };
-  environment.systemPackages = with pkgs; [
+
+  home.packages = with pkgs; [
     discord
+    networkmanagerapplet
+    wlr-randr
   ];
 }

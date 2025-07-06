@@ -1,11 +1,12 @@
-{ flake, pkgs, ...}:
+{ config, lib, pkgs, inputs, ...}:
 
 {
+
     environment.systemPackages = with pkgs; [
       lightdm
     ];
     programs.niri = {
-      enabled = true;
+      enable = true;
     };
 
 }

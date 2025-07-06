@@ -46,25 +46,15 @@
     enable = true;
     videoDrivers = [ "amd" ];
     desktopManager = { xterm.enable = false; };
-
-    displayManager = {
-      lightdm = {
-        enable = true;
-
-        greeters.slick = { enable = true; };
-        # background = ../../assests/background.png;
+  };
+   services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        user = "greeter";
       };
-      session =
-        [ { manage = "desktop";
-            name = "default";
-            start = ''
-            ${pkgs.niri}/bin/niri-session &
-            waitPID=$!
-            '';
-          }
-        ];
     };
-
   };
   services.libinput.enable = true;
 
