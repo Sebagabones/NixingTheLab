@@ -293,7 +293,53 @@ in {
       #     ];
       #   }
       # ];
-      window-rule = { open-maximized = true; };
+
+      window-rules = let colors = config.lib.stylix.colors.withHashtag;
+      in [
+        {
+          draw-border-with-background = false;
+          geometry-corner-radius = let r = 8.0;
+          in {
+            top-left = r;
+            top-right = r;
+            bottom-left = r;
+            bottom-right = r;
+          };
+          clip-to-geometry = true;
+        }
+        { open-maximized = true; }
+        {
+          matches = [{ is-focused = false; }];
+          opacity = 0.95;
+        }
+        {
+          # the terminal is already transparent from stylix
+          matches = [{ app-id = "^ghostty$"; }];
+          opacity = 1.0;
+        }
+        {
+          matches = [{ app-id = "^niri$"; }];
+          opacity = 1.0;
+        }
+        {
+          matches = [{
+            app-id = "^ghostty$";
+            title = "^\\[oxygen\\]";
+          }];
+          border.active.color = colors.base0B;
+        }
+        {
+          matches = [{
+            app-id = "^firefox$";
+            title = "Private Browsing";
+          }];
+          border.active.color = colors.base0E;
+        }
+        {
+          matches = [{ app-id = "^discord$"; }];
+          block-out-from = "screencast";
+        }
+      ];
 
       screenshot-path = "~/tmp/Screenshot from %Y-%m-%d %H-%M-%S.png";
       hotkey-overlay.skip-at-startup = true;
