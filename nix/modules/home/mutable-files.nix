@@ -1,7 +1,6 @@
 { config, options, lib, pkgs, ... }:
 # gratefully borrowed from https://www.foodogsquared.one/posts/2023-03-24-managing-mutable-files-in-nixos/#a-better-way-to-manage-traditional-dotfiles-in-home-manager
 # (code from https://github.com/foo-dogsquared/nixos-config/blob/30f23d969620da60dff7f98aa91f798e36df48f5/modules/home-manager/files/mutable-files.nix)
-{ config, lib, pkgs, ... }:
 
 let
   cfg = config.home.mutableFile;
@@ -22,20 +21,20 @@ let
       fetch = ''
         [ -e ${path} ] || curl ${extraArgs} ${url} --output ${path}"
       '';
-      archive = let
-        extractScript = if (value.extractPath == null) then
-          ''arc unarchive "/tmp/$filename" ${path}''
-        else
-          ''
-            arc extract "/tmp/$filename" ${
-              lib.escapeShellArg value.extractPath
-            } ${path}'';
-      in ''
-        [ -e ${path} ] || {
-          filename=$(curl ${extraArgs} --output-dir /tmp --silent --show-error --write-out '%{filename_effective}' --remote-name --remote-header-name --location ${url})
-          ${extractScript}
-        }
-      '';
+      # archive = let
+      #   extractScript = if (value.extractPath == null) then
+      #     ''arc unarchive "/tmp/$filename" ${path}''
+      #   else
+      #     ''
+      #       arc extract "/tmp/$filename" ${
+      #         lib.escapeShellArg value.extractPath
+      #       } ${path}'';
+      # in ''
+      #   [ -e ${path} ] || {
+      #     filename=$(curl ${extraArgs} --output-dir /tmp --silent --show-error --write-out '%{filename_effective}' --remote-name --remote-header-name --location ${url})
+      #     ${extractScript}
+      #   }
+      # '';
       gopass = ''
         [ -e ${path} ] || gopass clone ${extraArgs} ${url} --path ${path}
       '';
@@ -164,10 +163,10 @@ in {
         type = "git";
       };
 
-      "library/projects/keys" = {
-        url = "https://example.com/file.zip";
-        type = "archive";
-      };
+      # "library/projects/keys" = {
+      #   url = "https://example.com/file.zip";
+      #   type = "archive";
+      # };
     };
   };
 

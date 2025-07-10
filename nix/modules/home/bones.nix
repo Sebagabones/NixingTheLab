@@ -5,8 +5,9 @@
   programs.home-manager.enable = true;
 
   imports = [
+    ./mutable-files.nix
     flake.homeModules.theming
-    flake.homeModules.flake.homeModules.emacs
+    flake.homeModules.emacs
     # flake.homeModules.gui
   ];
   home.packages = with pkgs; [
@@ -16,12 +17,18 @@
     delta
     difftastic
     procs
+    python3
+    aspell
+    aspellDicts.en
+    hunspellDicts.en-au
+    hunspellDicts.en_GB-large
+    aspellDicts.en-computers
+    aspellDicts.en-science
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
 
   programs = {
-
     fzf.enable = true;
     btop = {
       enable = true;

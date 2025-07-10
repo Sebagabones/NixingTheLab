@@ -58,7 +58,10 @@
   };
 
   # Packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [ "archiver-3.5.1" ];
+  };
 
   environment.systemPackages = with pkgs; [
     wezterm.terminfo
@@ -81,6 +84,7 @@
     fd
     btop
     nixfmt-classic # move this to emacs when you have set it up
+    sqlite
   ];
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;

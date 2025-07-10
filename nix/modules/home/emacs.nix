@@ -2,20 +2,20 @@
 let
   userCfg = config.users.bones;
   cfg = userCfg.programs.emacs;
-  emacsInstallation = "${config.xdg.configHome}/emacs";
+  emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
 in {
-  # Automatically install Emacs config from here.
-  home.mutableFile.${emacsInstallation} = {
-    url = "https://github.com/Sebagabones/myEmacsConfig.git";
-    type = "git";
-  };
-  # Enable Emacs server for them quicknotes.
-  services.emacs = {
-    enable = true;
-    socketActivation.enable = true;
-  };
+  config = {
+    # Automatically install Emacs config from here.
+    home.mutableFile.${emacsInstallation} = {
+      url = "https://github.com/Sebagabones/myEmacsConfig.git";
+      type = "git";
+    };
+    # Enable Emacs server for them quicknotes.
+    services.emacs = {
+      enable = true;
+      socketActivation.enable = true;
+    };
 
-  config = lib.mkIf cfg.enable {
     programs.emacs = {
       enable = true;
       package = pkgs.emacs;
@@ -24,11 +24,9 @@ in {
           org-noter-pdftools
           org-pdftools
           pdf-tools
-          emacsql-sqlite
           vterm
         ];
     };
-
     # Add org-protocol support.
     xdg.desktopEntries.org-protocol = {
       name = "org-protocol";
