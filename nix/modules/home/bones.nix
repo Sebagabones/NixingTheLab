@@ -6,6 +6,7 @@
 
   imports = [
     flake.homeModules.theming
+    flake.homeModules.flake.homeModules.emacs
     # flake.homeModules.gui
   ];
   home.packages = with pkgs; [

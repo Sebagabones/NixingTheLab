@@ -1,11 +1,10 @@
 { config, lib, pkgs, ... }:
-
 let
   userCfg = config.users.bones;
   cfg = userCfg.programs.emacs;
   emacsInstallation = "${config.xdg.configHome}/emacs";
 in {
-  # Automatically install Doom Emacs from here.
+  # Automatically install Emacs config from here.
   home.mutableFile.${emacsInstallation} = {
     url = "https://github.com/Sebagabones/myEmacsConfig.git";
     type = "git";
@@ -29,21 +28,22 @@ in {
           vterm
         ];
     };
-  # Add org-protocol support.
-  xdg.desktopEntries.org-protocol = {
-    name = "org-protocol";
-    exec = "emacsclient -- %u";
-    mimeType = [ "x-scheme-handler/org-protocol" ];
-    terminal = false;
-    comment = "Intercept calls from emacsclient to trigger custom actions";
-    noDisplay = true;
-  };
 
-  xdg.mimeApps.defaultApplications = {
-    "application/json" = [ "emacs.desktop" ];
-    "text/org" = [ "emacs.desktop" ];
-    "text/plain" = [ "emacs.desktop" ];
-    "x-scheme-handler/org-protocol" = [ "org-protocol.desktop" ];
-  };
+    # Add org-protocol support.
+    xdg.desktopEntries.org-protocol = {
+      name = "org-protocol";
+      exec = "emacsclient -- %u";
+      mimeType = [ "x-scheme-handler/org-protocol" ];
+      terminal = false;
+      comment = "Intercept calls from emacsclient to trigger custom actions";
+      noDisplay = true;
+    };
 
+    xdg.mimeApps.defaultApplications = {
+      "application/json" = [ "emacs.desktop" ];
+      "text/org" = [ "emacs.desktop" ];
+      "text/plain" = [ "emacs.desktop" ];
+      "x-scheme-handler/org-protocol" = [ "org-protocol.desktop" ];
+    };
+  };
 }
