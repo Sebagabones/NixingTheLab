@@ -19,6 +19,8 @@
   programs.bemenu = { enable = true; };
   programs.ghostty = {
     enable = true;
+    installBatSyntax = true;
+    enableZshIntegration = true;
     enableFishIntegration = true;
     settings = {
       unfocused-split-opacity = 0.95;
