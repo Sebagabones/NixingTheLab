@@ -2,7 +2,7 @@
 
 let
   terminal = lib.getExe config.programs.ghostty.package;
-  bemenu = lib.getExe config.programs.bemenu.package;
+  # bemenu = lib.getExe config.programs.bemenu.package;
   firefox = lib.getExe config.programs.firefox.package;
 in {
   imports = [ inputs.niri.homeModules.niri ];
@@ -204,7 +204,7 @@ in {
         #   ];
         #   text = ''cliphist list | wmenu -l5 -p"clipboard delete" -i | cliphist-delete'';
         # };
-        "Mod+D".action.spawn = [ bemenu ];
+        # "Mod+D".action.spawn = [ bemenu ];
 
         "XF86AudioRaiseVolume" = {
           allow-when-locked = true;

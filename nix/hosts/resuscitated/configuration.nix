@@ -24,10 +24,10 @@
     enable = true;
     enable32Bit = true;
   };
-  hardware.graphics.extraPackages = with pkgs; [
-    vaapiIntel
-    intel-media-driver
-  ];
+  # hardware.graphics.extraPackages = with pkgs; [
+  #   vaapiIntel
+  #   intel-media-driver
+  # ];
 
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
@@ -45,7 +45,7 @@
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "intel" ];
+    # videoDrivers = [ "intel" ];
     desktopManager = { xterm.enable = false; };
   };
   services.greetd = {
@@ -53,7 +53,7 @@
     settings = {
       default_session = {
         command =
-          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm";
+          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
         user = "greeter";
       };
     };

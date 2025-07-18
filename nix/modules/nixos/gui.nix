@@ -1,11 +1,6 @@
-{ config, lib, pkgs, inputs, ...}:
-{
+{ config, lib, pkgs, inputs, ... }: {
 
-    environment.systemPackages = with pkgs; [
-      lightdm
-    ];
-    programs.niri = {
-      enable = true;
-    };
+  environment.systemPackages = with pkgs; [ lightdm ];
+  programs.niri = { enable = true; };
 
 }

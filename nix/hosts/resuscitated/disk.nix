@@ -4,7 +4,7 @@
     disk = {
       vdb = {
         device =
-          "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S4EWNM0TB25096Z";
+          "/dev/disk/by-id/nvme-SAMSUNG_MZVLW256HEHP-000L7_S35ENX2JA86582";
         type = "disk";
         content = {
           type = "gpt";
@@ -23,8 +23,10 @@
               size = "100%";
               content = {
                 type = "filesystem";
-                format = "ext4";
+                format = "xfs";
                 mountpoint = "/";
+                mountOptions =
+                  [ "defaults" "pquota" "logbufs=8" "logbsize=256k" ];
               };
             };
           };

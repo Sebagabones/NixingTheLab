@@ -25,6 +25,8 @@
         "ctrl+shift+down=goto_split:down"
         "shift+left=previous_tab"
         "shift+right=next_tab"
+        "ctrl+shift+]=new_split:down"
+        "ctrl+shift+[=new_split:right"
       ];
       gtk-tabs-location = "hidden";
       gtk-single-instance = true;
@@ -42,7 +44,7 @@
           vimium
         ];
 
-        extraConfig = "widget.use-xdg-desktop-portal.file-picker = 1";
+        # extraConfig = "widget.use-xdg-desktop-portal.file-picker = 1";
         settings =
           { # from https://github.com/TLATER/dotfiles/blob/b39af91fbd13d338559a05d69f56c5a97f8c905d/home-config/config/graphical-applications/firefox.nix
             # Performance settings
@@ -97,9 +99,6 @@
 
       };
     };
-    nativeMessagingHosts =
-      [ pkgs.plasma5Packages.plasma-browser-integration ]; # we love KDE
-
   };
   programs.spotify-player = { enable = true; };
   programs.autorandr = { enable = true; };
@@ -108,7 +107,7 @@
     discord
     networkmanagerapplet
     wlr-randr
-    kdePackages.dolphin
+    # kdePackages.dolphin
   ];
 
   stylix = {
