@@ -1,5 +1,14 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
-  networking.hostName = "insanity";
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  ...
+}:
+{
+  networking.hostName = "resuscitated";
   system.stateVersion = "24.11";
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -29,8 +38,7 @@
   #   intel-media-driver
   # ];
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.dbus.enable = true;
@@ -46,14 +54,15 @@
   services.xserver = {
     enable = true;
     # videoDrivers = [ "intel" ];
-    desktopManager = { xterm.enable = false; };
+    desktopManager = {
+      xterm.enable = false;
+    };
   };
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command =
-          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
         user = "greeter";
       };
     };

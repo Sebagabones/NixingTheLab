@@ -1,11 +1,47 @@
-{ flake, pkgs, perSystem, ... }:
+{
+  flake,
+  pkgs,
+  perSystem,
+  ...
+}:
 
 {
-  imports = [ flake.homeModules.niri ./theming.nix ];
+  imports = [
+    flake.homeModules.miracle-wm
+    ./theming.nix
+  ];
 
-  programs.niri = { enable = true; };
+  stylix = {
 
-  programs.bemenu = { enable = true; };
+    targets = {
+      bemenu = {
+        enable = true;
+        alternate = true;
+      };
+      firefox = {
+        profileNames = [ "default" ];
+        firefoxGnomeTheme.enable = true;
+      };
+    };
+
+  };
+
+  # programs.niri = {
+  #   enable = true;
+  # };
+
+  programs.fuzzel = {
+    enable = true;
+  };
+  programs.bemenu = {
+    enable = true;
+    settings = {
+      line-height = 28;
+      prompt = "open";
+      ignorecase = true;
+      list = 5;
+    };
+  };
   programs.ghostty = {
     enable = true;
     installBatSyntax = true;
@@ -35,98 +71,80 @@
 
   programs.firefox = {
     enable = true;
-    profiles = {
-      bones = {
-        isDefault = true;
-        # bookmarks, extensions, search engines...
-        extensions.packages = with perSystem.firefox-addons; [
-          ublock-origin
-          vimium
-        ];
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "browser.aboutConfig.showWarning" = false;
+        "full-screen-api.ignore-widgets" = true;
+        "media.ffmpeg.vaapi.enabled" = true;
 
-        # extraConfig = "widget.use-xdg-desktop-portal.file-picker = 1";
-        settings =
-          { # from https://github.com/TLATER/dotfiles/blob/b39af91fbd13d338559a05d69f56c5a97f8c905d/home-config/config/graphical-applications/firefox.nix
-            # Performance settings
-            "gfx.webrender.all" = true; # Force enable GPU acceleration
-            "media.ffmpeg.vaapi.enabled" = true;
-            "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
+        "browser.startup.page" = 3; # load last visited
+        "browser.startup.homepage" = "about:blank";
+        "browser.newtabpage.enabled" = false;
+        "browser.toolbars.bookmarks.visibility" = "never";
 
-            # Hide the "sharing indicator", it's especially annoying
-            # with tiling WMs on wayland
-            "privacy.webrtc.legacyGlobalIndicator" = false;
+        "browser.contentblocking.category" = "standard"; # not strict because it conflicts with adnauseam
+        "layout.css.visited_links_enabled" = false;
 
-            # Actual settings
-            "app.shield.optoutstudies.enabled" = false;
-            "app.update.auto" = false;
-            "browser.bookmarks.restore_default_bookmarks" = false;
-            "browser.contentblocking.category" = "strict";
-            "browser.ctrlTab.recentlyUsedOrder" = true;
-            "browser.discovery.enabled" = false;
-            "browser.laterrun.enabled" = false;
-            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" =
-              false;
-            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" =
-              false;
-            "browser.newtabpage.activity-stream.feeds.snippets" = false;
-            "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned" =
-              "";
-            "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines" =
-              "";
-            "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-              false;
-            "browser.newtabpage.activity-stream.showSponsored" = false;
-            "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-            "browser.newtabpage.pinned" = false;
-            "browser.protections_panel.infoMessage.seen" = true;
-            "browser.quitShortcut.disabled" = true;
-            "browser.shell.checkDefaultBrowser" = false;
-            "browser.ssb.enabled" = true;
-            "browser.toolbars.bookmarks.visibility" = "never";
-            "browser.urlbar.placeholderName" = "DuckDuckGo";
-            "browser.urlbar.suggest.openpage" = false;
-            "datareporting.policy.dataSubmissionEnable" = false;
-            "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
-            "dom.security.https_only_mode" = true;
-            "dom.security.https_only_mode_ever_enabled" = true;
-            "extensions.getAddons.showPane" = false;
-            "extensions.htmlaboutaddons.recommendations.enabled" = false;
-            "extensions.pocket.enabled" = false;
-            "identity.fxaccounts.enabled" = false;
-            "privacy.trackingprotection.enabled" = true;
-            "privacy.trackingprotection.socialtracking.enabled" = true;
-          };
+        "signon.rememberSignons" = false;
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
 
+        "sidebar.verticalTabs" = true;
+        "sidebar.revamp" = true;
+        "browser.uidensity" = 0;
+        "browser.tabs.inTitlebar" = 1;
+        # "widget.gtk.rounded-bottom-corners.enabled" = true;
+        "browser.theme.dark-private-windows" = false;
+
+        "general.smoothScroll" = true;
       };
+      extensions.packages = with perSystem.firefox-addons; [
+        adnauseam
+        # bitwarden
+        lovely-forks
+        react-devtools
+        refined-github
+        vimium
+      ];
     };
   };
-  programs.spotify-player = { enable = true; };
-  programs.autorandr = { enable = true; };
 
+  programs.spotify-player = {
+    enable = true;
+  };
+  programs.autorandr = {
+    enable = true;
+  };
+  programs.waybar = {
+    enable = true;
+  };
+  programs.wofi = {
+    enable = true;
+  };
   home.packages = with pkgs; [
     discord
     networkmanagerapplet
     wlr-randr
+    wl-clipboard
     # kdePackages.dolphin
   ];
 
-  stylix = {
+  # pointerCursor = {
+  #   name = "Banana";
+  #   size = 32;
+  #   package = pkgs.banana-cursor;
+  #   x11.enable = true;
+  #   gtk.enable = true;
+  # };
 
-    image = ../../assests/background.png;
-
-    cursor = {
-      package = pkgs.banana-cursor;
-      name = "banana-cursor";
-      size = 24;
-    };
-    targets = {
-      bemenu = {
-        alternate = true;
-        enable = true;
-      };
-      firefox.profileNames = [ "bones" ];
-    };
-
-  };
+  # gtk = {
+  #   enable = true;
+  #   cursorTheme = {
+  #     name = "Banana";
+  #     size = 32;
+  #     package = pkgs.banana-cursor;
+  #   };
+  # };
 
 }

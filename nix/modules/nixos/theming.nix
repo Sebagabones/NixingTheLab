@@ -1,4 +1,10 @@
-{ inputs, config, lib, pkgs, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
@@ -22,6 +28,14 @@
     #   size = 24;
     # };
     fonts = {
+      serif = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrains Mono NF";
+      };
+      sansSerif = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrains Mono NF";
+      };
       monospace = {
         # package = pkgs.commit-mono;
         # name = "Commit Mono";
