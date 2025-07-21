@@ -13,6 +13,7 @@
 
   imports = [
     ./mutable-files.nix
+    flake.homeModules.git
     flake.homeModules.theming
     flake.homeModules.emacs
     # flake.homeModules.gui
@@ -21,8 +22,8 @@
     ghostty.terminfo
     atool
     httpie
-    delta
-    difftastic
+    # delta
+    # difftastic
     procs
     python3
     cmatrix
@@ -57,7 +58,6 @@
     enable = true;
   };
 
-  programs.git.enable = true;
   programs.bat = {
     enable = true;
     extraPackages = with pkgs.bat-extras; [
