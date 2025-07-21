@@ -38,8 +38,8 @@
     enableZshIntegration = true;
     enableFishIntegration = true;
     settings = {
-      unfocused-split-opacity = 0.95;
-
+      unfocused-split-opacity = 0.5;
+      background-opacity = 0.9;
       window-padding-x = 4;
       window-padding-y = 4;
       window-padding-balance = true;
@@ -54,9 +54,11 @@
         "ctrl+shift+]=new_split:down"
         "ctrl+shift+[=new_split:right"
       ];
-      gtk-tabs-location = "hidden";
+      gtk-tabs-location = "right";
+      gtk-adwaita = true;
       # window-decoration = false;
-      gtk-single-instance = true;
+      # gtk-single-instance = true;
+      adw-toolbar-style = "raised-border";
       window-theme = "ghostty";
     };
   };
