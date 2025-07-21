@@ -17,8 +17,10 @@
       };
     };
     difftastic = {
-      enableAsDiffTool = true;
+      enable = true;
+      enableAsDifftool = true;
       color = "auto";
+      display = "side-by-side";
     };
 
   };
