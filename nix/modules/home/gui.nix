@@ -126,6 +126,7 @@
   };
   home.packages = with pkgs; [
     swaybg
+    teams-for-linux
     discord
     networkmanagerapplet
     wlr-randr
