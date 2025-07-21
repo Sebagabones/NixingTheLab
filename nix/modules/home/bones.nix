@@ -1,11 +1,4 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  flake,
-  ...
-}:
+{ inputs, config, lib, pkgs, flake, ... }:
 
 {
   home.stateVersion = "24.11";
@@ -22,7 +15,8 @@
     ghostty.terminfo
     atool
     httpie
-    # delta
+    nixd
+    delta
     # difftastic
     procs
     python3
@@ -35,17 +29,13 @@
     aspellDicts.en-science
   ];
 
-  home.sessionVariables = {
-    TERM = "xterm-direct";
-  };
+  home.sessionVariables = { TERM = "xterm-direct"; };
 
   programs = {
     fzf.enable = true;
     btop = {
       enable = true;
-      settings = {
-        update_ms = 100;
-      };
+      settings = { update_ms = 100; };
     };
     fastfetch.enable = true;
     lazygit.enable = true;
@@ -54,9 +44,7 @@
   programs.fd.enable = true;
 
   programs.ripgrep.enable = true;
-  programs.emacs = {
-    enable = true;
-  };
+  programs.emacs = { enable = true; };
 
   programs.bat = {
     enable = true;

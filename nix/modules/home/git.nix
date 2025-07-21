@@ -1,9 +1,4 @@
-{
-  flake,
-  pkgs,
-  perSystem,
-  ...
-}:
+{ flake, pkgs, perSystem, ... }:
 
 {
 
@@ -11,11 +6,10 @@
     enable = true;
     userName = "Sebgabones";
     userEmail = "133339614+Sebagabones@users.noreply.github.com";
-    delta = {
-      enable = true;
-      options = {
-      };
-    };
+    # delta = {
+    #   enable = true;
+    #   options = { };
+    # };
     difftastic = {
       enable = true;
       enableAsDifftool = true;
