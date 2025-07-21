@@ -1,4 +1,13 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  ...
+}:
+{
   networking.hostName = "insanity";
   system.stateVersion = "24.11";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -28,8 +37,7 @@
   };
   hardware.graphics.extraPackages = with pkgs; [ amdvlk ];
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.dbus.enable = true;
@@ -45,9 +53,11 @@
   services.xserver = {
     enable = true;
     videoDrivers = [ "amd" ];
-    desktopManager = { xterm.enable = false; };
+    desktopManager = {
+      xterm.enable = false;
+    };
   };
-   services.greetd = {
+  services.greetd = {
     enable = true;
     settings = {
       default_session = {
@@ -63,7 +73,7 @@
   networking.networkmanager.wifi.powersave = true;
 
   lollypops.deployment.group = "Personal";
-  # home-manager.backupFileExtension = "backup";
+  home-manager.backupFileExtension = "backup";
 
   stylix.enable = true;
 }

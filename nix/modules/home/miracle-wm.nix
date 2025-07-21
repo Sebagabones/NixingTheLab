@@ -21,7 +21,7 @@
         {
           command = "fuzzel";
           action = "down";
-          modifers = [ "primary" ];
+          modifiers = [ "primary" ];
           key = "KEY_D";
         }
       ];

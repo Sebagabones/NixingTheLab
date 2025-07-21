@@ -1,4 +1,13 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  ...
+}:
+{
   networking.hostName = "bonesboundhome";
   networking.domain = "lab.mahoosively.gay";
   system.stateVersion = "24.11";
@@ -14,14 +23,19 @@
 
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = { efiSupport = true; };
+  boot.loader.grub = {
+    efiSupport = true;
+  };
 
   # Networking
   systemd.network = {
     enable = true;
 
     networks."10-lan" = {
-      matchConfig.Name = [ "eno5" "vm-*" ];
+      matchConfig.Name = [
+        "eno5"
+        "vm-*"
+      ];
       networkConfig.Bridge = "br0";
     };
 
@@ -56,10 +70,9 @@
     ];
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      perSystem.self.fanControl # Fan control for the IBM servers
-    ];
+  environment.systemPackages = with pkgs; [
+    perSystem.self.fanControl # Fan control for the IBM servers
+  ];
 
   systemd.services."fanControl" = {
     enable = true;
@@ -83,8 +96,14 @@
   # Networking
   networking.firewall = {
     enable = false;
-    allowedTCPPorts = [ 8909 9090 ];
-    allowedUDPPorts = [ 8909 9090 ];
+    allowedTCPPorts = [
+      8909
+      9090
+    ];
+    allowedUDPPorts = [
+      8909
+      9090
+    ];
   };
 
   boot.kernelModules = [ "mgag200" ]; # we love the Matrox G200
@@ -97,8 +116,7 @@
     enable32Bit = true;
   };
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.dbus.enable = true;
@@ -107,7 +125,7 @@
     group = "Servers";
     ssh.opts = [ " -p 8909" ];
   };
-  # home-manager.backupFileExtension = "backup";
+  home-manager.backupFileExtension = "backup";
 
   stylix.enable = true;
 }

@@ -25,6 +25,7 @@
     difftastic
     procs
     python3
+    cmatrix
     aspell
     aspellDicts.en
     hunspellDicts.en-au

@@ -65,7 +65,9 @@
         "ctrl+shift+[=new_split:right"
       ];
       gtk-tabs-location = "hidden";
+      # window-decoration = false;
       gtk-single-instance = true;
+      window-theme = "ghostty";
     };
   };
 
@@ -123,6 +125,7 @@
     enable = true;
   };
   home.packages = with pkgs; [
+    swaybg
     discord
     networkmanagerapplet
     wlr-randr
