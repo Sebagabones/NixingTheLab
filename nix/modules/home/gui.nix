@@ -1,15 +1,7 @@
-{
-  flake,
-  pkgs,
-  perSystem,
-  ...
-}:
+{ flake, pkgs, perSystem, ... }:
 
 {
-  imports = [
-    flake.homeModules.miracle-wm
-    ./theming.nix
-  ];
+  imports = [ flake.homeModules.miracle-wm ./theming.nix ];
 
   stylix = {
 
@@ -30,9 +22,7 @@
   #   enable = true;
   # };
 
-  programs.fuzzel = {
-    enable = true;
-  };
+  programs.fuzzel = { enable = true; };
   programs.bemenu = {
     enable = true;
     settings = {
@@ -85,7 +75,8 @@
         "browser.newtabpage.enabled" = false;
         "browser.toolbars.bookmarks.visibility" = "never";
 
-        "browser.contentblocking.category" = "standard"; # not strict because it conflicts with adnauseam
+        "browser.contentblocking.category" =
+          "standard"; # not strict because it conflicts with adnauseam
         "layout.css.visited_links_enabled" = false;
 
         "signon.rememberSignons" = false;
@@ -112,20 +103,14 @@
     };
   };
 
-  programs.spotify-player = {
-    enable = true;
-  };
-  programs.autorandr = {
-    enable = true;
-  };
-  programs.waybar = {
-    enable = true;
-  };
-  programs.wofi = {
-    enable = true;
-  };
+  programs.spotify-player = { enable = true; };
+  programs.autorandr = { enable = true; };
+  programs.waybar = { enable = true; };
+  programs.wofi = { enable = true; };
   home.packages = with pkgs; [
     swaybg
+    pavucontrol
+    spotify
     teams-for-linux
     discord
     networkmanagerapplet
