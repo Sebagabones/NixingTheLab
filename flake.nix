@@ -42,6 +42,7 @@
       nixpkgs.config.allowUnfree = true;
 
     } // {
+
       # Lollypops
       apps."x86_64-linux".default =
         inputs.lollypops.apps."x86_64-linux".default {
