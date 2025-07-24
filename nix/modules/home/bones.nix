@@ -35,26 +35,27 @@
     fzf.enable = true;
     btop = {
       enable = true;
-      settings = { update_ms = 100; };
+      settings = {
+        update_ms = 100;
+        theme-background = false;
+      };
     };
     fastfetch.enable = true;
     lazygit.enable = true;
+    fd.enable = true;
+    ripgrep.enable = true;
+    emacs = { enable = true; };
+    bat = {
+      enable = true;
+      extraPackages = with pkgs.bat-extras; [
+        batdiff
+        batman
+        prettybat
+        batpipe
+        batgrep
+        batwatch
+      ];
+    };
   };
 
-  programs.fd.enable = true;
-
-  programs.ripgrep.enable = true;
-  programs.emacs = { enable = true; };
-
-  programs.bat = {
-    enable = true;
-    extraPackages = with pkgs.bat-extras; [
-      batdiff
-      batman
-      prettybat
-      batpipe
-      batgrep
-      batwatch
-    ];
-  };
 }
