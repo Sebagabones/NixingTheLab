@@ -20,6 +20,5 @@
       color = "auto";
       display = "side-by-side";
     };
-
   };
 }
