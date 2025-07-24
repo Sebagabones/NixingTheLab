@@ -23,15 +23,15 @@
   # };
 
   programs.fuzzel = { enable = true; };
-  programs.bemenu = {
-    enable = true;
-    settings = {
-      line-height = 28;
-      prompt = "open";
-      ignorecase = true;
-      list = 5;
-    };
-  };
+  # programs.bemenu = {
+  #   enable = true;
+  #   settings = {
+  #     line-height = 28;
+  #     prompt = "open";
+  #     ignorecase = true;
+  #     list = 5;
+  #   };
+  # };
   programs.ghostty = {
     enable = true;
     installBatSyntax = true;
