@@ -34,7 +34,6 @@
 
   programs = {
     fzf.enable = true;
-
     btop = {
       enable = true;
       settings = {

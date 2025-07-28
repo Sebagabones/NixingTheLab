@@ -4,7 +4,6 @@
   imports = [ flake.homeModules.miracle-wm ./theming.nix ];
 
   stylix = {
-
     targets = {
       bemenu = {
         enable = true;
