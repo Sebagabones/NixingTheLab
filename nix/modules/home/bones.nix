@@ -27,12 +27,14 @@
     hunspellDicts.en_GB-large
     aspellDicts.en-computers
     aspellDicts.en-science
+    gnupg
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
 
   programs = {
     fzf.enable = true;
+
     btop = {
       enable = true;
       settings = {
