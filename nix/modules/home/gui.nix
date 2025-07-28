@@ -219,6 +219,8 @@
     networkmanagerapplet
     wlr-randr
     wl-clipboard
+    brightnessctl
+    libreoffice-qt6-fresh
     # kdePackages.dolphin
   ];
 
@@ -226,6 +228,7 @@
   #   name = "Banana";
   #   size = 32;
   #   package = pkgs.banana-cursor;
+
   #   x11.enable = true;
   #   gtk.enable = true;
   # };
