@@ -27,6 +27,7 @@
   # boot.kernelModules = [ "kvm_intel" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
   programs.xwayland.enable = true;
+  programs.wayland.miracle-wm.enable = true;
   # Packages
   # environment.systemPackages = with pkgs; [
   # ];
@@ -61,7 +62,8 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        command =
+          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
         user = "greeter";
       };
     };
