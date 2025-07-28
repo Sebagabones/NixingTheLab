@@ -10,8 +10,8 @@
       user = { signingkey = "~/.ssh/id_ed25519.pub"; };
       push = { autoSetupRemote = true; };
       pull = { rebase = false; };
-      gpg = { format = "ssh"; };
       commit = { gpgsign = true; };
+      gpg = { format = "ssh"; };
     };
     # delta = {
     #   enable = true;
