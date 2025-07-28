@@ -211,6 +211,7 @@
   home.packages = with pkgs; [
     # brightnessctl
     swaybg
+    libinput
     pavucontrol
     spotify
     teams-for-linux
