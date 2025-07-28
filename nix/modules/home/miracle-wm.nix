@@ -5,7 +5,8 @@
 
     xdg.configFile."miracle-wm.config".text = ''
       translucent=on
-      touchpad-vertical-scroll-speed-override=-1
+      touchpad-vertical-scroll-speed-override=-1.0
+      touchpad-horizontal-scroll-speed-override=-1.0
     '';
 
     xdg.configFile."miracle-wm.yaml".source =
