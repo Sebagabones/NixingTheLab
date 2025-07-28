@@ -45,10 +45,10 @@
     ports = [ 8909 ];
     openFirewall = true;
     listenAddresses = [
-      {
-        addr = "192.168.1.117";
-        port = 8909;
-      }
+      # {
+      #   addr = "192.168.1.117";
+      #   port = 8909;
+      # }
       {
         addr = "0.0.0.0";
         port = 8909;
