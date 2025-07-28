@@ -1,6 +1,6 @@
 { flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
   networking.hostName = "insanity";
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   imports = [

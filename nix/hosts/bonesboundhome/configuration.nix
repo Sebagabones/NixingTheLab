@@ -1,7 +1,7 @@
 { flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
   networking.hostName = "bonesboundhome";
   networking.domain = "lab.mahoosively.gay";
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   imports = [
