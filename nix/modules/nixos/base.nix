@@ -1,7 +1,7 @@
 { modulesPath, config, lib, pkgs, inputs, nixpkgs, home-manager, ... }: {
 
   imports = [
-    inputs.lollypops.nixosModules.lollypops
+    inputs.lollypops.nixosModules.default
     inputs.xremap-flake.nixosModules.default
     ./theming.nix
   ];

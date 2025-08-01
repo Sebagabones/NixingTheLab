@@ -45,8 +45,8 @@
     } // {
 
       # Lollypops
-      apps."x86_64-linux".default =
-        inputs.lollypops.apps."x86_64-linux".default {
+      packages."x86_64-linux".lollypops =
+        inputs.lollypops.packages."x86_64-linux".default.override {
           configFlake = inputs.self;
         };
 
