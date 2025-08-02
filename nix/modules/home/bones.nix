@@ -35,6 +35,8 @@ in {
     aspellDicts.en-computers
     aspellDicts.en-science
     gnupg
+    unzip
+    zip
     tex
     multimarkdown # used for emacs export markdown
     python311Packages.weasyprint

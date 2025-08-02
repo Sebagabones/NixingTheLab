@@ -26,6 +26,8 @@
       trusted-users = [ "root" "@wheel" ];
       min-free = 100 * 1024 * 1024;
       max-free = 1024 * 1024 * 1024;
+      max-jobs = "auto";
+      cores = 0;
     };
     gc = {
       automatic = true;
