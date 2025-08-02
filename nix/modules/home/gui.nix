@@ -35,7 +35,7 @@
     enable = true;
     installBatSyntax = true;
     enableZshIntegration = true;
-    enableFishIntegration = true;
+    # enableFishIntegration = true;
     settings = {
       unfocused-split-opacity = 0.5;
       background-opacity = 0.9;

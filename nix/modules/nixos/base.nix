@@ -37,7 +37,7 @@
   };
   users = {
     mutableUsers = false;
-    defaultUserShell = pkgs.fish;
+    defaultUserShell = pkgs.zsh;
 
     users.root = {
 
@@ -73,7 +73,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    wezterm.terminfo
+    ghostty.terminfo
+    zsh
     curl
     dhcpcd
     lm_sensors
@@ -82,11 +83,11 @@
     wget
     screen
     uutils-coreutils
-    fishPlugins.done
-    fishPlugins.grc
-    fishPlugins.fzf-fish
-    fishPlugins.forgit
-    fishPlugins.hydro
+    # fishPlugins.done
+    # fishPlugins.grc
+    # fishPlugins.fzf-fish
+    # fishPlugins.forgit
+    # fishPlugins.hydro
     ripgrep
     bat
     git
@@ -95,8 +96,8 @@
     nixfmt-classic # move this to emacs when you have set it up
     sqlite
   ];
-  programs.fish.enable = true;
-  programs.fish.useBabelfish = true;
+  programs.zsh.enable = true;
+  # programs.fish.useBabelfish = true;
 
   # System
   time.timeZone = "Australia/Perth";
@@ -135,6 +136,8 @@
 
   stylix.enable = true;
 
+  environment.pathsToLink =
+    [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
   # Services
   services.xremap = {
     # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
