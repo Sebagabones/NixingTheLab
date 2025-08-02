@@ -3,6 +3,7 @@ let
   userCfg = config.users.bones;
   cfg = userCfg.programs.emacs;
   emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
+
 in {
   config = {
     # Automatically install Emacs config from here.
