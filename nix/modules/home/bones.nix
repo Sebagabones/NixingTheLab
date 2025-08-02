@@ -83,7 +83,8 @@ in {
             owner = "folke";
             repo = "tokyonight.nvim"; # Bat uses sublime syntax for its themes
             rev = "76d5d5d71a7211549aed84807ec2ea9c07ad192a";
-            sha256 = "sha256-1xZhQR1BhH2eqax0swlNtnPWIEUTxSOab6sQ3Fv9WQA=";
+            sha256 = "sha256-ADXEPqCNlWZ0sO2K0b0E0bMDsfoL2QXfufOYjv+mtzY=";
+            # sha256 = lib.fakeSha256;
           };
           file = "extras/sublime/tokyonight_night.tmTheme";
         };
