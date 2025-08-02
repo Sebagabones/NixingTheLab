@@ -20,9 +20,8 @@
   programs.xwayland.enable = true;
   programs.wayland.miracle-wm.enable = true;
   # Packages
-  # environment.systemPackages = with pkgs; [
-  # ];
 
+  environment.systemPackages = with pkgs; [ miracle-wm ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
