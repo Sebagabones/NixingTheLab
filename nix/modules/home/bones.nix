@@ -1,6 +1,13 @@
-{ inputs, config, lib, pkgs, flake, ... }:
-
-{
+{ inputs, config, lib, pkgs, flake, perSystem, ... }:
+let
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive)
+      scheme-basic dvisvgm dvipng # for preview and export as html
+      wrapfig amsmath ulem hyperref capt-of;
+    #(setq org-latex-compiler "lualatex")
+    #(setq org-preview-latex-default-process 'dvisvgm)
+  });
+in {
   home.stateVersion = "24.11";
   programs.home-manager.enable = true;
 
@@ -9,6 +16,7 @@
     flake.homeModules.git
     flake.homeModules.theming
     flake.homeModules.emacs
+
     # flake.homeModules.gui
   ];
   home.packages = with pkgs; [
@@ -28,6 +36,10 @@
     aspellDicts.en-computers
     aspellDicts.en-science
     gnupg
+    tex
+    multimarkdown # used for emacs export markdown
+    python311Packages.weasyprint
+    pandoc
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
