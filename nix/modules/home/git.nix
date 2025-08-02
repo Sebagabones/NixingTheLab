@@ -13,10 +13,10 @@
       commit = { gpgsign = true; };
       gpg = { format = "ssh"; };
     };
-    # delta = {
-    #   enable = true;
-    #   options = { };
-    # };
+    delta = {
+      enable = false;
+      options = { };
+    };
     difftastic = {
       enable = true;
       enableAsDifftool = true;
