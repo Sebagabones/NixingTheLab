@@ -24,7 +24,6 @@ in {
     atool
     httpie
     nixd
-    delta
     # difftastic
     procs
     python3
@@ -44,6 +43,9 @@ in {
     starship
     zsh-autosuggestions
     zsh-syntax-highlighting
+    # perSystem.self.delta
+    delta
+    nix-update
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
