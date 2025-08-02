@@ -66,6 +66,15 @@ in {
     fd.enable = true;
     ripgrep.enable = true;
     emacs = { enable = true; };
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        bonesboundhome = {
+          hostname = "mahoosively.gay";
+          port = 8909;
+        };
+      };
+    };
     bat = {
       enable = true;
       extraPackages = with pkgs.bat-extras; [
