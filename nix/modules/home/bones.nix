@@ -40,6 +40,10 @@ in {
     multimarkdown # used for emacs export markdown
     python311Packages.weasyprint
     pandoc
+    direnv
+    starship
+    zsh-autosuggestions
+    zsh-syntax-highlighting
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
@@ -68,7 +72,70 @@ in {
         batgrep
         batwatch
       ];
+      config = { theme = "tokyoNightNight"; };
+      themes = {
+        tokyoNightNight = {
+          src = pkgs.fetchFromGitHub {
+            owner = "folke";
+            repo = "tokyonight.nvim"; # Bat uses sublime syntax for its themes
+            rev = "76d5d5d71a7211549aed84807ec2ea9c07ad192a";
+            sha256 = "sha256-1xZhQR1BhH2eqax0swlNtnPWIEUTxSOab6sQ3Fv9WQA=";
+          };
+          file = "extras/sublime/tokyonight_night.tmTheme";
+        };
+      };
     };
-  };
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      # syntaxhighlighting.enable = true;
+      syntaxHighlighting.enable = true;
+      shellAliases = {
+        ll = "ls -l";
+        update = "sudo nixos-rebuild switch";
+      };
+      history.size = 10000;
+      sessionVariables = {
+        EDITOR = "emacs";
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE =
+          "fg=#${config.lib.stylix.colors.base03-hex},underline"; # can't be arsed trying to convert hex to xterm, so this is hopefully good enough
+      };
 
+      oh-my-zsh = {
+        enable = true;
+        plugins = [
+          "git"
+          "direnv"
+          "starship"
+          "zsh-navigation-tools"
+          # "zsh-autosuggestions"
+          # "zsh-syntax-highlighting"
+          # "fast-syntax-highlighting"
+        ];
+        # theme = "robbyrussell";
+      };
+      initContent = "cd";
+    };
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = true;
+        command_timeout = 1300;
+        scan_timeout = 50;
+        # format = ''
+        #   $all$nix_shell$c$$golang$rust$python$git_branch$git_commit$git_state$git_status
+        #   $username$hostname$directory'';
+        character = {
+          success_symbol = "[](bold green) ";
+          error_symbol = "[✗](bold red) ";
+        };
+      };
+    };
+
+  };
+  services.lorri = {
+    enable = true;
+    enableNotifications = true;
+  };
 }
