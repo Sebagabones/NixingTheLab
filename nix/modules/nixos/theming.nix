@@ -1,10 +1,4 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
@@ -18,8 +12,8 @@
 
     enable = true;
     polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/da-one-ocean.yaml";
     # image = ../../assests/background.png;
     #
     # cursor = {
