@@ -4,7 +4,7 @@ pkgs.callPackage ({ rustPlatform, fetchFromGitHub, installShellFiles, pkg-config
   with rustPlatform;
   buildRustPackage {
     pname = "delta";
-    version = "2025-08-02-main";
+    version = "0.18.2";
     src = fetchFromGitHub {
       owner = "dandavison";
       repo = "delta";
