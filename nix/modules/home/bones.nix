@@ -48,6 +48,11 @@ in {
     # perSystem.self.delta
     delta
     nix-update
+
+    uv
+    ruff
+    ty
+    python312Packages.mypy
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
