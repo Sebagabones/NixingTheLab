@@ -1,15 +1,11 @@
 { flake, pkgs, perSystem, ... }:
 
 {
-  imports =
-    [ flake.homeModules.gnome flake.homeModules.miracle-wm ./theming.nix ];
+  imports = [ flake.homeModules.miracle-wm ./theming.nix ];
 
   stylix = {
     targets = {
-      bemenu = {
-        enable = true;
-        alternate = true;
-      };
+
       firefox = {
         profileNames = [ "default" ];
         firefoxGnomeTheme.enable = true;
