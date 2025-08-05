@@ -1,7 +1,8 @@
 { flake, pkgs, perSystem, ... }:
 
 {
-  imports = [ flake.homeModules.miracle-wm ./theming.nix ];
+  imports =
+    [ flake.homeModules.gnome flake.homeModules.miracle-wm ./theming.nix ];
 
   stylix = {
     targets = {
