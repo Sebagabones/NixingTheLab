@@ -1,14 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
-{
-  imports = [
-    ./theming.nix
-  ];
+{ config, lib, pkgs, inputs, ... }: {
+  imports = [ ./theming.nix ];
   environment.systemPackages = with pkgs; [ lightdm ];
   # programs.niri = {
   #   enable = true;
@@ -20,4 +11,6 @@
       size = 32;
     };
   };
+  services.blueman.enable = true;
+  stylix.targets.qt.platform = "qtct";
 }
