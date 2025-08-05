@@ -7,7 +7,7 @@
     homeManagerIntegration.followSystem = true;
     homeManagerIntegration.autoImport = true;
     autoEnable = true;
-    # image = wallpaper;
+    image = ../../assests/background.png;
     # base16Scheme = theme;
 
     enable = true;
