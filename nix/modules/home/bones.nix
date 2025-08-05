@@ -53,6 +53,8 @@ in {
     ruff
     ty
     python312Packages.mypy
+
+    jre8 # For RETRO - ELEC3020
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
