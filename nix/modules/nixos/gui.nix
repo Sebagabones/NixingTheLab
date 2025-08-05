@@ -1,5 +1,5 @@
 { config, lib, pkgs, inputs, ... }: {
-  imports = [ ./theming.nix ];
+  imports = [ ./gnome.nix ./theming.nix ];
   environment.systemPackages = with pkgs; [ lightdm ];
   # programs.niri = {
   #   enable = true;
@@ -12,5 +12,4 @@
     };
   };
   services.blueman.enable = true;
-  stylix.targets.qt.platform = "qtct";
 }

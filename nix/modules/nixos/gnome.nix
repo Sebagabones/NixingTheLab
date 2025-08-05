@@ -6,5 +6,5 @@
     gnomeExtensions.arc-menu
     gnomeExtensions.space-bar
   ];
-  stylix.targets.qt.platform = "qtct";
+
 }
