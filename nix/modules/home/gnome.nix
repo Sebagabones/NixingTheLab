@@ -1,10 +1,10 @@
 { config, lib, pkgs, inputs, ... }: {
 
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     gnomeExtensions.blur-my-shell
-    gnomeExtensions.just-perfection
-    gnomeExtensions.arc-menu
     gnomeExtensions.space-bar
+    # gnomeExtensions.just-perfection
+    # gnomeExtensions.arc-menu
   ];
 
 }

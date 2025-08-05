@@ -1,5 +1,5 @@
 { config, lib, pkgs, inputs, ... }: {
-  imports = [ ./gnome.nix ./theming.nix ];
+  imports = [ ./theming.nix ];
   environment.systemPackages = with pkgs; [ lightdm ];
   # programs.niri = {
   #   enable = true;
