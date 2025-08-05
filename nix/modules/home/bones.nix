@@ -28,12 +28,10 @@ in {
     procs
     python3
     cmatrix
-    aspell
-    aspellDicts.en
+    clang
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     hunspellDicts.en-au
     hunspellDicts.en_GB-large
-    aspellDicts.en-computers
-    aspellDicts.en-science
     gnupg
     unzip
     zip

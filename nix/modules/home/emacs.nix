@@ -19,7 +19,7 @@ in {
 
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs;
+      package = pkgs.emacs-gtk;
       extraPackages = epkgs:
         with epkgs; [
           org-noter-pdftools
