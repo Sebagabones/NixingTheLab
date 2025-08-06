@@ -24,6 +24,8 @@ in {
     atool
     httpie
     nixd
+    ccls
+    clangd
     # difftastic
     procs
     python3

@@ -220,6 +220,7 @@
     wl-clipboard
     brightnessctl
     libreoffice-qt6-fresh
+    platformio # ELEC3020
     # kdePackages.dolphin
   ];
 
