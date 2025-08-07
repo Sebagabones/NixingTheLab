@@ -25,7 +25,7 @@ in {
     httpie
     nixd
     ccls
-    clangd
+    clang-tools
     # difftastic
     procs
     python3
@@ -53,8 +53,6 @@ in {
     ruff
     ty
     python312Packages.mypy
-
-    jre8 # For RETRO - ELEC3020
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
