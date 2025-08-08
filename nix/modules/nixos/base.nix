@@ -11,7 +11,10 @@
   lollypops.deployment = {
     config-dir = "/var/src/lollypops";
     deploy-method = "copy";
-    ssh.host = "${config.networking.hostName}";
+    ssh = {
+      host = "${config.networking.hostName}";
+      user = lib.mkDefault "root";
+    };
     sudo.enable = false;
   };
   # Hostname
