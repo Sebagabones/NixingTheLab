@@ -13,8 +13,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware = { url = "github:nixos/nixos-hardware/master"; };
-    lollypops.url =
-      "github:pinpox/lollypops//098b95c871a8fb6f246ead8d7072ec2201d7692b";
+    # lollypops.url =
+    #   "github:pinpox/lollypops//098b95c871a8fb6f246ead8d7072ec2201d7692b";
+    lollypops.url = "github:pinpox/lollypops";
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
     microvm.url = "github:astro/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
