@@ -115,9 +115,8 @@
     wl-clipboard
     brightnessctl
     libreoffice-qt6-fresh
-
     # For ELEC3020:
-    jre # For RETRO
+    jre8 # For RETRO
     platformio
     # End ELEC3020
     # kdePackages.dolphin
