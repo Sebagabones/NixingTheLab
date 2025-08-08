@@ -1,12 +1,15 @@
-{ flake, pkgs, perSystem, ... }:
-
-{
-  imports =
-    [ flake.homeModules.gnome flake.homeModules.miracle-wm ./theming.nix ];
+{ inputs, flake, pkgs, perSystem, ... }: {
+  imports = [
+    # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
+    flake.homeModules.gnome
+    flake.homeModules.miracle-wm
+    ./theming.nix
+    flake.homeModules.spotify
+  ];
 
   stylix = {
     targets = {
-
+      vscode = { enable = false; };
       firefox = {
         profileNames = [ "default" ];
         firefoxGnomeTheme.enable = true;
