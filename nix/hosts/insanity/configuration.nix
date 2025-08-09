@@ -50,6 +50,10 @@
   };
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  systemd.targets.sleep.enable = true;
+  systemd.targets.suspend.enable = true;
+  systemd.targets.hibernate.enable = true;
+  systemd.targets.hybrid-sleep.enable = true;
 
   # services.greetd = {
   #   enable = true;
