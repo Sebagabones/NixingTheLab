@@ -28,6 +28,7 @@
     enable32Bit = true;
   };
   hardware.graphics.extraPackages = with pkgs; [ amdvlk ];
+  hardware.bluetooth.enable = true;
 
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
@@ -42,14 +43,14 @@
     alsa.enable = true;
     pulse.enable = true;
   };
-
   services.xserver = {
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     enable = true;
     videoDrivers = [ "amd" ];
     desktopManager = { xterm.enable = false; };
   };
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
   # services.greetd = {
   #   enable = true;
   #   settings = {
