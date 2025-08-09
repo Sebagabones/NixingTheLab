@@ -97,7 +97,14 @@
   programs.autorandr = { enable = true; };
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode.fhs;
+    profiles.default.extensions = with pkgs.vscode-extensions; [
+      enkia.tokyo-night
+      ms-python.python
+      charliermarsh.ruff
+      mkhl.direnv
+      ms-azuretools.vscode-docker
+      ms-vscode-remote.remote-ssh
+    ];
   };
   home.sessionVariables = { NIXOS_OZONE_WL = "1"; }; # for VS-Code
 
