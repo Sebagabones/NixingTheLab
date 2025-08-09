@@ -18,10 +18,11 @@
   # boot.kernelModules = [ "kvm_intel" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
   programs.xwayland.enable = true;
-  programs.wayland.miracle-wm.enable = true;
+  # programs.wayland.miracle-wm.enable = true;
   # Packages
 
-  environment.systemPackages = with pkgs; [ miracle-wm ];
+  # environment.systemPackages = with pkgs; [ miracle-wm ];
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -43,20 +44,22 @@
   };
 
   services.xserver = {
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
     enable = true;
     videoDrivers = [ "amd" ];
     desktopManager = { xterm.enable = false; };
   };
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command =
-          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
-        user = "greeter";
-      };
-    };
-  };
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command =
+  #         "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
+  #       user = "greeter";
+  #     };
+  #   };
+  # };
   services.libinput.enable = true;
 
   # Networking
