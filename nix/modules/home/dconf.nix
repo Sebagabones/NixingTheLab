@@ -5,20 +5,9 @@ with lib.hm.gvariant;
 
 {
   dconf.settings = {
-    "org/gnome/Weather" = {
-      locations = [ (mkVariant [ (mkUint32 2) (mkVariant [ "Perth" "YPPH" true [ (mkTuple [ (-0.5573418019857584) 2.0237092676874253 ]) ] [ (mkTuple [ (-0.5573418019857584) 2.0216730444090008 ]) ] ]) ]) ];
-      window-height = 519;
-      window-maximized = false;
-      window-width = 439;
-    };
+    "org/gnome/desktop/break-reminders" = { selected-breaks = [ "eyesight" ]; };
 
-    "org/gnome/desktop/break-reminders" = {
-      selected-breaks = [ "eyesight" ];
-    };
-
-    "org/gnome/desktop/break-reminders/eyesight" = {
-      play-sound = true;
-    };
+    "org/gnome/desktop/break-reminders/eyesight" = { play-sound = true; };
 
     "org/gnome/desktop/interface" = {
       accent-color = "purple";
@@ -43,9 +32,7 @@ with lib.hm.gvariant;
       grayscale = false;
     };
 
-    "org/gnome/desktop/session" = {
-      idle-delay = mkUint32 300;
-    };
+    "org/gnome/desktop/session" = { idle-delay = mkUint32 300; };
 
     "org/gnome/desktop/sound" = {
       event-sounds = true;
@@ -57,8 +44,8 @@ with lib.hm.gvariant;
       maximize = [ "<Super>Up" ];
       maximize-horizontally = [ "<Shift><Super>Page_Down" ];
       maximize-vertically = [ "<Shift><Super>Page_Up" ];
-      move-to-monitor-left = [];
-      move-to-monitor-right = [];
+      move-to-monitor-left = [ ];
+      move-to-monitor-right = [ ];
       move-to-workspace-1 = [ "<Super><Shift>1" ];
       move-to-workspace-10 = [ "<Super><Shift>0" ];
       move-to-workspace-2 = [ "<Super><Shift>2" ];
@@ -89,32 +76,39 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 10;
-      workspace-names = [];
+      workspace-names = [ ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" ];
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1"
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2"
+      ];
       search = [ "<Super>d" ];
       www = [ "<Super>w" ];
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>Return";
-      command = "ghostty";
-      name = "Ghostty";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
+      {
+        binding = "<Super>Return";
+        command = "ghostty";
+        name = "Ghostty";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Super>m";
-      command = "spotify";
-      name = "Spotify";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" =
+      {
+        binding = "<Super>m";
+        command = "spotify";
+        name = "Spotify";
+      };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding = "<Super>b";
-      command = "discord";
-      name = "discord";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" =
+      {
+        binding = "<Super>b";
+        command = "discord";
+        name = "discord";
+      };
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
@@ -122,18 +116,19 @@ with lib.hm.gvariant;
 
     "org/gnome/shell" = {
       disabled-extensions = [ "tilingshell@ferrarodomenico.com" ];
-      enabled-extensions = [ "user-theme@gnome-shell-extensions.gcampax.github.com" "just-perfection-desktop@just-perfection" "blur-my-shell@aunetx" "space-bar@luchrioh" ];
+      enabled-extensions = [
+        "user-theme@gnome-shell-extensions.gcampax.github.com"
+        "just-perfection-desktop@just-perfection"
+        "blur-my-shell@aunetx"
+        "space-bar@luchrioh"
+      ];
       last-selected-power-profile = "performance";
       welcome-dialog-last-shown-version = "48.2";
     };
 
-    "org/gnome/shell/app-switcher" = {
-      current-workspace-only = true;
-    };
+    "org/gnome/shell/app-switcher" = { current-workspace-only = true; };
 
-    "org/gnome/shell/extensions/blur-my-shell" = {
-      settings-version = 2;
-    };
+    "org/gnome/shell/extensions/blur-my-shell" = { settings-version = 2; };
 
     "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
       brightness = 0.46;
@@ -144,7 +139,7 @@ with lib.hm.gvariant;
       blur = true;
       enable-all = false;
       sigma = 29;
-      whitelist = [];
+      whitelist = [ ];
     };
 
     "org/gnome/shell/extensions/blur-my-shell/coverflow-alt-tab" = {
@@ -223,7 +218,8 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/shell/extensions/space-bar/appearance" = {
-      application-styles = ".space-bar {n  -natural-hpadding: 12px;n}nn.space-bar-workspace-label.active {n  margin: 0 4px;n  background-color: rgba(255,255,255,0.3);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive.empty {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,0.5);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}";
+      application-styles =
+        ".space-bar {n  -natural-hpadding: 12px;n}nn.space-bar-workspace-label.active {n  margin: 0 4px;n  background-color: rgba(255,255,255,0.3);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive.empty {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,0.5);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}";
     };
 
     "org/gnome/shell/extensions/space-bar/behavior" = {
@@ -237,35 +233,22 @@ with lib.hm.gvariant;
       open-menu = [ "<Shift><Super>w" ];
     };
 
-    "org/gnome/shell/extensions/space-bar/state" = {
-      version = 33;
-    };
+    "org/gnome/shell/extensions/space-bar/state" = { version = 33; };
 
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Stylix";
-    };
+    "org/gnome/shell/extensions/user-theme" = { name = "Stylix"; };
 
     "org/gnome/shell/keybindings" = {
       focus-active-notification = [ "<Shift><Super>n" ];
-      switch-to-application-1 = [];
-      switch-to-application-10 = [];
-      switch-to-application-2 = [];
-      switch-to-application-3 = [];
-      switch-to-application-4 = [];
-      switch-to-application-5 = [];
-      switch-to-application-6 = [];
-      switch-to-application-7 = [];
-      switch-to-application-8 = [];
-      switch-to-application-9 = [];
-    };
-
-    "org/gnome/shell/weather" = {
-      automatic-location = true;
-      locations = [ (mkVariant [ (mkUint32 2) (mkVariant [ "Perth" "YPPH" true [ (mkTuple [ (-0.5573418019857584) 2.0237092676874253 ]) ] [ (mkTuple [ (-0.5573418019857584) 2.0216730444090008 ]) ] ]) ]) ];
-    };
-
-    "org/gnome/shell/world-clocks" = {
-      locations = [];
+      switch-to-application-1 = [ ];
+      switch-to-application-10 = [ ];
+      switch-to-application-2 = [ ];
+      switch-to-application-3 = [ ];
+      switch-to-application-4 = [ ];
+      switch-to-application-5 = [ ];
+      switch-to-application-6 = [ ];
+      switch-to-application-7 = [ ];
+      switch-to-application-8 = [ ];
+      switch-to-application-9 = [ ];
     };
 
   };
