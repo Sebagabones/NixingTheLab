@@ -114,7 +114,7 @@
     overskride
     libinput
     pavucontrol
-    spotify
+    # spotify
     teams-for-linux
     discord
     networkmanagerapplet
