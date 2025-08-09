@@ -11,7 +11,7 @@
       size = 32;
     };
   };
-
+  programs = { dconf.enable = true; };
   services = {
     blueman.enable = true;
     udev.packages = [ pkgs.platformio-core pkgs.openocd ]; # ELEC3020
