@@ -1,5 +1,5 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ lib, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 with lib.hm.gvariant;
 
@@ -41,7 +41,7 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/wm/keybindings" = {
       close = [ "<Super>q" ];
-      maximize = [ "<Super>Up" ];
+      # maximize = [ "<Super>Up" ];
       maximize-horizontally = [ "<Shift><Super>Page_Down" ];
       maximize-vertically = [ "<Shift><Super>Page_Up" ];
       move-to-monitor-left = [ ];
@@ -56,10 +56,10 @@ with lib.hm.gvariant;
       move-to-workspace-7 = [ "<Super><Shift>7" ];
       move-to-workspace-8 = [ "<Super><Shift>8" ];
       move-to-workspace-9 = [ "<Super><Shift>9" ];
-      move-to-workspace-left = [ "<Shift><Super>Left" ];
-      move-to-workspace-right = [ "<Shift><Super>Right" ];
+      # move-to-workspace-left = [ "<Shift><Super>Left" ];
+      # move-to-workspace-right = [ "<Shift><Super>Right" ];
       switch-to-workspace-1 = [ "<Super>1" ];
-      switch-to-workspace-10 = [ "<Super>10" ];
+      switch-to-workspace-10 = [ "<Super>0" ];
       switch-to-workspace-2 = [ "<Super>2" ];
       switch-to-workspace-3 = [ "<Super>3" ];
       switch-to-workspace-4 = [ "<Super>4" ];
@@ -68,10 +68,10 @@ with lib.hm.gvariant;
       switch-to-workspace-7 = [ "<Super>7" ];
       switch-to-workspace-8 = [ "<Super>8" ];
       switch-to-workspace-9 = [ "<Super>9" ];
-      switch-to-workspace-left = [ "<Super>Left" ];
-      switch-to-workspace-right = [ "<Super>Right" ];
+      # switch-to-workspace-left = [ "<Super>Left" ];
+      # switch-to-workspace-right = [ "<Super>Right" ];
       toggle-fullscreen = [ "<Super>f" ];
-      unmaximize = [ "<Super>Down" "<Alt>F5" ];
+      unmaximize = [ "<Shift><Super>minus" ];
     };
 
     "org/gnome/desktop/wm/preferences" = {
@@ -82,9 +82,10 @@ with lib.hm.gvariant;
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1"
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
       ];
+      logout = [ "<Shift><Super>e" ];
       search = [ "<Super>d" ];
       www = [ "<Super>w" ];
     };
@@ -98,7 +99,7 @@ with lib.hm.gvariant;
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" =
       {
-        binding = "<Super>m";
+        binding = "<Super>t";
         command = "spotify";
         name = "Spotify";
       };
@@ -107,7 +108,7 @@ with lib.hm.gvariant;
       {
         binding = "<Super>b";
         command = "discord";
-        name = "discord";
+        name = "Discord";
       };
 
     "org/gnome/settings-daemon/plugins/power" = {
@@ -121,6 +122,7 @@ with lib.hm.gvariant;
         "just-perfection-desktop@just-perfection"
         "blur-my-shell@aunetx"
         "space-bar@luchrioh"
+        "pop-shell@system76.com"
       ];
       last-selected-power-profile = "performance";
       welcome-dialog-last-shown-version = "48.2";
@@ -215,6 +217,22 @@ with lib.hm.gvariant;
       workspace-popup = true;
       workspace-wrap-around = false;
       workspaces-in-app-grid = true;
+    };
+
+    "org/gnome/shell/extensions/pop-shell" = {
+      active-hint = true;
+      hint-color-rgba =
+        "rgba(${config.lib.stylix.colors.base0D-rgb-r}, ${config.lib.stylix.colors.base0D-rgb-g}, ${config.lib.stylix.colors.base0D-rgb-b}, 1)";
+      search = [ "<Meta>minus" ];
+      show-title = false;
+      smart-gaps = true;
+      tile-by-default = true;
+      tile-enter = [ "<Super>equal" ];
+      toggle-floating = [ "<Shift><Super>space" ];
+      focus-right = [ "<Super>Right" ];
+      focus-left = [ "<Super>Left" ];
+      tile-move-right = [ "<Shift><Super>Right" ];
+      tile-move-left = [ "<Shift><Meta>Left" ];
     };
 
     "org/gnome/shell/extensions/space-bar/appearance" = {
