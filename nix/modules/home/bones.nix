@@ -3,8 +3,9 @@ let
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive)
       scheme-basic dvisvgm dvipng # for preview and export as html
-      wrapfig amsmath ulem hyperref capt-of;
-    #(setq org-latex-compiler "lualatex")
+      wrapfig amsmath ulem hyperref capt-of fontspec minted listings xcolor
+      multirow;
+    # (setq org-latex-compiler "lualatex")
     #(setq org-preview-latex-default-process 'dvisvgm)
   });
 in {
@@ -32,6 +33,7 @@ in {
     cmatrix
     clang
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+    imagemagick
     hunspellDicts.en-au
     hunspellDicts.en_GB-large
     gnupg
@@ -48,7 +50,6 @@ in {
     # perSystem.self.delta
     delta
     nix-update
-
     uv
     ruff
     ty
