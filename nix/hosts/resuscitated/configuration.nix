@@ -63,6 +63,21 @@
   # };
   services.libinput.enable = true;
 
+  services.undervolt = {
+    enable = true;
+    useTimer = true;
+    tempBat = 85;
+    temp = 85;
+    coreOffset = -105;
+    p1 = {
+      limit = 42;
+      window = 28;
+    };
+    p2 = {
+      limit = 44;
+      window = 2.0e-3;
+    };
+  };
   # services.tlp = {
   #   enable = true;
   #   settings = {
