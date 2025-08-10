@@ -1,4 +1,5 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
+
 { lib, config, pkgs, inputs, ... }:
 
 with lib.hm.gvariant;
@@ -84,7 +85,9 @@ with lib.hm.gvariant;
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
       ];
+      email = [ "<Shift><Super>space" ];
       logout = [ "<Shift><Super>e" ];
       search = [ "<Super>d" ];
       www = [ "<Super>w" ];
@@ -109,6 +112,13 @@ with lib.hm.gvariant;
         binding = "<Super>b";
         command = "discord";
         name = "Discord";
+      };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" =
+      {
+        binding = "<Super>c";
+        command = "emacs";
+        name = "Emacs";
       };
 
     "org/gnome/settings-daemon/plugins/power" = {
