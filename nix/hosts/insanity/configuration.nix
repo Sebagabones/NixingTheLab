@@ -49,6 +49,7 @@
     desktopManager = { xterm.enable = false; };
   };
   services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.autoSuspend = false;
   services.xserver.desktopManager.gnome.enable = true;
   systemd.targets.sleep.enable = true;
   systemd.targets.suspend.enable = true;
