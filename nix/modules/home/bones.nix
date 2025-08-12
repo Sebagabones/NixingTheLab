@@ -34,6 +34,7 @@ in {
     clang
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     imagemagick
+    ghostscript_headless
     hunspellDicts.en-au
     hunspellDicts.en_GB-large
     gnupg
@@ -48,6 +49,7 @@ in {
     zsh-autosuggestions
     zsh-syntax-highlighting
     # perSystem.self.delta
+    libqalculate
     delta
     nix-update
     uv
@@ -64,14 +66,21 @@ in {
       enable = true;
       settings = {
         update_ms = 100;
-        theme-background = false;
+        theme_background = false;
+        truecolor = true;
       };
     };
+
     fastfetch.enable = true;
+
     lazygit.enable = true;
+
     fd.enable = true;
+
     ripgrep.enable = true;
+
     emacs = { enable = true; };
+
     ssh = {
       enable = true;
       matchBlocks = {
