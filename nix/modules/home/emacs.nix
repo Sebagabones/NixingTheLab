@@ -26,6 +26,7 @@ in {
           org-pdftools
           pdf-tools
           vterm
+          latex-pretty-symbols
         ];
     };
     # Add org-protocol support.
