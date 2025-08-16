@@ -122,6 +122,7 @@
     wl-clipboard
     brightnessctl
     libreoffice-qt6-fresh
+    gnome-screenshot # for emacs
     # For ELEC3020:
     jre8 # For RETRO
     platformio
