@@ -68,13 +68,13 @@
     useTimer = true;
     tempBat = 85;
     temp = 85;
-    coreOffset = -100;
+    coreOffset = -90;
     p1 = {
-      limit = 42;
-      window = 28;
+      limit = 38;
+      window = 27;
     };
     p2 = {
-      limit = 44;
+      limit = 38;
       window = 2.0e-3;
     };
   };
