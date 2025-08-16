@@ -15,11 +15,12 @@ with lib.hm.gvariant;
       color-scheme = "prefer-dark";
       cursor-size = 32;
       cursor-theme = "Banana";
-      document-font-name = "JetBrains Mono NF  11";
+      document-font-name =
+        "${config.stylix.fonts.monospace.name}  11"; # for some reason this needs two spaces??
       enable-animations = true;
-      font-name = "JetBrains Mono NF 12";
+      font-name = "${config.stylix.fonts.monospace.name} 12";
       gtk-theme = "adw-gtk3";
-      monospace-font-name = "JetBrains Mono NF 12";
+      monospace-font-name = "${config.stylix.fonts.monospace.name} 12";
       overlay-scrolling = true;
       show-battery-percentage = true;
     };
