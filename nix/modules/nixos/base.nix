@@ -172,4 +172,15 @@
       remap = { "CapsLock" = "Ctrl"; }; # globally remap CapsLock to Ctrl
     }];
   };
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libz
+      libusb-compat-0_1
+      # Add any missing dynamic libraries for unpackaged programs
+
+      # here, NOT in environment.systemPackages
+
+    ];
+  };
 }
