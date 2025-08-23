@@ -67,6 +67,7 @@ in {
     ruff
     ty
     python312Packages.mypy
+    gh
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
@@ -193,7 +194,7 @@ in {
         };
       };
     };
-
+    gh-dash = { enable = true; };
   };
   services.lorri = {
     enable = true;
