@@ -1,9 +1,10 @@
-{ modulesPath, config, lib, pkgs, inputs, nixpkgs, home-manager, ... }: {
+{ modulesPath, config, lib, pkgs, inputs, nixpkgs, flake, home-manager, ... }: {
 
   imports = [
     inputs.lollypops.nixosModules.default
     inputs.xremap-flake.nixosModules.default
     inputs.catppuccin.nixosModules.catppuccin
+    flake.nixosModules.podman
     ./theming.nix
   ];
 
@@ -74,7 +75,8 @@
       isNormalUser = true;
       home = "/home/bones";
       description = "Seb Gazey";
-      extraGroups = [ "qemu-libvirtd" "libvirtd" "wheel" "networkmanager" ];
+      extraGroups =
+        [ "qemu-libvirtd" "libvirtd" "wheel" "networkmanager" "podman" ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/tDV1v2CN6VqwEgq86fV5M9k7/L5pEFNbe1XYe28P+ bones@revitalised"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN12V+UEifCUlKMCvngUp96LgUrw/aDp0zKLgVnHJ0Op bones@sanity"
