@@ -3,8 +3,16 @@
   imports = [
     inputs.lollypops.nixosModules.default
     inputs.xremap-flake.nixosModules.default
+    inputs.catppuccin.nixosModules.catppuccin
     ./theming.nix
   ];
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "mauve";
+    grub.enable = false;
+  };
 
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
