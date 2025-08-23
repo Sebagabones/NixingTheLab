@@ -1,4 +1,4 @@
-{ inputs, flake, pkgs, perSystem, ... }: {
+{ inputs, lib, flake, pkgs, perSystem, ... }: {
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
     flake.homeModules.gnome
@@ -126,6 +126,7 @@
     # For ELEC3020:
     jre8 # For RETRO
     platformio
+    esptool
     # End ELEC3020
     # kdePackages.dolphin
   ];
