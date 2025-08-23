@@ -35,6 +35,7 @@
     };
     xremap-flake.url = "github:xremap/nix-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
   };
 
   outputs = inputs:

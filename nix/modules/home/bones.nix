@@ -17,9 +17,20 @@ in {
     flake.homeModules.git
     flake.homeModules.theming
     flake.homeModules.emacs
-
+    inputs.catppuccin.homeModules.catppuccin
     # flake.homeModules.gui
   ];
+  catppuccin = {
+    enable = false; # not globally
+    flavor = "mocha";
+    accent = "mauve";
+    bat.enable = false;
+    vscode.profiles.default.enable = false;
+    starship.enable = true;
+    btop.enable = true;
+    gh-dash.enable = true;
+  };
+
   home.packages = with pkgs; [
     ghostty.terminfo
     atool
@@ -73,7 +84,27 @@ in {
 
     fastfetch.enable = true;
 
-    lazygit.enable = true;
+    lazygit = {
+      enable = true;
+      settings = {
+        gui =
+          { # Wanted catppuccin, however nix catppuccin module just made a new config file with other settings missing, so instead:
+            theme = {
+              activeBorderColor = [ "#cba6f7" "bold" ];
+              inactiveBorderColor = [ "#a6adc8" ];
+              optionsTextColor = [ "#89b4fa" ];
+              selectedLineBgColor = [ "#313244" ];
+              cherryPickedCommitBgColor = [ "#45475a" ];
+              cherryPickedCommitFgColor = [ "#cba6f7" ];
+              unstagedChangesColor = [ "#f38ba8" ];
+              defaultFgColor = [ "#cdd6f4" ];
+              searchingActiveBorderColor = [ "#f9e2af" ];
+            };
+            authorColors = { "*" = "#b4befe"; };
+          };
+        git = { paging = { externalDiffCommand = "difft --color=always"; }; };
+      };
+    };
 
     fd.enable = true;
 
