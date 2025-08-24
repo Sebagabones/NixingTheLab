@@ -130,10 +130,11 @@ with lib.hm.gvariant;
       disabled-extensions = [ "tilingshell@ferrarodomenico.com" ];
       enabled-extensions = [
         "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "just-perfection-desktop@just-perfection"
         "blur-my-shell@aunetx"
         "space-bar@luchrioh"
         "pop-shell@system76.com"
+        "spotify-controls@Sonath21"
+        "weatherornot@somepaulo.github.io"
       ];
       last-selected-power-profile = "performance";
       welcome-dialog-last-shown-version = "48.2";
@@ -199,37 +200,6 @@ with lib.hm.gvariant;
       sigma = 30;
     };
 
-    "org/gnome/shell/extensions/just-perfection" = {
-      accent-color-icon = false;
-      accessibility-menu = true;
-      background-menu = true;
-      controls-manager-spacing-size = 0;
-      dash = true;
-      dash-icon-size = 0;
-      double-super-to-appgrid = true;
-      max-displayed-search-results = 0;
-      osd = true;
-      overlay-key = true;
-      panel = true;
-      panel-in-overview = true;
-      ripple-box = true;
-      search = true;
-      show-apps-button = true;
-      startup-status = 1;
-      support-notifier-showed-version = 34;
-      support-notifier-type = 0;
-      theme = true;
-      window-demands-attention-focus = false;
-      window-picker-icon = true;
-      window-preview-caption = true;
-      window-preview-close-button = true;
-      workspace = true;
-      workspace-background-corner-size = 0;
-      workspace-popup = true;
-      workspace-wrap-around = false;
-      workspaces-in-app-grid = true;
-    };
-
     "org/gnome/shell/extensions/pop-shell" = {
       active-hint = true;
       hint-color-rgba =
@@ -245,6 +215,13 @@ with lib.hm.gvariant;
       tile-move-right = [ "<Shift><Super>Right" ];
       tile-move-left = [ "<Shift><Meta>Left" ];
     };
+
+    "org/gnome/shell/extensions/spotify-controls" = {
+      controls-position = "right";
+      position = "leftmost-right";
+    };
+
+    "org/gnome/shell/extensions/weatherornot" = { position = "clock-right"; };
 
     "org/gnome/shell/extensions/space-bar/appearance" = {
       application-styles =
