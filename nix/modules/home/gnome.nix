@@ -4,8 +4,8 @@
     gnomeExtensions.blur-my-shell
     gnomeExtensions.space-bar
     gnomeExtensions.pop-shell
-    # gnomeExtensions.just-perfection
-    # gnomeExtensions.arc-menu
+    gnomeExtensions.spotify-controls
+    gnomeExtensions.weather-or-not
   ];
 
 }
