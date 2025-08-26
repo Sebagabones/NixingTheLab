@@ -15,5 +15,18 @@
   services = {
     blueman.enable = true;
     udev.packages = [ pkgs.platformio-core.udev pkgs.openocd ]; # ELEC3020
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
+    };
   };
 }
