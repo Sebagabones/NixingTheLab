@@ -127,7 +127,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/shell" = {
-      disabled-extensions = [ "tilingshell@ferrarodomenico.com" ];
+      disabled-extensions = [ ];
       enabled-extensions = [
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "blur-my-shell@aunetx"
@@ -135,6 +135,7 @@ with lib.hm.gvariant;
         "pop-shell@system76.com"
         "spotify-controls@Sonath21"
         "weatherornot@somepaulo.github.io"
+        # "notification-configurator@exposedcat" bring back when its added
       ];
       last-selected-power-profile = "performance";
       welcome-dialog-last-shown-version = "48.2";

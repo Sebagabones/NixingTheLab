@@ -6,6 +6,7 @@
     gnomeExtensions.pop-shell
     gnomeExtensions.spotify-controls
     gnomeExtensions.weather-or-not
+    # gnomeExtensions.notification-configurator ADD AFTER TEST OR LAUREN WILL MURDER YOU
   ];
 
 }
