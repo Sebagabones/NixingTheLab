@@ -6,9 +6,10 @@
     ./theming.nix
     flake.homeModules.spotify
   ];
-
+  qt.platformTheme.name = lib.mkForce "adwaita";
   stylix = {
     targets = {
+      qt.platform = "qtct";
       vscode = { enable = false; };
       firefox = {
         profileNames = [ "default" ];
