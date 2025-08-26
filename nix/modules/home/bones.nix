@@ -36,6 +36,7 @@ in {
     atool
     httpie
     nixd
+    lsd
     ccls
     clang-tools
     # difftastic
