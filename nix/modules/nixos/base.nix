@@ -104,20 +104,15 @@
     lm_sensors
     gcc
     grc
+    clang
     wget
     screen
-    uutils-coreutils
-    # fishPlugins.done
-    # fishPlugins.grc
-    # fishPlugins.fzf-fish
-    # fishPlugins.forgit
-    # fishPlugins.hydro
+    uutils-coreutils-noprefix
     ripgrep
     bat
     git
     fd
     btop
-    nixfmt-classic # move this to emacs when you have set it up
     sqlite
   ];
   programs.zsh.enable = true;

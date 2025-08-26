@@ -52,7 +52,6 @@ in {
     unzip
     zip
     tex
-    multimarkdown # used for emacs export markdown
     python311Packages.weasyprint
     pandoc
     direnv
@@ -61,11 +60,10 @@ in {
     zsh-syntax-highlighting
     # perSystem.self.delta
     libqalculate
-    delta
     nix-update
     uv
     ruff
-    ty
+    delta
     python312Packages.mypy
     gh
   ];
