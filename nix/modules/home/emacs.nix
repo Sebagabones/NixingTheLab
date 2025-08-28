@@ -27,8 +27,6 @@ in {
         epkgs.latex-pretty-symbols
         pkgs.basedpyright
         pkgs.multimarkdown
-        pkgs.nixfmt-classic
-        pkgs.ruff
       ];
     };
     # Add org-protocol support.

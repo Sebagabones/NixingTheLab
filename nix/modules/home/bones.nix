@@ -59,7 +59,9 @@ in {
     starship
     zsh-autosuggestions
     zsh-syntax-highlighting
-    # perSystem.self.delta
+    basedpyright
+    multimarkdown
+    nixfmt-classic
     libqalculate
     nix-update
     uv
