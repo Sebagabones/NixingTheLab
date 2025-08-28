@@ -26,7 +26,7 @@ in {
     accent = "mauve";
     bat.enable = false;
     vscode.profiles.default.enable = false;
-    starship.enable = true;
+    starship.enable = false;
     btop.enable = true;
     gh-dash.enable = true;
   };
@@ -182,16 +182,149 @@ in {
     starship = {
       enable = true;
       settings = {
+        palette = "catppuccin_mocha";
+        format = ''
+          [╭─ $shell$character $memory_usage ──╌╌ $python$nim$cpp $fill  ╌╌─╮](overlay0)
+          [│ ](overlay0)$sudo$username$hostname$localip$directory$read_only$git_state$git_branch$git_metrics [$fill$cmd_duration ╯ ](overlay0)
+          [╰─ ](overlay0)'';
+        scan_timeout = 10;
+        command_timeout = 500;
         add_newline = true;
-        command_timeout = 1300;
-        scan_timeout = 50;
-        # format = ''
-        #   $all$nix_shell$c$golang$rust$python$nim$git_branch$git_commit$git_state$git_status
-        #   $username$hostname$directory
-        # '';
+        palettes = {
+          catppuccin_mocha = {
+            rosewater = "#f5e0dc";
+            flamingo = "#f2cdcd";
+            pink = "#f5c2e7";
+            mauve = "#cba6f7";
+            red = "#f38ba8";
+            maroon = "#eba0ac";
+            peach = "#fab387";
+            yellow = "#f9e2af";
+            green = "#a6e3a1";
+            teal = "#94e2d5";
+            sky = "#89dceb";
+            sapphire = "#74c7ec";
+            blue = "#89b4fa";
+            lavender = "#b4befe";
+            text = "#cdd6f4";
+            subtext1 = "#bac2de";
+            subtext0 = "#a6adc8";
+            overlay2 = "#9399b2";
+            overlay1 = "#7f849c";
+            overlay0 = "#6c7086";
+            surface2 = "#585b70";
+            surface1 = "#45475a";
+            surface0 = "#313244";
+            base = "#1e1e2e";
+            mantle = "#181825";
+            crust = "#11111b";
+          };
+        };
+        shell = {
+          fish_indicator = "fish";
+          bash_indicator = "bash";
+          zsh_indicator = "zsh";
+          unknown_indicator = "unknwn";
+          style = "teal";
+          disabled = false;
+        };
+        username = {
+          style_user = "teal bold";
+          format = " [$user@]($style)";
+          disabled = false;
+          show_always = true;
+        };
+        sudo = {
+          format = " [sudo](bold red)";
+          disabled = false;
+        };
+        python = {
+          symbol = "";
+          format =
+            "[Python](bold mauve) [$version [($virtualenv)](dimmed mauve)](dimmed mauve)";
+          pyenv_version_name = true;
+          detect_extensions = [ "py" ];
+          detect_folders = [ ];
+        };
+        nix_shell = {
+          disabled = true;
+          heuristic = true;
+          format = "[Nix Shell](bold lavender) [$state](bold dimmed lavender) ";
+        };
+        nim = {
+          format = "[Nim](bold lavender) [$version](bold dimmed lavender) ";
+        };
+        cpp = {
+          format = "[C++ ($name)](bold pink) [$version](bold dimmed pink) ";
+        };
+        memory_usage = {
+          disabled = false;
+          threshold = -1;
+          format = "[$ram_pct]($style)";
+          symbol = "";
+          style = "dimmed blue";
+        };
+        localip = {
+          ssh_only = false;
+          format = "[@$localipv4](bold dimmed blue) ";
+          disabled = false;
+        };
+        hostname = {
+          ssh_only = false;
+          ssh_symbol = "ssh:";
+          format =
+            "[$ssh_symbol](bold dimmed maroon)[$hostname](bold dimmed sapphire)";
+          trim_at = "";
+          disabled = false;
+        };
+        git_state = {
+          format = "[($state( $progress_current of $progress_total))]($style) ";
+          style = "bold red";
+        };
+        git_metrics = {
+          disabled = false;
+          format = " [+$added](bold teal)[-$deleted](bold pink)";
+        };
+        git_branch = {
+          format = "[$branch(:$remote_branch)]($style)";
+          style = "bold pink";
+        };
+        fill = {
+          symbol = " ";
+          style = "bold base";
+        };
+        cmd_duration = {
+          min_time = 500;
+          format = " [$duration](bold dimmed flamingo)";
+        };
+        directory = {
+          fish_style_pwd_dir_length = 9;
+          disabled = false;
+          truncation_length = 5;
+          truncation_symbol = "…/";
+          read_only = " read-only";
+          read_only_style = "bold dimmed mauve";
+          style = "bold mauve";
+        };
         character = {
-          success_symbol = "[](bold green) ";
-          error_symbol = "[✗](bold red) ";
+          success_symbol = "[───────────────](overlay0)";
+          error_symbol = "[───────────────](red)";
+        };
+        package = { disabled = true; };
+        battery = {
+          full_symbol = "● ";
+          charging_symbol = "◉ ";
+          discharging_symbol = "◯ ";
+          display = [
+            {
+              threshold = 20;
+              style = "red";
+            }
+            {
+              threshold = 100;
+              style = "teal";
+            }
+          ];
         };
       };
     };
