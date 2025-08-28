@@ -4,7 +4,7 @@ let
     inherit (pkgs.texlive)
       scheme-basic dvisvgm dvipng # for preview and export as html
       wrapfig amsmath ulem hyperref capt-of fontspec minted listings xcolor
-      multirow;
+      multirow lstfiracode;
     # (setq org-latex-compiler "lualatex")
     #(setq org-preview-latex-default-process 'dvisvgm)
   });

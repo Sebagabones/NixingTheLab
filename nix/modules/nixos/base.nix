@@ -151,6 +151,8 @@
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono
+    fira-code-symbols
+    fira-code
   ];
 
   stylix.enable = true;
