@@ -12,9 +12,8 @@
     # "${inputs.nixos-hardware}/common/pc"
   ];
 
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = { efiSupport = true; };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
   systemd.network = { enable = true; };
