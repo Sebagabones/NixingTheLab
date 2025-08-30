@@ -4,7 +4,7 @@ let
     inherit (pkgs.texlive)
       scheme-basic dvisvgm dvipng # for preview and export as html
       wrapfig amsmath ulem hyperref capt-of fontspec minted listings xcolor
-      multirow lstfiracode;
+      koma-script multirow lstfiracode fvextra upquote lineno tcolorbox;
     # (setq org-latex-compiler "lualatex")
     #(setq org-preview-latex-default-process 'dvisvgm)
   });
@@ -69,6 +69,8 @@ in {
     delta
     python312Packages.mypy
     gh
+    python312Packages.pygments
+    python312Packages.catppuccin
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
