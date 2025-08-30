@@ -186,7 +186,7 @@ in {
       settings = {
         palette = "catppuccin_mocha";
         format = ''
-          [╭─ $shell$character $memory_usage ──╌╌ $python$nim$cpp $fill  ╌╌─╮](overlay0)
+          [╭─ $shell$character$memory_usage ──╌╌ $python$nim$cpp $fill  ╌╌─╮](overlay0)
           [│ ](overlay0)$sudo$username$hostname$localip$directory$read_only$git_state$git_branch$git_metrics [$fill$cmd_duration ╯ ](overlay0)
           [╰─ ](overlay0)'';
         scan_timeout = 10;
@@ -274,8 +274,7 @@ in {
         hostname = {
           ssh_only = false;
           ssh_symbol = "ssh:";
-          format =
-            "[$ssh_symbol](bold dimmed maroon)[$hostname](bold dimmed sapphire)";
+          format = "[$ssh_symbol](bold red )[$hostname](bold dimmed sapphire)";
           trim_at = "";
           disabled = false;
         };
