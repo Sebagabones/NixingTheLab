@@ -68,6 +68,8 @@ in {
     delta
     python312Packages.mypy
     gh
+    cmake
+    fastmod
     python312Packages.pygments
     python312Packages.catppuccin
   ];
