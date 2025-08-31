@@ -114,6 +114,7 @@
     fd
     btop
     sqlite
+    pkg-config
   ];
   programs.zsh.enable = true;
   # programs.fish.useBabelfish = true;
@@ -180,4 +181,6 @@
 
     ];
   };
+  programs.direnv = { enable = true; };
+
 }

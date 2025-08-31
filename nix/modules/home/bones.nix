@@ -55,7 +55,6 @@ in {
     tex
     python311Packages.weasyprint
     pandoc
-    direnv
     starship
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -111,7 +110,11 @@ in {
     };
 
     fd.enable = true;
-
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
     ripgrep.enable = true;
 
     emacs = { enable = true; };
@@ -330,9 +333,5 @@ in {
       };
     };
     gh-dash = { enable = true; };
-  };
-  services.lorri = {
-    enable = true;
-    enableNotifications = true;
   };
 }
