@@ -1,9 +1,7 @@
 { config, lib, pkgs, inputs, ... }: {
   imports = [ ./theming.nix ];
-  environment.systemPackages = with pkgs; [ lightdm ];
-  # programs.niri = {
-  #   enable = true;
-  # };
+  environment.systemPackages = with pkgs; [ ];
+
   stylix = {
     cursor = {
       package = pkgs.banana-cursor;
@@ -23,10 +21,7 @@
 
     printing = {
       enable = true;
-      drivers = with pkgs; [
-        cups-filters
-        cups-browsed
-      ];
+      drivers = with pkgs; [ cups-filters cups-browsed ];
     };
   };
 }
