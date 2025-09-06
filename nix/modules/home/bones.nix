@@ -4,7 +4,8 @@ let
     inherit (pkgs.texlive)
       scheme-basic dvisvgm dvipng # for preview and export as html
       wrapfig amsmath ulem hyperref capt-of fontspec minted listings xcolor
-      koma-script multirow lstfiracode fvextra upquote lineno tcolorbox;
+      koma-script multirow lstfiracode fvextra upquote lineno tcolorbox latexmk
+      catppuccinpalette;
     # (setq org-latex-compiler "lualatex")
     #(setq org-preview-latex-default-process 'dvisvgm)
   });
@@ -39,9 +40,9 @@ in {
     lsd
     ccls
     clang-tools
-    # difftastic
     procs
-    python3
+    (python3.withPackages
+      (python-pkgs: with python-pkgs; [ pygments catppuccin mypy weasyprint ]))
     cmatrix
     clang
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
@@ -53,7 +54,6 @@ in {
     unzip
     zip
     tex
-    python311Packages.weasyprint
     pandoc
     starship
     zsh-autosuggestions
@@ -66,12 +66,10 @@ in {
     uv
     ruff
     delta
-    python312Packages.mypy
     gh
     cmake
     fastmod
-    python312Packages.pygments
-    python312Packages.catppuccin
+    openscad-lsp
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
