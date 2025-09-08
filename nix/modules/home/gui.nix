@@ -130,6 +130,7 @@
     esptool
     # End ELEC3020
     # kdePackages.dolphin
+    openscad-unstable
   ];
 
   # pointerCursor = {

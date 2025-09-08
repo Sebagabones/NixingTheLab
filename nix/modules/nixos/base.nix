@@ -114,6 +114,7 @@
     fd
     btop
     sqlite
+    pkg-config
   ];
   programs.zsh.enable = true;
   # programs.fish.useBabelfish = true;
@@ -151,6 +152,8 @@
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono
+    fira-code-symbols
+    fira-code
   ];
 
   stylix.enable = true;
@@ -178,4 +181,6 @@
 
     ];
   };
+  programs.direnv = { enable = true; };
+
 }
