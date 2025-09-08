@@ -34,7 +34,7 @@
   };
 
   networking.useDHCP = false;
-  networking.nameservers = [ "192.168.1.1" ] 
+  networking.nameservers = [ "192.168.1.1" ];
   networking.interfaces.eno2.useDHCP = true;
   networking.interfaces.eno3.useDHCP = true;
   networking.interfaces.eno5.useDHCP = true;

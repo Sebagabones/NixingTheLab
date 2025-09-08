@@ -18,7 +18,7 @@
 bool verbose = false;
 bool dryRun = false;
 bool fanTest = false;
-int seconds = 3;
+int seconds = 1;
 int temps(int numCores) {
   FILE *fp;
   char path[1035];

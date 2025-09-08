@@ -13,8 +13,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware = { url = "github:nixos/nixos-hardware/master"; };
-    lollypops.url =
-      "github:pinpox/lollypops//098b95c871a8fb6f246ead8d7072ec2201d7692b";
+    # lollypops.url =
+    #   "github:pinpox/lollypops//098b95c871a8fb6f246ead8d7072ec2201d7692b";
+    lollypops.url = "github:pinpox/lollypops";
     lollypops.inputs.nixpkgs.follows = "nixpkgs";
     microvm.url = "github:astro/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +34,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xremap-flake.url = "github:xremap/nix-flake";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
   };
 
   outputs = inputs:
@@ -46,8 +49,8 @@
     } // {
 
       # Lollypops
-      apps."x86_64-linux".default =
-        inputs.lollypops.apps."x86_64-linux".default {
+      packages."x86_64-linux".lollypops =
+        inputs.lollypops.packages."x86_64-linux".default.override {
           configFlake = inputs.self;
         };
 

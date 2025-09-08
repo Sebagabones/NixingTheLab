@@ -1,14 +1,16 @@
-{ flake, pkgs, perSystem, ... }:
-
-{
-  imports = [ flake.homeModules.miracle-wm ./theming.nix ];
-
+{ inputs, lib, flake, pkgs, perSystem, ... }: {
+  imports = [
+    # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
+    flake.homeModules.gnome
+    flake.homeModules.miracle-wm
+    ./theming.nix
+    flake.homeModules.spotify
+  ];
+  qt.platformTheme.name = lib.mkForce "adwaita";
   stylix = {
     targets = {
-      bemenu = {
-        enable = true;
-        alternate = true;
-      };
+      qt.platform = "qtct";
+      vscode = { enable = false; };
       firefox = {
         profileNames = [ "default" ];
         firefoxGnomeTheme.enable = true;
@@ -17,20 +19,8 @@
 
   };
 
-  # programs.niri = {
-  #   enable = true;
-  # };
-
   programs.fuzzel = { enable = true; };
-  # programs.bemenu = {
-  #   enable = true;
-  #   settings = {
-  #     line-height = 28;
-  #     prompt = "open";
-  #     ignorecase = true;
-  #     list = 5;
-  #   };
-  # };
+
   programs.ghostty = {
     enable = true;
     installBatSyntax = true;
@@ -106,114 +96,26 @@
 
   programs.spotify-player = { enable = true; };
   programs.autorandr = { enable = true; };
-
-  programs.waybar = {
+  programs.vscode = {
     enable = true;
-    settings = {
-      mainBar = {
-        layer = "top";
-        # position = "left";
-        modules-left = [ "sway/workspaces" "sway/mode" ];
-        modules-center = [ ];
-        modules-right = [
-          # "mpd"
-          # "idle_inhibitor"
-          "pulseaudio"
-          "network"
-          "cpu"
-          "memory"
-          "temperature"
-          "backlight"
-          "battery"
-          "battery#bat2"
-          "clock"
-        ];
-
-        "sway/mode" = { format = ''<span style="italic">{}</span>''; };
-
-        pulseaudio = {
-          format = "{volume}% {icon} {format_source}";
-          format-bluetooth = "{volume}% {icon} {format_source}";
-          format-bluetooth-muted = " {icon} {format_source}";
-          format-muted = " {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = "";
-          format-icons = {
-            headphone = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [ "" "" "" ];
-          };
-          on-click = "pavucontrol";
-          # scroll-step = 1;
-        };
-        network = {
-          format-wifi = "{essid} ({signalStrength}%) ";
-          format-disconnected = "󰖪";
-          format-ethernet = "󰈀";
-          tooltip = true;
-          tooltip-format = "{signalStrength}%";
-        };
-
-        cpu = {
-          format = "{usage}% ";
-          tooltip = false;
-        };
-
-        memory = { format = "{}% "; };
-
-        temperature = {
-          critical-threshold = 80;
-          format = "{temperatureC}°C {icon}";
-          format-icons = [ "" "" "" ];
-          # thermal-zone = 2;
-          # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-        };
-
-        backlight = {
-          format = "{percent}% {icon}";
-          format-icons = [ "" "" "" "" "" "" "" "" "" ];
-          # device = "acpi_video1";
-        };
-
-        battery = {
-          states = {
-            warning = 45;
-            critical = 20;
-            # good = 95;
-          };
-          format = "{capacity}% {icon}";
-          format-full = "{capacity}% {icon}";
-          format-charging = "{capacity}% 󱊦";
-          format-plugged = "{capacity}% ";
-          format-alt = "{time} {icon}";
-          format-icons = [ "" "" "" "" "" ];
-          # format-good = "";
-          # format-full = "";
-        };
-
-        "battery#bat2" = { bat = "BAT2"; };
-
-        clock = {
-          tooltip-format = ''
-            <big>{:%Y %B}</big>
-            <tt><small>{calendar}</small></tt>'';
-          format-alt = "{:%Y-%m-%d}";
-          # timezone = "America/New_York";
-        };
-
-      };
-    };
-
+    profiles.default.extensions = with pkgs.vscode-extensions; [
+      enkia.tokyo-night
+      ms-python.python
+      charliermarsh.ruff
+      mkhl.direnv
+      ms-azuretools.vscode-docker
+      ms-vscode-remote.remote-ssh
+    ];
   };
-  programs.wofi = { enable = true; };
+  home.sessionVariables = { NIXOS_OZONE_WL = "1"; }; # for VS-Code
+
   home.packages = with pkgs; [
     # brightnessctl
     swaybg
+    overskride
     libinput
     pavucontrol
-    spotify
+    # spotify
     teams-for-linux
     discord
     networkmanagerapplet
@@ -221,6 +123,12 @@
     wl-clipboard
     brightnessctl
     libreoffice-qt6-fresh
+    gnome-screenshot # for emacs
+    # For ELEC3020:
+    jre8 # For RETRO
+    platformio
+    esptool
+    # End ELEC3020
     # kdePackages.dolphin
   ];
 

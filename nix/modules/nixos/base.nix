@@ -1,17 +1,29 @@
-{ modulesPath, config, lib, pkgs, inputs, nixpkgs, home-manager, ... }: {
+{ modulesPath, config, lib, pkgs, inputs, nixpkgs, flake, home-manager, ... }: {
 
   imports = [
-    inputs.lollypops.nixosModules.lollypops
+    inputs.lollypops.nixosModules.default
     inputs.xremap-flake.nixosModules.default
+    inputs.catppuccin.nixosModules.catppuccin
+    flake.nixosModules.podman
     ./theming.nix
   ];
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "mauve";
+    grub.enable = false;
+  };
 
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
   lollypops.deployment = {
     config-dir = "/var/src/lollypops";
     deploy-method = "copy";
-    ssh.host = "${config.networking.hostName}";
+    ssh = {
+      host = "${config.networking.hostName}";
+      user = lib.mkDefault "root";
+    };
     sudo.enable = false;
   };
   # Hostname
@@ -21,6 +33,13 @@
   boot.tmp.tmpfsSize = "50%";
 
   nix = {
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+
+    # This will additionally add your inputs to the system's legacy channels
+    # Making legacy nix commands consistent as well, awesome!
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
+      config.nix.registry;
+
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "@wheel" ];
@@ -48,6 +67,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN12V+UEifCUlKMCvngUp96LgUrw/aDp0zKLgVnHJ0Op bones@sanity"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMojSoe7FKyrInx8Wqiu3C6vVKJwraI8znT1c+2pm9a+ bones@bonesboundhome"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbb35UUZb29bK6mv+LnHyfnhUtX9n7952K8RCpWxq1Q bones@resuscitated"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt1AaEyY9HIs6qhdW7IrlpWiCTWdm8gqblW6Hvu1naU bones@insanity"
       ];
     };
 
@@ -55,10 +75,12 @@
       isNormalUser = true;
       home = "/home/bones";
       description = "Seb Gazey";
-      extraGroups = [ "qemu-libvirtd" "libvirtd" "wheel" "networkmanager" ];
+      extraGroups =
+        [ "qemu-libvirtd" "libvirtd" "wheel" "networkmanager" "podman" ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/tDV1v2CN6VqwEgq86fV5M9k7/L5pEFNbe1XYe28P+ bones@revitalised"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN12V+UEifCUlKMCvngUp96LgUrw/aDp0zKLgVnHJ0Op bones@sanity"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt1AaEyY9HIs6qhdW7IrlpWiCTWdm8gqblW6Hvu1naU bones@insanity"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFoMUhlkQdS+hGjOJhqa9jUE9x2E4i00+aWtQd0sk3F+ bones@bonesrunhome.lab.mahoosively.gay"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMojSoe7FKyrInx8Wqiu3C6vVKJwraI8znT1c+2pm9a+ bones@bonesboundhome"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbb35UUZb29bK6mv+LnHyfnhUtX9n7952K8RCpWxq1Q bones@resuscitated"
@@ -82,20 +104,15 @@
     lm_sensors
     gcc
     grc
+    clang
     wget
     screen
-    uutils-coreutils
-    # fishPlugins.done
-    # fishPlugins.grc
-    # fishPlugins.fzf-fish
-    # fishPlugins.forgit
-    # fishPlugins.hydro
+    uutils-coreutils-noprefix
     ripgrep
     bat
     git
     fd
     btop
-    nixfmt-classic # move this to emacs when you have set it up
     sqlite
   ];
   programs.zsh.enable = true;
@@ -149,5 +166,16 @@
       name = "Global";
       remap = { "CapsLock" = "Ctrl"; }; # globally remap CapsLock to Ctrl
     }];
+  };
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libz
+      libusb-compat-0_1
+      # Add any missing dynamic libraries for unpackaged programs
+
+      # here, NOT in environment.systemPackages
+
+    ];
   };
 }
