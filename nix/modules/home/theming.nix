@@ -18,14 +18,5 @@
       lazygit.enable = false;
       btop.enable = false;
     };
-    # fonts = {
-    #
-    #   monospace = {
-    #     # package = pkgs.commit-mono;
-    #     # name = "Commit Mono";
-    #     package = pkgs.nerd-fonts.jetbrains-mono;
-    #     name = "JetBrains Mono NF";
-    #   };
-    # };
   };
 }

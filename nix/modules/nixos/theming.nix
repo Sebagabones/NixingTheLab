@@ -30,18 +30,20 @@
     # };
     fonts = {
       serif = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrains Mono NF";
+        package = pkgs.fira-code;
+        name = "FiraCode";
       };
       sansSerif = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrains Mono NF";
+        package = pkgs.fira-code;
+        name = "FiraCode";
       };
       monospace = {
-        # package = pkgs.commit-mono;
-        # name = "Commit Mono";
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrains Mono NF";
+        package = pkgs.fira-code;
+        name = "FiraCode";
+      };
+      emoji = {
+        package = pkgs.fira-code-symbols;
+        name = "FiraCode Symbols";
       };
     };
   };
