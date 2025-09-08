@@ -3,8 +3,8 @@ let
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive)
       scheme-basic dvisvgm dvipng # for preview and export as html
-      wrapfig amsmath ulem hyperref capt-of fontspec minted listings xcolor
-      koma-script multirow lstfiracode fvextra upquote lineno tcolorbox latexmk
+      wrapfig amsmath ulem hyperref capt-of fontspec listings xcolor koma-script
+      multirow lstfiracode fvextra upquote lineno tcolorbox latexmk minted
       catppuccinpalette;
     # (setq org-latex-compiler "lualatex")
     #(setq org-preview-latex-default-process 'dvisvgm)
@@ -41,8 +41,14 @@ in {
     ccls
     clang-tools
     procs
-    (python3.withPackages
-      (python-pkgs: with python-pkgs; [ pygments catppuccin mypy weasyprint ]))
+    (python3.withPackages (python-pkgs:
+      with python-pkgs; [
+        pygments
+        catppuccin
+        mypy
+        weasyprint
+        rich
+      ]))
     cmatrix
     clang
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
