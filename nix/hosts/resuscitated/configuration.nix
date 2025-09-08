@@ -15,15 +15,14 @@
   boot.kernelModules = [ "kvm_intel" ];
   # boot.initrd.kernelModules = [ "amdgpu" ];
   programs.xwayland.enable = true;
-  programs.wayland.miracle-wm.enable = true;
+  # programs.wayland.miracle-wm.enable = true;
   # Packages
-  # environment.systemPackages = with pkgs; [
-  # ];
-  environment.systemPackages = with pkgs; [ miracle-wm ];
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
+  hardware.bluetooth.enable = true;
   # hardware.graphics.extraPackages = with pkgs; [
   #   vaapiIntel
   #   intel-media-driver
@@ -48,18 +47,37 @@
     # videoDrivers = [ "intel" ];
     desktopManager = { xterm.enable = false; };
   };
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command =
-          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
-        user = "greeter";
-      };
-    };
-  };
+
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command =
+  #         "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
+  #       user = "greeter";
+  #     };
+  #   };
+  # };
   services.libinput.enable = true;
 
+  services.undervolt = {
+    enable = true;
+    useTimer = true;
+    tempBat = 85;
+    temp = 85;
+    coreOffset = -90;
+    p1 = {
+      limit = 38;
+      window = 27;
+    };
+    p2 = {
+      limit = 38;
+      window = 2.0e-3;
+    };
+  };
   # services.tlp = {
   #   enable = true;
   #   settings = {

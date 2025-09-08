@@ -3,7 +3,6 @@ let
   userCfg = config.users.bones;
   cfg = userCfg.programs.emacs;
   emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
-
 in {
   config = {
     # Automatically install Emacs config from here.
@@ -19,14 +18,18 @@ in {
 
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs;
-      extraPackages = epkgs:
-        with epkgs; [
-          org-noter-pdftools
-          org-pdftools
-          pdf-tools
-          vterm
-        ];
+      package = pkgs.emacs-gtk;
+      extraPackages = epkgs: [
+        epkgs.org-noter-pdftools
+        epkgs.org-pdftools
+        epkgs.pdf-tools
+        epkgs.vterm
+        epkgs.latex-pretty-symbols
+        pkgs.basedpyright
+        pkgs.multimarkdown
+        pkgs.nixfmt-classic
+        pkgs.ruff
+      ];
     };
     # Add org-protocol support.
     xdg.desktopEntries.org-protocol = {
