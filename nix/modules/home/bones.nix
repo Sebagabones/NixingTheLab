@@ -5,9 +5,8 @@ let
       scheme-basic dvisvgm dvipng # for preview and export as html
       wrapfig amsmath ulem hyperref capt-of fontspec listings xcolor koma-script
       multirow lstfiracode fvextra upquote lineno tcolorbox latexmk minted
-      catppuccinpalette;
-    # (setq org-latex-compiler "lualatex")
-    #(setq org-preview-latex-default-process 'dvisvgm)
+      enumitem catppuccinpalette pdfcol caption xifthen tablefootnote
+      latex-graphics-dev booktabs;
   });
 in {
   home.stateVersion = "24.11";
