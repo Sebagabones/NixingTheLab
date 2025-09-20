@@ -81,6 +81,10 @@ with lib.hm.gvariant;
       workspace-names = [ ];
     };
 
+    "org/gnome/mutter" = { dynamic-workspaces = false; };
+    "org/gnome/mutter/keybindings" = { toggle-tiled-left = "@as []"; };
+
+
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
