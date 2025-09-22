@@ -131,6 +131,7 @@
     # End ELEC3020
     # kdePackages.dolphin
     openscad-unstable
+    prusa-slicer
   ];
 
   # pointerCursor = {
