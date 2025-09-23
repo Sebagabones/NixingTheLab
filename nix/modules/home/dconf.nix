@@ -82,8 +82,10 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/mutter" = { dynamic-workspaces = false; };
-    "org/gnome/mutter/keybindings" = { toggle-tiled-left = "@as []"; };
-
+    "org/gnome/mutter/keybindings" = {
+      toggle-tiled-left = [ ];
+      toggle-tiled-right = [ ];
+    };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
@@ -139,7 +141,7 @@ with lib.hm.gvariant;
         "pop-shell@system76.com"
         "spotify-controls@Sonath21"
         "weatherornot@somepaulo.github.io"
-        # "notification-configurator@exposedcat" bring back when its added
+        "notification-configurator@exposedcat"
       ];
       last-selected-power-profile = "performance";
       welcome-dialog-last-shown-version = "48.2";
@@ -218,7 +220,7 @@ with lib.hm.gvariant;
       focus-right = [ "<Super>Right" ];
       focus-left = [ "<Super>Left" ];
       tile-move-right = [ "<Shift><Super>Right" ];
-      tile-move-left = [ "<Shift><Meta>Left" ];
+      tile-move-left = [ "<Shift><Super>Left" ];
     };
 
     "org/gnome/shell/extensions/spotify-controls" = {
@@ -245,6 +247,9 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/shell/extensions/space-bar/state" = { version = 33; };
+    "org/gnome/shell/extensions/notification-configurator" = {
+      notification-timeout = 3000;
+    };
 
     "org/gnome/shell/extensions/user-theme" = { name = "Stylix"; };
 
