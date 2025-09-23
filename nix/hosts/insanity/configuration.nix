@@ -17,40 +17,40 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.kernelModules = [ "kvm_intel" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
-  programs.xwayland.enable = true;
+  # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages
 
   # environment.systemPackages = with pkgs; [ miracle-wm ];
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  # hardware.graphics = {
+  #   enable = true;
+  #   enable32Bit = true;
+  # };
   hardware.graphics.extraPackages = with pkgs; [ amdvlk ];
-  hardware.bluetooth.enable = true;
+  # hardware.bluetooth.enable = true;
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
-  security.rtkit.enable = true;
-  security.polkit.enable = true;
-  services.dbus.enable = true;
+  # environment.pathsToLink =
+  #   [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  # security.rtkit.enable = true;
+  # security.polkit.enable = true;
+  # services.dbus.enable = true;
 
-  services.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    audio.enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-  };
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "amd" ];
-    desktopManager = { xterm.enable = false; };
-  };
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.autoSuspend = false;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.pulseaudio.enable = false;
+  # services.pipewire = {
+  #   enable = true;
+  #   audio.enable = true;
+  #   alsa.enable = true;
+  #   pulse.enable = true;
+  # };
+  # services.xserver = {
+  #   enable = true;
+  #   videoDrivers = [ "amd" ];
+  #   desktopManager = { xterm.enable = false; };
+  # };
+  # services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.gdm.autoSuspend = false;
+  # services.xserver.desktopManager.gnome.enable = true;
   systemd.targets.sleep.enable = true;
   systemd.targets.suspend.enable = true;
   systemd.targets.hibernate.enable = true;
@@ -66,11 +66,7 @@
   #     };
   #   };
   # };
-  services.libinput.enable = true;
-
-  # Networking
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.powersave = true;
+  # services.libinput.enable = true;
 
   lollypops.deployment.group = "Personal";
   home-manager.backupFileExtension = "backup";

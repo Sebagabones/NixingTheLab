@@ -20,24 +20,30 @@
   systemd.network = {
     enable = true;
 
-    networks."10-lan" = {
-      matchConfig.Name = [ "eno5" "vm-*" ];
-      networkConfig.Bridge = "br0";
-    };
+    networks = {
+      "10-lan" = {
+        matchConfig.Name = [ "eno5" "vm-*" ];
+        networkConfig.Bridge = "br0";
+      };
 
-    netdevs."br0" = {
-      netdevConfig = {
-        Name = "br0";
-        Kind = "bridge";
+      "br0" = {
+        netdevConfig = {
+          Name = "br0";
+          Kind = "bridge";
+        };
       };
     };
   };
 
-  networking.useDHCP = false;
-  networking.nameservers = [ "192.168.1.1" ];
-  networking.interfaces.eno2.useDHCP = true;
-  networking.interfaces.eno3.useDHCP = true;
-  networking.interfaces.eno5.useDHCP = true;
+  networking = {
+    useDHCP = false;
+    nameservers = [ "192.168.1.1" ];
+    interfaces = {
+      eno2.useDHCP = true;
+      eno3.useDHCP = true;
+      eno5.useDHCP = true;
+    };
+  };
 
   # SSH
   services.openssh = {
