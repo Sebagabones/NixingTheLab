@@ -3,10 +3,10 @@
 
   # Add all your dependencies here
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     disko = {
       url = "github:nix-community/disko";
@@ -25,7 +25,7 @@
       inputs.nixpkgs-stable.follows = "";
     };
     stylix = {
-      url = "github:nix-community/stylix/release-25.05";
+      url = "github:nix-community/stylix/";
       inputs.nixpkgs.follows = "nixpkgs";
       # inputs.home-manager.follows = "home-manager";
     };
@@ -35,7 +35,7 @@
     };
     xremap-flake.url = "github:xremap/nix-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    catppuccin.url = "github:catppuccin/nix/release-25.05";
+    catppuccin.url = "github:catppuccin/nix/";
   };
 
   outputs = inputs:
