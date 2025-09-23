@@ -96,6 +96,13 @@
     permittedInsecurePackages = [ "archiver-3.5.1" ];
   };
 
+  # GPG things
+  services.pcscd.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
   environment.systemPackages = with pkgs; [
     ghostty.terminfo
     zsh
@@ -115,6 +122,7 @@
     btop
     sqlite
     pkg-config
+    pinentry
   ];
   programs.zsh.enable = true;
   # programs.fish.useBabelfish = true;

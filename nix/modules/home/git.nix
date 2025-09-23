@@ -28,6 +28,7 @@
           line-numbers-plus-style = "#449dab";
           line-numbers-zero-style = "#3b4261";
         };
+        github = { user = "Sebagabones"; };
       };
 
       # delta = {
