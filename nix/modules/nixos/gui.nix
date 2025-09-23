@@ -37,7 +37,10 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
-    dbus.enable = true;
+    dbus = {
+      enable = true;
+      packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
+    };
 
     pulseaudio.enable = false;
 
