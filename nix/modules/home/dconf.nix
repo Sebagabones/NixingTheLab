@@ -6,9 +6,9 @@ with lib.hm.gvariant;
 
 {
   dconf.settings = {
-    "org/gnome/desktop/break-reminders" = { selected-breaks = [ "eyesight" ]; };
+    # "org/gnome/desktop/break-reminders" = { selected-breaks = [ "eyesight" ]; };
 
-    "org/gnome/desktop/break-reminders/eyesight" = { play-sound = true; };
+    # "org/gnome/desktop/break-reminders/eyesight" = { play-sound = true; };
 
     "org/gnome/desktop/interface" = {
       accent-color = "purple";

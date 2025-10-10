@@ -13,6 +13,7 @@
         pull = { rebase = false; };
         commit = { gpgsign = true; };
         gpg = { format = "ssh"; };
+        merge = { conflictStyle = "diff3"; };
         delta = {
           features = "side-by-side";
           syntax-theme = "tokyoNightNight";

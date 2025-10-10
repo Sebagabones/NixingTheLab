@@ -42,6 +42,7 @@ in {
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
         pygments
+        git
         catppuccin
         mypy
         weasyprint
@@ -74,6 +75,8 @@ in {
     cmake
     fastmod
     openscad-lsp
+    ccls
+
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
