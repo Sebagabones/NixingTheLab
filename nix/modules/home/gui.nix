@@ -43,8 +43,9 @@
         "ctrl+shift+]=new_split:down"
         "ctrl+shift+[=new_split:right"
       ];
-      gtk-tabs-location = "right";
-      gtk-adwaita = true;
+      gtk-tabs-location = "top";
+      gtk-titlebar-style = "native";
+      app-notifications = "no-clipboard-copy";
       # window-decoration = false;
       # gtk-single-instance = true;
       adw-toolbar-style = "raised-border";
