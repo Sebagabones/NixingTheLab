@@ -51,7 +51,7 @@
     gc = {
       automatic = true;
       randomizedDelaySec = "1800";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 18d";
     };
     optimise.automatic = true;
 
