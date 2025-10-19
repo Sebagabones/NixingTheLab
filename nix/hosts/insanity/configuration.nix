@@ -27,7 +27,7 @@
   #   enable = true;
   #   enable32Bit = true;
   # };
-  hardware.graphics.extraPackages = with pkgs; [ amdvlk ];
+  # hardware.graphics.extraPackages = with pkgs; [ ];
   # hardware.bluetooth.enable = true;
 
   # environment.pathsToLink =
