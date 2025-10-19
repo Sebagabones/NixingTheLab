@@ -24,8 +24,10 @@ in {
     enable = false; # not globally
     flavor = "mocha";
     accent = "mauve";
+    cache.enable = true;
     bat.enable = false;
     vscode.profiles.default.enable = false;
+    kvantum.enable = true;
     starship.enable = false;
     btop.enable = true;
     gh-dash.enable = true;

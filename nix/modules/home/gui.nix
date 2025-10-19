@@ -5,12 +5,17 @@
     flake.homeModules.miracle-wm
     ./theming.nix
     flake.homeModules.spotify
+    inputs.nixcord.homeModules.nixcord
   ];
-  qt.platformTheme.name = lib.mkForce "adwaita";
+  # qt.platformTheme.name = lib.mkForce "adwaita";
+  qt.platformTheme.name = lib.mkForce "kvantum";
+
   stylix = {
     targets = {
-      qt.platform = "qtct";
+      # qt.platform = "qtct";
+      nixcord.enable = false;
       vscode = { enable = false; };
+      qt = { enable = false; };
       firefox = {
         profileNames = [ "default" ];
         firefoxGnomeTheme.enable = true;
