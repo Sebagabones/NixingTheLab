@@ -20,7 +20,7 @@
   # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages
-
+  networking.interfaces.enp6s0.wakeOnLan.enable = true;
   # environment.systemPackages = with pkgs; [ miracle-wm ];
 
   # hardware.graphics = {
