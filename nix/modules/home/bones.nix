@@ -78,8 +78,6 @@ in {
     cmake
     fastmod
     openscad-lsp
-    ccls
-
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
