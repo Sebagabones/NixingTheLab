@@ -123,7 +123,6 @@
     pavucontrol
     # spotify
     teams-for-linux
-    discord
     networkmanagerapplet
     wlr-randr
     wl-clipboard
@@ -157,5 +156,30 @@
       package = pkgs.banana-cursor;
     };
   };
+  programs.nixcord = {
+    enable = true; # Enable Nixcord (It also installs Discord)
+    vesktop.enable = true; # Vesktop
+    # dorion.enable = true; # Dorion
+    # quickCss = "some CSS"; # quickCSS file
+    config = {
+      transparent = true;
+      useQuickCss = true; # use out quickCSS
+      themeLinks = [ # or use an online theme
+        "https://catppuccin.github.io/discord/dist/catppuccin-mocha-mauve.theme.css"
 
+      ];
+      frameless = true; # Set some Vencord options
+      plugins = {
+        userMessagesPronouns = { enable = true; };
+        clearURLs.enable = true;
+        #   hideAttachments.enable = true; # Enable a Vencord plugin
+        #   # ignoreActivities = { # Enable a plugin and set some options
+        #   #   enable = true;
+        #   #   ignorePlaying = true;
+        #   #   ignoreWatching = true;
+        #   #   ignoredActivities = [ "someActivity" ];
+        #   # };
+      };
+    };
+  };
 }
