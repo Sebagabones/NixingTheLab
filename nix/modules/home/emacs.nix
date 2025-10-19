@@ -25,6 +25,12 @@ in {
         epkgs.pdf-tools
         epkgs.vterm
         epkgs.latex-pretty-symbols
+        epkgs.treemacs
+        epkgs.treemacs-projectile
+        epkgs.lsp-treemacs
+        epkgs.treemacs-nerd-icons
+        epkgs.elpaca
+        epkgs.use-package
         pkgs.basedpyright
         pkgs.multimarkdown
       ];

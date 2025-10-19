@@ -5,7 +5,8 @@ let
       scheme-basic dvisvgm dvipng # for preview and export as html
       wrapfig amsmath ulem hyperref capt-of fontspec listings xcolor koma-script
       multirow lstfiracode fvextra upquote lineno tcolorbox latexmk minted
-      enumitem catppuccinpalette pdfcol caption latex-graphics-dev booktabs;
+      enumitem catppuccinpalette pdfcol caption latex-graphics-dev booktabs
+      framed changepage;
   });
 in {
   home.stateVersion = "24.11";

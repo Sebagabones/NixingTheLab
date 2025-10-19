@@ -40,8 +40,10 @@
         enable = true;
         # enable = false;
         enableAsDifftool = true;
-        color = "auto";
-        display = "side-by-side";
+	options = {
+        	color = "auto";
+	        display = "side-by-side";
+	};	
       };
     };
     mergiraf = { enable = true; };
