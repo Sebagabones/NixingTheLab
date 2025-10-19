@@ -36,6 +36,7 @@
     xremap-flake.url = "github:xremap/nix-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     catppuccin.url = "github:catppuccin/nix/";
+    nixcord = { url = "github:kaylorben/nixcord"; };
   };
 
   outputs = inputs:
