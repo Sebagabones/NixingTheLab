@@ -30,7 +30,28 @@ in {
         epkgs.lsp-treemacs
         epkgs.treemacs-nerd-icons
         epkgs.elpaca
+        epkgs.base16-theme
+        epkgs.solaire-mode
+        epkgs.corfu
+        epkgs.cape
+        epkgs.vertico
+        epkgs.orderless
+        epkgs.marginalia
+        epkgs.org
         epkgs.use-package
+        epkgs.embark
+        epkgs.embark-consult
+        epkgs.outline-indent
+        epkgs.stripspace
+        epkgs.undo-fu
+        epkgs.vim-tab-bar
+        epkgs.ox-gfm
+        epkgs.org-modern
+        epkgs.org-appear
+        epkgs.org-fragtog
+        epkgs.engrave-faces
+        epkgs.org-attach-screenshot
+        epkgs.org-sidebar
         pkgs.basedpyright
         pkgs.multimarkdown
       ];
