@@ -8,6 +8,7 @@
       userName = "Sebgabones";
       userEmail = "133339614+Sebagabones@users.noreply.github.com";
       extraConfig = {
+        init = { defaultBranch = "main"; };
         user = { signingkey = "~/.ssh/id_ed25519.pub"; };
         push = { autoSetupRemote = true; };
         pull = { rebase = false; };
@@ -40,10 +41,10 @@
         enable = true;
         # enable = false;
         enableAsDifftool = true;
-	options = {
-        	color = "auto";
-	        display = "side-by-side";
-	};	
+        options = {
+          color = "auto";
+          display = "side-by-side";
+        };
       };
     };
     mergiraf = { enable = true; };
