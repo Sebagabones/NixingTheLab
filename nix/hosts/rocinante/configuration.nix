@@ -1,4 +1,14 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }:
+let
+  zfsCompatibleKernelPackages = lib.filterAttrs (name: kernelPackages:
+    (builtins.match "linux_[0-9]+_[0-9]+" name) != null
+    && (builtins.tryEval kernelPackages).success
+    && (!kernelPackages.${config.boot.zfs.package.kernelModuleAttribute}.meta.broken))
+    pkgs.linuxKernel.packages;
+  latestKernelPackage = lib.last
+    (lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version))
+      (builtins.attrValues zfsCompatibleKernelPackages));
+in {
   networking.hostName = "rocinante";
   networking.domain = "lab.mahoosively.gay";
   system.stateVersion = "25.05";
@@ -12,9 +22,30 @@
     # "${inputs.nixos-hardware}/common/pc"
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = latestKernelPackage;
+    kernelModules = [ "mgag200" ]; # we love the Matrox G200
 
+  };
+
+  fileSystems = {
+    "/storage/main" = {
+      device = "zdata/storage/main";
+      fsType = "zfs";
+    };
+    "/storage/immich" = {
+      device = "zdata/storage/immich";
+      fsType = "zfs";
+    };
+    "/storage/git" = {
+      device = "zdata/storage/git";
+      fsType = "zfs";
+    };
+  };
   # Networking
   systemd.network = { enable = true; };
   networking.useDHCP = false;
@@ -27,16 +58,10 @@
 
     ports = [ 1621 ];
     openFirewall = true;
-    listenAddresses = [
-      # {
-      #   addr = "192.168.1.117";
-      #   port = 8909;
-      # }
-      {
-        addr = "0.0.0.0";
-        port = 1621;
-      }
-    ];
+    listenAddresses = [{
+      addr = "0.0.0.0";
+      port = 1621;
+    }];
   };
 
   environment.systemPackages = with pkgs; [ ];
@@ -50,7 +75,6 @@
     allowedUDPPorts = [ 1621 9090 ];
   };
 
-  boot.kernelModules = [ "mgag200" ]; # we love the Matrox G200
   # Packages
   # environment.systemPackages = with pkgs; [
   # ];
