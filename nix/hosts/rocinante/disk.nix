@@ -16,30 +16,28 @@ in {
   imports = [ inputs.disko.nixosModules.disko ];
   disko.devices = {
     disk = {
-      bootSSD = {
-        vdb = {
-          device = "/dev/disk/by-id/usb-SABRENT_SABRENT_DB9876543214E-0:0";
-          type = "disk";
-          content = {
-            type = "gpt";
-            partitions = {
-              ESP = {
-                type = "EF00";
-                size = "1024M";
-                content = {
-                  type = "filesystem";
-                  format = "vfat";
-                  mountpoint = "/boot";
-                  mountOptions = [ "umask=0077" ];
-                };
+      vdb = {
+        device =
+          "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7BWNJ0WA34315L";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              type = "EF00";
+              size = "1024M";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
               };
-              root = {
-                size = "100%";
-                content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/";
-                };
+            };
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zroot";
               };
             };
           };
@@ -68,10 +66,40 @@ in {
       };
     };
     zpool = {
+      zroot = {
+        type = "zpool";
+        rootFsOptions = {
+          acltype = "posixacl";
+          compression = "zstd";
+          mountpoint = "none";
+          relatime = "on";
+          xattr = "sa";
+          "com.sun:auto-snapshot" = "false";
+        };
+        options = {
+          ashift = "12";
+          autotrim = "on";
+        };
+        datasets = {
+          root = {
+            type = "zfs_fs";
+            mountpoint = "/";
+          };
+        };
+      };
       zdata = {
         type = "zpool";
-        mode = "mirror";
+
         mountpoint = "/storage";
+        mode = {
+          topology = {
+            type = "topology";
+            vdev = [{
+              mode = "mirror";
+              members = [ "hardDrive1" "hardDrive2" "hardDrive3" "hardDrive4" ];
+            }];
+          };
+        };
         rootFsOptions = {
           acltype = "posixacl";
           compression = "zstd";

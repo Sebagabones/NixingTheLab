@@ -9,8 +9,11 @@ let
     (lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version))
       (builtins.attrValues zfsCompatibleKernelPackages));
 in {
-  networking.hostName = "rocinante";
-  networking.domain = "lab.mahoosively.gay";
+  networking = {
+    hostName = "rocinante";
+    hostId = "52006401";
+    domain = "lab.mahoosively.gay";
+  };
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -33,18 +36,26 @@ in {
   };
 
   fileSystems = {
+    "/" = {
+      device = "zroot/root";
+      fsType = "zfs";
+    };
     "/storage/main" = {
-      device = "zdata/storage/main";
+      device = "zdata/mainStorage";
       fsType = "zfs";
     };
     "/storage/immich" = {
-      device = "zdata/storage/immich";
+      device = "zdata/immich";
       fsType = "zfs";
     };
     "/storage/git" = {
-      device = "zdata/storage/git";
+      device = "zdata/git";
       fsType = "zfs";
     };
+  };
+  services.zfs.autoScrub = {
+    enable = true;
+    pools = [ "zpool" ];
   };
   # Networking
   systemd.network = { enable = true; };
