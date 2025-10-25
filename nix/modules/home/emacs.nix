@@ -52,6 +52,8 @@ in {
         epkgs.engrave-faces
         epkgs.org-attach-screenshot
         epkgs.org-sidebar
+        epkgs.htmlize
+        epkgs.markdown-mode
         pkgs.basedpyright
         pkgs.multimarkdown
       ];
