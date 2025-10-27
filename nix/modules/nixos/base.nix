@@ -171,6 +171,8 @@
   # Services
   services.xremap = {
     # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
+    # LMAO, looks like this doesnt work on gnome - fix it sometime
+    enable = true;
     serviceMode = "user";
     userName = "bones";
     config.modmap = [{
