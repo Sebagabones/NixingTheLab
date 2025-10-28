@@ -4,10 +4,10 @@
 
   programs = {
     git = {
-      enable = true;
-      userName = "Sebgabones";
-      userEmail = "133339614+Sebagabones@users.noreply.github.com";
-      extraConfig = {
+      settings = {
+        user.name = "Sebgabones";
+        user.email = "133339614+Sebagabones@users.noreply.github.com";
+
         init = { defaultBranch = "main"; };
         user = { signingkey = "~/.ssh/id_ed25519.pub"; };
         push = { autoSetupRemote = true; };
@@ -32,19 +32,19 @@
         };
         github = { user = "Sebagabones"; };
       };
+      enable = true;
 
       # delta = {
       # enable = true;
       # options = { features = {  }; };
-      # };
-      difftastic = {
-        enable = true;
-        # enable = false;
-        enableAsDifftool = true;
-        options = {
-          color = "auto";
-          display = "side-by-side";
-        };
+    };
+    difftastic = {
+      enable = true;
+      # enable = false;
+      git.diffToolMode = false;
+      options = {
+        color = "auto";
+        display = "side-by-side";
       };
     };
     mergiraf = { enable = true; };
