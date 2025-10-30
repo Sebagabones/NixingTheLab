@@ -122,14 +122,13 @@
     btop
     sqlite
     pkg-config
-    pinentry
   ];
   programs.zsh.enable = true;
   # programs.fish.useBabelfish = true;
 
   # System
   time.timeZone = "Australia/Perth";
-  hardware.enableRedistributableFirmware = true;
+  hardware.enableAllFirmware = true;
   # SSH
   services.openssh = {
     enable = true;
