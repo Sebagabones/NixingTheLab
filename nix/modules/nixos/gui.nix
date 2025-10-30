@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }: {
   imports = [ ./theming.nix ];
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ pinentry-gnome3 ];
 
   stylix = {
     cursor = {
