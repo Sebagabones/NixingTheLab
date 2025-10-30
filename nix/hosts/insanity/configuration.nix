@@ -1,4 +1,4 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }: {
   networking.hostName = "insanity";
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -13,22 +13,38 @@
     "${inputs.nixos-hardware}/common/pc"
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  # boot.kernelModules = [ "kvm_intel" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    # boot.kernelModules = [ "kvm_intel" ];
+    initrd = {
+      kernelModules = [ "amdgpu" ];
+      availableKernelModules =
+        [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+    };
+  };
   # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages
   networking.interfaces.enp6s0.wakeOnLan.enable = true;
   # environment.systemPackages = with pkgs; [ miracle-wm ];
-
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
   # hardware.graphics = {
   #   enable = true;
   #   enable32Bit = true;
   # };
   # hardware.graphics.extraPackages = with pkgs; [ ];
   # hardware.bluetooth.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall =
+      true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall =
+      false; # Open ports in the firewall for Source Dedicated Server
+    extraCompatPackages = with pkgs; [ proton-ge-bin ];
+  };
+  environment.systemPackages = with pkgs; [ protonup-qt ];
 
   # environment.pathsToLink =
   #   [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw

@@ -1,4 +1,4 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }: {
   networking.hostName = "resuscitated";
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -53,6 +53,7 @@
 
   lollypops.deployment.group = "Personal";
   home-manager.backupFileExtension = "backup";
-
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
   stylix.enable = true;
 }
