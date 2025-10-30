@@ -1,14 +1,4 @@
-{ inputs, config, lib, pkgs, flake, perSystem, ... }:
-let
-  tex = (pkgs.texlive.combine {
-    inherit (pkgs.texlive)
-      scheme-basic dvisvgm dvipng # for preview and export as html
-      wrapfig amsmath ulem hyperref capt-of fontspec listings xcolor koma-script
-      multirow lstfiracode fvextra upquote lineno tcolorbox latexmk minted
-      enumitem catppuccinpalette pdfcol caption latex-graphics-dev booktabs
-      framed changepage;
-  });
-in {
+{ inputs, config, lib, pkgs, flake, perSystem, ... }: {
   home.stateVersion = "24.11";
   programs.home-manager.enable = true;
 
@@ -39,7 +29,7 @@ in {
     httpie
     nixd
     lsd
-    ccls
+
     clang-tools
     procs
     (python3.withPackages (python-pkgs:
@@ -53,31 +43,19 @@ in {
       ]))
     cmatrix
     clang
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-    imagemagick
-    ghostscript_headless
-    hunspellDicts.en-au
-    hunspellDicts.en_GB-large
-    gnupg
     unzip
     zip
-    tex
     pandoc
     starship
     zsh-autosuggestions
     zsh-syntax-highlighting
-    basedpyright
-    multimarkdown
-    nixfmt-classic
     libqalculate
     nix-update
     uv
     ruff
-    delta
     gh
     cmake
     fastmod
-    openscad-lsp
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
