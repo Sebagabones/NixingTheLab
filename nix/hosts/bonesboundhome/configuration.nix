@@ -1,4 +1,4 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, ... }: {
+{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }: {
   networking.hostName = "bonesboundhome";
   networking.domain = "lab.mahoosively.gay";
   system.stateVersion = "25.05";
@@ -98,9 +98,13 @@
   # environment.systemPackages = with pkgs; [
   # ];
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  hardware = {
+    cpu.intel.updateMicrocode =
+      lib.mkDefault config.hardware.enableRedistributableFirmware;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
   };
 
   environment.pathsToLink =
