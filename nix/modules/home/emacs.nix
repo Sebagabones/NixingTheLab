@@ -3,6 +3,7 @@ let
   userCfg = config.users.bones;
   cfg = userCfg.programs.emacs;
   emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
+
 in {
   config = {
     # Automatically install Emacs config from here.
@@ -15,7 +16,30 @@ in {
       enable = true;
       socketActivation.enable = true;
     };
-
+    home.packages = with pkgs;
+      let
+        tex = (pkgs.texlive.combine {
+          inherit (pkgs.texlive)
+            scheme-basic dvisvgm dvipng # for preview and export as html
+            wrapfig amsmath ulem hyperref capt-of fontspec listings xcolor
+            koma-script multirow lstfiracode fvextra upquote lineno tcolorbox
+            latexmk minted enumitem catppuccinpalette pdfcol caption
+            latex-graphics-dev booktabs framed changepage;
+        });
+      in [
+        delta
+        (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+        hunspellDicts.en-au
+        hunspellDicts.en_GB-large
+        basedpyright
+        multimarkdown
+        nixfmt-classic
+        openscad-lsp
+        ccls
+        imagemagick
+        ghostscript_headless
+        gnupg
+      ];
     programs.emacs = {
       enable = true;
       package = pkgs.emacs-gtk;
