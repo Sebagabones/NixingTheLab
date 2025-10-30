@@ -1,4 +1,5 @@
-{ inputs, lib, flake, pkgs, perSystem, ... }: {
+{ inputs, lib, flake, nixpkgs, nixpkgs-for-qgnomeplatform, pkgs, perSystem, ...
+}: {
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
     flake.homeModules.gnome
@@ -8,7 +9,7 @@
     inputs.nixcord.homeModules.nixcord
   ];
   # qt.platformTheme.name = lib.mkForce "adwaita";
-  qt.platformTheme.name = lib.mkForce "kvantum";
+  # qt.platformTheme.name = lib.mkForce "kvantum";
 
   stylix = {
     targets = {
@@ -23,7 +24,10 @@
     };
 
   };
-
+  nixpkgs.overlays = [{
+    qgnomeplatform-qt =
+      inputs.nixpkgs-for-qgnomeplatform.legacyPackages.${pkgs.system}.qgnomeplatform-qt;
+  }];
   programs.fuzzel = { enable = true; };
 
   programs.ghostty = {
