@@ -38,9 +38,6 @@
     catppuccin.url = "github:catppuccin/nix/";
     nixcord = { url = "github:kaylorben/nixcord"; };
     # temp
-    nixpkgs-for-qgnomeplatform = {
-      url = "github:nekowinston/nixpkgs/qgnomeplatform/fix-qt6.10-build";
-    };
   };
 
   outputs = inputs:

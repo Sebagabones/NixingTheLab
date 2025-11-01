@@ -6,7 +6,6 @@
     ./mutable-files.nix
     flake.homeModules.git
     flake.homeModules.theming
-    flake.homeModules.emacs
     inputs.catppuccin.homeModules.catppuccin
     # flake.homeModules.gui
   ];
@@ -29,7 +28,6 @@
     httpie
     nixd
     lsd
-
     clang-tools
     procs
     (python3.withPackages (python-pkgs:
@@ -102,8 +100,6 @@
       nix-direnv.enable = true;
     };
     ripgrep.enable = true;
-
-    emacs = { enable = true; };
 
     ssh = {
       enable = true;

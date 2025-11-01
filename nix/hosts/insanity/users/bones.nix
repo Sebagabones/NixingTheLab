@@ -3,7 +3,7 @@
 {
   imports = [
     inputs.self.homeModules.bones
-    inputs.self.homeModules.gui
+    inputs.self.homeModules.nonserver
     # inputs.self.homeModules.pc
   ];
 }

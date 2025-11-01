@@ -2,7 +2,6 @@
 
   imports = [
     inputs.lollypops.nixosModules.default
-    inputs.xremap-flake.nixosModules.default
     inputs.catppuccin.nixosModules.catppuccin
     flake.nixosModules.podman
     ./theming.nix
@@ -14,7 +13,10 @@
     accent = "mauve";
     grub.enable = false;
   };
-
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [ "archiver-3.5.1" ];
+  };
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
   lollypops.deployment = {
@@ -90,12 +92,6 @@
     };
   };
 
-  # Packages
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [ "archiver-3.5.1" ];
-  };
-
   # GPG things
   services.pcscd.enable = true;
   programs.gnupg.agent = {
@@ -168,17 +164,7 @@
   environment.pathsToLink =
     [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
   # Services
-  services.xremap = {
-    # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
-    # LMAO, looks like this doesnt work on gnome - fix it sometime
-    enable = true;
-    serviceMode = "user";
-    userName = "bones";
-    config.modmap = [{
-      name = "Global";
-      remap = { "CapsLock" = "Ctrl"; }; # globally remap CapsLock to Ctrl
-    }];
-  };
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
