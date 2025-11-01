@@ -4,10 +4,11 @@
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   stylix = {
+
     homeManagerIntegration.followSystem = true;
     homeManagerIntegration.autoImport = true;
     autoEnable = true;
-    image = ../../assests/background.png;
+
     # base16Scheme = theme;
 
     enable = true;

@@ -1,5 +1,7 @@
 { flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }:
 let
+  sshPort = 8909;
+  sshPortString = "${toString sshPort}";
   zfsCompatibleKernelPackages = lib.filterAttrs (name: kernelPackages:
     (builtins.match "linux_[0-9]+_[0-9]+" name) != null
     && (builtins.tryEval kernelPackages).success
@@ -26,36 +28,66 @@ in {
   ];
 
   boot = {
+    zfs = {
+      devNodes = "/dev/disk/by-uuid";
+      extraPools = [ "zroot" "zdonttrust" ];
+    };
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = latestKernelPackage;
-    kernelModules = [ "mgag200" ]; # we love the Matrox G200
+    initrd = {
+      systemd.enable = true;
+      availableKernelModules = [
+        "ata_piix"
+        "xhci_pci"
+        "ehci_pci"
+        "ahci"
+        "aacraid"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+      ];
+      supportedFilesystems = [ "zfs" ];
+    };
 
+    supportedFilesystems = [ "zfs" ];
+    kernelPackages = latestKernelPackage;
+    kernelModules = [ "mgag200" "kvm-intel" ]; # we love the Matrox G200
   };
 
+  fileSystems."/" = {
+    device = "zroot/root";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
   fileSystems = {
-    "/" = {
-      device = "zroot/root";
-      fsType = "zfs";
-    };
     "/storage/main" = {
       device = "zdata/mainStorage";
       fsType = "zfs";
+      options = [ "zfsutil" ];
     };
     "/storage/immich" = {
       device = "zdata/immich";
       fsType = "zfs";
+      options = [ "zfsutil" ];
+
     };
     "/storage/git" = {
       device = "zdata/git";
       fsType = "zfs";
+      options = [ "zfsutil" ];
+
     };
+  };
+  fileSystems."/donttrust" = {
+    device = "zdonttrust";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
   };
   services.zfs.autoScrub = {
     enable = true;
-    pools = [ "zpool" ];
+    pools = [ "zdata" ];
   };
   # Networking
   systemd.network = { enable = true; };
@@ -66,12 +98,11 @@ in {
 
   # SSH
   services.openssh = {
-
-    ports = [ 1621 ];
+    ports = [ sshPort ];
     openFirewall = true;
     listenAddresses = [{
       addr = "0.0.0.0";
-      port = 1621;
+      port = sshPort;
     }];
   };
 
@@ -82,17 +113,21 @@ in {
   # Networking
   networking.firewall = {
     enable = false;
-    allowedTCPPorts = [ 1621 9090 ];
-    allowedUDPPorts = [ 1621 9090 ];
+    allowedTCPPorts = [ sshPort ];
+    allowedUDPPorts = [ sshPort ];
   };
 
   # Packages
   # environment.systemPackages = with pkgs; [
   # ];
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  hardware = {
+    cpu.intel.updateMicrocode =
+      lib.mkDefault config.hardware.enableRedistributableFirmware;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
   };
 
   environment.pathsToLink =
@@ -103,7 +138,7 @@ in {
 
   lollypops.deployment = {
     group = "Servers";
-    ssh.opts = [ " -p 1621" ];
+    ssh.opts = [ " -p ${sshPortString}" ];
   };
   home-manager.backupFileExtension = "backup";
 

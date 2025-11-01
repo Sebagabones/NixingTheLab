@@ -42,7 +42,7 @@ in {
       ];
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs-gtk;
+
       extraPackages = epkgs: [
         epkgs.org-noter-pdftools
         epkgs.org-pdftools

@@ -1,8 +1,10 @@
-{ config, lib, pkgs, inputs, ... }: {
-  imports = [ ./theming.nix ];
+{ config, lib, pkgs, nixpkgs, inputs, ... }: {
+  imports = [ inputs.xremap-flake.nixosModules.default ./theming.nix ];
   environment.systemPackages = with pkgs; [ pinentry-gnome3 ];
 
   stylix = {
+    image = ../../assests/background.png;
+    targets.qt = { enable = false; };
     cursor = {
       package = pkgs.banana-cursor;
       name = "Banana";
@@ -23,6 +25,7 @@
 
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  # Packages
 
   security = {
     rtkit.enable = true;
@@ -64,6 +67,17 @@
     printing = {
       enable = true;
       drivers = with pkgs; [ cups-filters cups-browsed ];
+    };
+    xremap = {
+      # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
+      # LMAO, looks like this doesnt work on gnome - fix it sometime
+      enable = true;
+      serviceMode = "user";
+      userName = "bones";
+      config.modmap = [{
+        name = "Global";
+        remap = { "CapsLock" = "Ctrl"; }; # globally remap CapsLock to Ctrl
+      }];
     };
   };
   networking = {
