@@ -16,7 +16,7 @@
     cache.enable = true;
     bat.enable = false;
     vscode.profiles.default.enable = false;
-    kvantum.enable = false;
+    kvantum.enable = true;
     starship.enable = false;
     btop.enable = true;
     gh-dash.enable = true;

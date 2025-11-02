@@ -10,7 +10,7 @@
 
   ];
   # qt.platformTheme.name = lib.mkForce "adwaita";
-  # qt.platformTheme.name = lib.mkForce "kvantum";
+  qt.platformTheme.name = lib.mkForce "kvantum";
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-gtk;
