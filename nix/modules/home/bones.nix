@@ -108,7 +108,7 @@
           controlPath = "~/.ssh/master-%r@%n:%p";
           controlPersist = "no";
         };
-        rocinante = {
+        bonesboundhome = {
           hostname = "mahoosively.gay";
           port = 8909;
         };
