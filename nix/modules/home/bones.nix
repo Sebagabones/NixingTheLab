@@ -28,7 +28,6 @@
     httpie
     nixd
     lsd
-    clang-tools
     procs
     (python3.withPackages (python-pkgs:
       with python-pkgs; [
@@ -93,14 +92,6 @@
       };
     };
 
-    fd.enable = true;
-    direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
-    };
-    ripgrep.enable = true;
-
     ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -117,7 +108,7 @@
           controlPath = "~/.ssh/master-%r@%n:%p";
           controlPersist = "no";
         };
-        bonesboundhome = {
+        rocinante = {
           hostname = "mahoosively.gay";
           port = 8909;
         };
