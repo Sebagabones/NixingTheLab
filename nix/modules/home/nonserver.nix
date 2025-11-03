@@ -9,12 +9,18 @@
     flake.homeModules.emacs
 
   ];
-  # qt.platformTheme.name = lib.mkForce "adwaita";
-  qt.platformTheme.name = lib.mkForce "kvantum";
+
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-gtk;
   };
+  # qt.platformTheme.name = lib.mkForce "adwaita";
+  qt.platformTheme.name = lib.mkForce "kvantum";
+  catppuccin = {
+    kvantum.enable = true;
+    vscode.profiles.default.enable = false;
+  };
+
   stylix = {
     targets = {
       qt.platform = "qtct";
@@ -141,6 +147,7 @@
     # kdePackages.dolphin
     openscad-unstable
     prusa-slicer
+    libqalculate
   ];
 
   # pointerCursor = {

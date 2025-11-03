@@ -15,8 +15,6 @@
     accent = "mauve";
     cache.enable = true;
     bat.enable = false;
-    vscode.profiles.default.enable = false;
-    kvantum.enable = true;
     starship.enable = false;
     btop.enable = true;
     gh-dash.enable = true;
@@ -46,7 +44,6 @@
     starship
     zsh-autosuggestions
     zsh-syntax-highlighting
-    libqalculate
     nix-update
     uv
     ruff
