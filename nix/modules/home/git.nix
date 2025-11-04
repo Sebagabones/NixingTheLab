@@ -33,15 +33,13 @@
         github = { user = "Sebagabones"; };
       };
       enable = true;
-
       # delta = {
       # enable = true;
       # options = { features = {  }; };
     };
     difftastic = {
       enable = true;
-      # enable = false;
-      git.diffToolMode = false;
+      git.diffToolMode = true;
       options = {
         color = "auto";
         display = "side-by-side";

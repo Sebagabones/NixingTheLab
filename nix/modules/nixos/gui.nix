@@ -4,7 +4,7 @@
 
   stylix = {
     image = ../../assests/background.png;
-    targets.qt = { enable = false; };
+    targets.qt = { enable = true; };
     cursor = {
       package = pkgs.banana-cursor;
       name = "Banana";
