@@ -109,6 +109,10 @@
           hostname = "mahoosively.gay";
           port = 8909;
         };
+        rocinante = {
+          hostname = "mahoosively.gay";
+          port = 8909;
+        };
         bonesrunhome = {
           hostname = "mahoosively.gay";
           port = 7856;

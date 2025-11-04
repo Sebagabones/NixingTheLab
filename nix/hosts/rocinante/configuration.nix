@@ -21,17 +21,16 @@ in {
 
   imports = [
     flake.nixosModules.base
-    ./disk.nix
+    # ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/broadwell"
     "${inputs.nixos-hardware}/common/pc/ssd"
-    # "${inputs.nixos-hardware}/common/pc"
   ];
 
   boot = {
-    zfs = {
-      devNodes = "/dev/disk/by-uuid";
-      extraPools = [ "zroot" "zdonttrust" ];
-    };
+    # zfs = {
+    #   devNodes = "/dev/disk/by-uuid";
+    #   extraPools = [ "zdonttrust" "zdata" ];
+    # };
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -48,22 +47,26 @@ in {
         "usbhid"
         "sd_mod"
       ];
-      supportedFilesystems = [ "zfs" ];
+      supportedFilesystems = [ "ext4" ];
     };
 
-    supportedFilesystems = [ "zfs" ];
+    supportedFilesystems = [ "ext4" ];
     kernelPackages = latestKernelPackage;
     kernelModules = [ "mgag200" "kvm-intel" ]; # we love the Matrox G200
   };
-
   fileSystems."/" = {
-    device = "zroot/root";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
+    device = "/dev/disk/by-uuid/e658618f-8e54-4cb1-8197-b410a07a949b";
+    fsType = "ext4";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/261A-CDBC";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
   };
   fileSystems = {
     "/storage/main" = {
-      device = "zdata/mainStorage";
+      device = "zdata/main";
       fsType = "zfs";
       options = [ "zfsutil" ];
     };
@@ -85,9 +88,14 @@ in {
     fsType = "zfs";
     options = [ "zfsutil" ];
   };
-  services.zfs.autoScrub = {
-    enable = true;
-    pools = [ "zdata" ];
+  services.zfs = {
+    trim.enable = true;
+    autoSnapshot = { enable = true; };
+    # TODO: setup sanoid and some of the other backup stuff things
+    autoScrub = {
+      enable = true;
+      pools = [ "zdata" "zdonttrust" ];
+    };
   };
   # Networking
   systemd.network = { enable = true; };
@@ -106,7 +114,7 @@ in {
     }];
   };
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ zfs ];
 
   nixpkgs.config.allowUnfree = true;
 

@@ -113,10 +113,10 @@
   security.polkit.enable = true;
   services.dbus.enable = true;
 
-  lollypops.deployment = {
-    group = "Servers";
-    ssh.opts = [ " -p 8909" ];
-  };
+  # lollypops.deployment = { # Has been replaced by rocinante
+  #   group = "Servers";
+  #   ssh.opts = [ " -p 8909" ];
+  # };
   home-manager.backupFileExtension = "backup";
 
   stylix.enable = true;
