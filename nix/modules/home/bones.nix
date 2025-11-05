@@ -116,6 +116,10 @@
           controlPath = "~/.ssh/master-%r@%n:%p";
           controlPersist = "no";
         };
+        pandemonium = {
+          hostname = "mahoosively.gay";
+          port = 7656;
+        };
         bonesboundhome = {
           hostname = "mahoosively.gay";
           port = 8909;
