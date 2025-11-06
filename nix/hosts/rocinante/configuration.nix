@@ -1,7 +1,7 @@
 { flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }:
 let
   sshPort = 8909;
-  sshPortString = "${toString sshPort}";
+
   zfsCompatibleKernelPackages = lib.filterAttrs (name: kernelPackages:
     (builtins.match "linux_[0-9]+_[0-9]+" name) != null
     && (builtins.tryEval kernelPackages).success
@@ -138,7 +138,7 @@ in {
 
   lollypops.deployment = {
     group = "Servers";
-    ssh.opts = [ " -p ${sshPortString}" ];
+    ssh.opts = [ " -p ${toString sshPort}" ];
   };
   home-manager.backupFileExtension = "backup";
 
