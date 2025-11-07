@@ -4,6 +4,7 @@
     inputs.lollypops.nixosModules.default
     inputs.catppuccin.nixosModules.catppuccin
     flake.nixosModules.podman
+    flake.nixosModules.builders
     ./theming.nix
   ];
 

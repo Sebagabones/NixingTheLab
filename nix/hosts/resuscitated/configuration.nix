@@ -9,6 +9,7 @@
     ./disk.nix
     "${inputs.nixos-hardware}/lenovo/thinkpad/t480"
   ];
+#  nix.distributedBuilds = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
