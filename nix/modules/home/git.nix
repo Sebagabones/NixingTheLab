@@ -15,6 +15,7 @@
         commit = { gpgsign = true; };
         gpg = { format = "ssh"; };
         merge = { conflictStyle = "diff3"; };
+        diff = { external = "difft"; };
         delta = {
           features = "side-by-side";
           syntax-theme = "tokyoNightNight";
