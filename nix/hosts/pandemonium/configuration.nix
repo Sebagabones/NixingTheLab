@@ -98,23 +98,6 @@ in {
       # perSystem.self.fanControl # Fan control for the IBM servers
     ];
 
-  # systemd.services."fanControl" = {
-  #   enable = true;
-  #   after = [ "network.target" ];
-  #   description = "Fan Speed Service";
-  #   serviceConfig = {
-  #     Type = "simple";
-  #     ExecStart = "${perSystem.self.fanControl}/bin/tempChecker";
-  #     Restart = "always";
-  #     RuntimeMaxSec = "30m";
-  #     RestartSec = "1s";
-  #     SyslogIdentifier = "fanControl";
-  #     User = "root";
-  #     Group = "root";
-  #   };
-  #   wantedBy = [ "multi-user.target" ];
-  # };
-
   nixpkgs.config.allowUnfree = true;
 
   # Networking
