@@ -50,6 +50,13 @@ in {
       epkgs.org-pdftools
       epkgs.pdf-tools
       epkgs.vterm
+      epkgs.vterm-toggle
+      epkgs.tabspaces
+      epkgs.pyvenv
+      epkgs.numpydoc
+      epkgs.git-gutter
+      epkgs.nix-modeline
+      epkgs.nix-mode
       epkgs.latex-pretty-symbols
       epkgs.treemacs
       epkgs.treemacs-projectile
@@ -70,6 +77,9 @@ in {
       epkgs.outline-indent
       epkgs.stripspace
       epkgs.undo-fu
+      epkgs.hl-todo
+      epkgs.consult-todo
+      epkgs.magit-todos
       epkgs.vim-tab-bar
       epkgs.ox-gfm
       epkgs.org-modern
@@ -80,6 +90,40 @@ in {
       epkgs.org-sidebar
       epkgs.htmlize
       epkgs.markdown-mode
+      epkgs.flycheck
+      epkgs.ccls
+      epkgs.color-identifiers-mode
+      epkgs.platformio-mode
+      epkgs.counsel
+      epkgs.magit
+      epkgs.difftastic
+      epkgs.scad-mode
+      epkgs.lsp-pyright
+      epkgs.git-gutter-fringe
+      epkgs.direnv
+      epkgs.forge
+      epkgs.rg
+      epkgs.ivy-prescient
+      epkgs.corfu-prescient
+      epkgs.embark
+      epkgs.embark-consult
+      epkgs.rainbow-delimiters
+      epkgs.highlight-defined
+      epkgs.aggressive-indent
+      epkgs.rmsbolt
+      epkgs.apheleia
+      epkgs.flycheck-inline
+      epkgs.clipetty
+      epkgs.ace-jump-mode
+      epkgs.dap-mode
+      epkgs.hydra
+      epkgs.magit-delta
+      epkgs.transient
+      epkgs.which-key
+      epkgs.fira-code-mode
+      epkgs.nerd-icons
+      epkgs.helpful
+      epkgs.compile-angel
     ];
   };
   # Add org-protocol support.
