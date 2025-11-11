@@ -4,7 +4,7 @@
   # qt.platformTheme.name = lib.mkForce "kvantum";
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-nox;
+    package = pkgs.emacs;
   };
 
 }

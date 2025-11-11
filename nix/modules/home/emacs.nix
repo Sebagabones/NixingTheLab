@@ -38,6 +38,9 @@ in {
       imagemagick
       ghostscript_headless
       gnupg
+      # Remote connection to gui emacs session
+      cage
+      waypipe
     ];
   programs.emacs = {
     enable = true;
