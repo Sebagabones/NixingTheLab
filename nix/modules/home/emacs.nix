@@ -80,8 +80,6 @@ in {
       epkgs.org-sidebar
       epkgs.htmlize
       epkgs.markdown-mode
-      pkgs.basedpyright
-      pkgs.multimarkdown
     ];
   };
   # Add org-protocol support.
