@@ -37,6 +37,7 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     catppuccin.url = "github:catppuccin/nix/";
     nixcord = { url = "github:kaylorben/nixcord"; };
+    mahoosivelyGay = { url = "github:Sebagabones/reallymahoosivelygay"; };
     # temp
   };
 

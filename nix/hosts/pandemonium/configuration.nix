@@ -13,7 +13,8 @@ in {
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/skylake"
     "${inputs.nixos-hardware}/common/pc/ssd"
-    # "${inputs.nixos-hardware}/common/pc"
+    ./website.nix
+
   ];
 
   boot.loader.systemd-boot.enable = true;
