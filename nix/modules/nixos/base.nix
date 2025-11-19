@@ -152,7 +152,9 @@
       };
     };
   };
-  home-manager.backupFileExtension = "backup";
+  home-manager = {
+    backupFileExtension = "backup";
+  };
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono

@@ -15,6 +15,7 @@ in {
     enable = true;
     socketActivation.enable = true;
   };
+
   home.packages = with pkgs;
     let
       tex = (pkgs.texlive.combine {
@@ -42,9 +43,9 @@ in {
       cage
       waypipe
     ];
+
   programs.emacs = {
     enable = true;
-
     extraPackages = epkgs: [
       epkgs.org-noter-pdftools
       epkgs.org-pdftools
