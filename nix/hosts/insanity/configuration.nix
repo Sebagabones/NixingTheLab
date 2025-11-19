@@ -44,7 +44,10 @@
       false; # Open ports in the firewall for Source Dedicated Server
     extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
-  environment.systemPackages = with pkgs; [ protonup-qt wineWowPackages.waylandFull];
+  environment.systemPackages = with pkgs; [
+    protonup-qt
+    wineWowPackages.waylandFull
+  ];
 
   # environment.pathsToLink =
   #   [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
