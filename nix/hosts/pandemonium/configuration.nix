@@ -21,12 +21,12 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot = {
-    swraid = {
-      enable = true;
-      mdadmConf = ''
-        MAILADDR=TODO@SetThisUp
-      '';
-    };
+    # swraid = {
+    #   enable = true;
+    #   mdadmConf = ''
+    #     MAILADDR=TODO@SetThisUp
+    #   '';
+    # };
     initrd = {
       availableKernelModules = [
         "ahci"
@@ -42,7 +42,7 @@ in {
     kernelModules = [ "kvm-intel" "mgag200" ];
     extraModulePackages = [ ];
   };
-
+  networking.hostId = "f70e81b8";
   # Networking
   # systemd.network = {
   #   enable = true;
