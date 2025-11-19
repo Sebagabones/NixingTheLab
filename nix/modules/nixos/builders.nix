@@ -13,7 +13,5 @@
     supportedFeatures = [ "big-parallel" ];
     mandatoryFeatures = [ "big-parallel" ];
   }];
-  nix.distributedBuilds = false;
-  # optional, useful when the builder has a faster internet connection than yours
-  nix.extraOptions = "  builders-use-substitutes = true\n";
+
 }
