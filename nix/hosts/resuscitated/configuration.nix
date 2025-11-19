@@ -20,21 +20,21 @@
   # programs.wayland.miracle-wm.enable = true;
   # Packages
 
-  # services.undervolt = {
-  #   enable = true;
-  #   useTimer = true;
-  #   tempBat = 85;
-  #   temp = 85;
-  #   coreOffset = -90;
-  #   p1 = {
-  #     limit = 38;
-  #     window = 27;
-  #   };
-  #   p2 = {
-  #     limit = 38;
-  #     window = 2.0e-3;
-  #   };
-  # };
+  services.undervolt = {
+    enable = true;
+    useTimer = true;
+    tempBat = 85;
+    temp = 85;
+    coreOffset = -90;
+    # p1 = {
+    #   limit = 38;
+    #   window = 27;
+    # };
+    # p2 = {
+    #   limit = 38;
+    #   window = 2.0e-3;
+    # };
+  };
 
   # services.tlp = {
   #   enable = true;
