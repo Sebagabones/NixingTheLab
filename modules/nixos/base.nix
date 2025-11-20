@@ -3,6 +3,7 @@
   imports = [
     inputs.lollypops.nixosModules.default
     inputs.catppuccin.nixosModules.catppuccin
+    inputs.agenix-rekey.nixosModules.default
     flake.nixosModules.podman
     flake.nixosModules.builders
     ./theming.nix

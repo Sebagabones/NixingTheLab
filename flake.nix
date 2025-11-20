@@ -18,6 +18,10 @@
       url = "github:pinpox/lollypops";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     #    microvm.url = "github:astro/microvm.nix";
     #    microvm.inputs.nixpkgs.follows = "nixpkgs";
     #    niri = {
@@ -50,6 +54,10 @@
       nixpkgs.config.allowUnfree = true;
 
     } // {
+      agenix-rekey = inputs.agenix-rekey.configure {
+        userFlake = inputs.self;
+        inherit (inputs.self) nixosConfigurations;
+      };
 
       # Lollypops
       packages."x86_64-linux".lollypops =
