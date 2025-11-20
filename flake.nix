@@ -13,16 +13,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware = { url = "github:nixos/nixos-hardware/master"; };
-    agenix.url = "github:ryantm/agenix";   
-    lollypops = {url = "github:pinpox/lollypops";
-    inputs.nixpkgs.follows = "nixpkgs";}
-#    microvm.url = "github:astro/microvm.nix";
-#    microvm.inputs.nixpkgs.follows = "nixpkgs";
-#    niri = {
-#      url = "github:sodiboo/niri-flake";
-#      inputs.nixpkgs.follows = "nixpkgs";
-#      inputs.nixpkgs-stable.follows = "";
-#    };
+    agenix.url = "github:ryantm/agenix";
+    lollypops = {
+      url = "github:pinpox/lollypops";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    #    microvm.url = "github:astro/microvm.nix";
+    #    microvm.inputs.nixpkgs.follows = "nixpkgs";
+    #    niri = {
+    #      url = "github:sodiboo/niri-flake";
+    #      inputs.nixpkgs.follows = "nixpkgs";
+    #      inputs.nixpkgs-stable.follows = "";
+    #    };
     stylix = {
       url = "github:nix-community/stylix/";
       inputs.nixpkgs.follows = "nixpkgs";
