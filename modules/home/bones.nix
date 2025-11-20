@@ -53,6 +53,10 @@
     gh
     cmake
     fastmod
+    sops
+    age
+    bitwarden-cli
+    bitwarden-desktop
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
