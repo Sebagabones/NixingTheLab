@@ -56,8 +56,6 @@ in {
       epkgs.pyvenv
       epkgs.numpydoc
       epkgs.git-gutter
-      epkgs.nix-modeline
-      epkgs.nix-mode
       epkgs.latex-pretty-symbols
       epkgs.treemacs
       epkgs.treemacs-projectile
