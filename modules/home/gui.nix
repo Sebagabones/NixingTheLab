@@ -1,18 +1,21 @@
 { inputs, lib, flake, nixpkgs, pkgs, perSystem, ... }: {
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
-    flake.homeModules.gnome
+    # flake.homeModules.gnome
     flake.homeModules.miracle-wm
     ./theming.nix
     flake.homeModules.spotify
     inputs.nixcord.homeModules.nixcord
     flake.homeModules.emacs
-
+    flake.homeModules.sway
   ];
   # qt.platformTheme.name = lib.mkForce "adwaita";
   qt.platformTheme.name = lib.mkForce "kvantum";
 
-  catppuccin = { kvantum.enable = true; };
+  catppuccin = {
+    kvantum.enable = true;
+    waybar.enable = true;
+  };
   stylix = {
     targets = {
       qt.platform = "qtct";

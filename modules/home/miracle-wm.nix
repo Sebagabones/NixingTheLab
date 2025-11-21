@@ -1,6 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
+
   config = {
 
     xdg.configFile."miracle-wm.config".text = ''
@@ -33,7 +34,6 @@
             key = "KEY_B";
           }
         ];
-
         startup_apps = [
           {
             command = "waybar";
@@ -99,6 +99,22 @@
         }];
 
       };
+    services.flameshot = {
+      enable = true;
+      settings = {
+        General = {
+          disabledTrayIcon = true;
+          showStartupLaunchMessage = false;
+          useGrimAdapter = true;
+        };
+      };
+    };
+    home.packages = with pkgs; [
+      grim # screenshot functionality
+      slurp # screenshot functionality
+      mako # notification system developed by swaywm maintainer
+    ];
+
     programs = {
       waybar = {
         enable = true;

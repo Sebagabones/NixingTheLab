@@ -1,6 +1,7 @@
 { config, lib, pkgs, nixpkgs, inputs, ... }: {
   imports = [ inputs.xremap-flake.nixosModules.default ./theming.nix ];
-  environment.systemPackages = with pkgs; [ pinentry-gnome3 ];
+
+  environment.systemPackages = with pkgs; [ pinentry-gnome3 miracle-wm ];
 
   stylix = {
     image = ../../assests/background.png;
@@ -14,7 +15,10 @@
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
+    wayland.miracle-wm.enable = true;
+
   };
+
   hardware = {
     graphics = {
       enable = true;
@@ -30,15 +34,32 @@
   security = {
     rtkit.enable = true;
     polkit.enable = true;
+    pam.loginLimits = [{
+      domain = "@users";
+      item = "rtprio";
+      type = "-";
+      value = 1;
+    }];
+
   };
 
   services = {
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command =
+            "${pkgs.tuigreet}/bin/tuigreet --time --cmd miracle-wm-session";
+          user = "greeter";
+        };
+      };
+    };
     xserver = {
       enable = true;
       desktopManager = { xterm.enable = false; };
     };
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    # displayManager.gdm.enable = true;
+    # desktopManager.gnome.enable = true;
 
     dbus = {
       enable = true;
