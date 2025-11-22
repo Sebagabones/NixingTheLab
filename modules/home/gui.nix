@@ -177,7 +177,7 @@
       frameless = true; # Set some Vencord options
       plugins = {
         userMessagesPronouns = { enable = true; };
-        clearURLs.enable = true;
+        clearUrls.enable = true;
         #   hideAttachments.enable = true; # Enable a Vencord plugin
         #   # ignoreActivities = { # Enable a plugin and set some options
         #   #   enable = true;
