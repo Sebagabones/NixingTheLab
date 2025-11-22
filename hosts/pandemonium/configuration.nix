@@ -16,10 +16,17 @@ in {
     ./website.nix
 
   ];
+  age.rekey = {
+    hostPubkey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG3uJxriXS2Y22lRjah2eVWHu9GfKS8JkNbrYE2FXWZz";
+    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
+    storageMode = "local";
+    localStorageDir = ./. + "/secrets/";
+  };
+  age.secrets = { secret1.rekeyFile = ../../secrets/secret1.age; };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
   boot = {
     # swraid = {
     #   enable = true;

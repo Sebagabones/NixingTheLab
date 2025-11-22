@@ -12,6 +12,13 @@
     # "${inputs.nixos-hardware}/common/pc"
   ];
 
+  age.rekey = {
+    hostPubkey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
+    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
+    storageMode = "local";
+    localStorageDir = ./. + "/secrets/";
+  };
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = { efiSupport = true; };

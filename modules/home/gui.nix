@@ -12,7 +12,10 @@
   # qt.platformTheme.name = lib.mkForce "adwaita";
   qt.platformTheme.name = lib.mkForce "kvantum";
 
-  catppuccin = { kvantum.enable = true; };
+  catppuccin = {
+    kvantum.enable = true;
+    vscode.profiles.default.enable = false;
+  };
   stylix = {
     targets = {
       qt.platform = "qtct";

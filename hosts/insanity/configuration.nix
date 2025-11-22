@@ -31,10 +31,12 @@ in {
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
     masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
     storageMode = "local";
-    localStorageDir = ./. + "/hosts/${hostname}/secrets/";
+    localStorageDir = ./. + "/secrets";
   };
-  rekey.secrets = { };
-  age.secrets.secret1.rekeyFile = ../../secrets/secret1.age;
+  # rekey.secrets = { secret1.file = ../../secrets/secret1.age; };
+  age.secrets = {
+    # secret1.rekeyFile = ../../secrets/secret1.age;
+  };
   # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages

@@ -27,6 +27,15 @@ in {
     # "${inputs.nixos-hardware}/common/pc"
   ];
 
+  age.rekey = {
+    hostPubkey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q"; # needs to be updated
+    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
+    storageMode = "local";
+    localStorageDir = ./. + "secrets/";
+
+  };
+  rekey.secrets = { };
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-uuid";
