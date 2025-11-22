@@ -15,7 +15,6 @@
     accent = "mauve";
     cache.enable = true;
     bat.enable = false;
-    vscode.profiles.default.enable = false;
     starship.enable = false;
     btop.enable = true;
     gh-dash.enable = true;
@@ -56,7 +55,6 @@
     sops
     age
     bitwarden-cli
-    bitwarden-desktop
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };

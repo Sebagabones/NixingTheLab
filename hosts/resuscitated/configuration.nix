@@ -13,6 +13,15 @@
   # optional, useful when the builder has a faster internet connection than yours
   nix.extraOptions = "  builders-use-substitutes = true\n";
 
+  age.rekey = {
+    hostPubkey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q"; # needs to be updated
+    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
+    storageMode = "local";
+    localStorageDir = ./. + "secrets/";
+
+  };
+  rekey.secrets = { };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "kvm_intel" ];

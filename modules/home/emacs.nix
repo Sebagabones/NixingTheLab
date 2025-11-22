@@ -1,9 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  userCfg = config.users.bones;
-  cfg = userCfg.programs.emacs;
-  emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
-
+let emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
 in {
   # Automatically install Emacs config from here.
   home.mutableFile.${emacsInstallation} = {
