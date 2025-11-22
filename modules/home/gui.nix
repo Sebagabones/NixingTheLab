@@ -93,7 +93,7 @@
       };
       extensions.packages = with perSystem.firefox-addons; [
         adnauseam
-        # bitwarden
+        bitwarden
         lovely-forks
         react-devtools
         refined-github
@@ -139,6 +139,7 @@
     # kdePackages.dolphin
     openscad-unstable
     prusa-slicer
+    bitwarden-desktop
   ];
 
   # pointerCursor = {

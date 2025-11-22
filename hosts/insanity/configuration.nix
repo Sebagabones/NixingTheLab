@@ -1,8 +1,11 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }: {
-  networking.hostName = "insanity";
+{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }:
+let hostname = "insanity";
+
+in {
+
+  networking.hostName = "${hostname}";
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
-
   imports = [
     flake.nixosModules.base
     flake.nixosModules.gui
@@ -23,6 +26,15 @@
         [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
     };
   };
+  age.rekey = {
+    hostPubkey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
+    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
+    storageMode = "local";
+    localStorageDir = ./. + "/hosts/${hostname}/secrets/";
+  };
+  rekey.secrets = { };
+  age.secrets.secret1.rekeyFile = ../../secrets/secret1.age;
   # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages

@@ -4,3 +4,4 @@
 # nix
 result
 result-*
+/secrets/secret.key
