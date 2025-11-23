@@ -55,6 +55,7 @@
     sops
     age
     bitwarden-cli
+    nix-fast-build
   ];
 
   home.sessionVariables = { TERM = "xterm-direct"; };
