@@ -43,6 +43,7 @@
     catppuccin.url = "github:catppuccin/nix/";
     nixcord = { url = "github:kaylorben/nixcord"; };
     mahoosivelyGay = { url = "github:Sebagabones/reallymahoosivelygay"; };
+    spotifyBackend = { url = "github:Sebagabones/mySpotifyBackend"; };
     # temp
   };
 
