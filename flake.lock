@@ -984,11 +984,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1763894033,
-        "narHash": "sha256-+qrlvvFUV7g08PxmWVAk4PEG6gwy8FDIDk1XwIsMFrY=",
+        "lastModified": 1763905211,
+        "narHash": "sha256-1+PA2LwPxvYNhSzRqfljjDaI0KLyzojj7YUnjy4vn5E=",
         "owner": "Sebagabones",
         "repo": "reallymahoosivelygay",
-        "rev": "c4d0555eb628c5db282bc1eb8b791e2f5777e5b7",
+        "rev": "aa694dffc6082ca08a42342d42b8df84383a45d0",
         "type": "github"
       },
       "original": {

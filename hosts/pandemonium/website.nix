@@ -29,7 +29,7 @@ in {
         ${domain} = {
           enableACME = true;
           forceSSL = true;
-          locations."/" = { root = "${website}/client"; };
+          locations."/" = { root = "${website}"; };
         };
         "api.${domain}" = {
           forceSSL = true;
