@@ -33,7 +33,8 @@ in {
         };
         "api.${domain}" = {
           forceSSL = true;
-          useACMEHost = "mahoosively.gay";
+          enableACME = true;
+          # useACMEHost = "api.mahoosively.gay";
           locations."/" = {
             recommendedProxySettings = false;
             proxyPass = "http://127.0.0.1:${spotifyPort}/";
