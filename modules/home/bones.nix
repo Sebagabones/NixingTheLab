@@ -32,6 +32,7 @@
       with python-pkgs; [
         pygments
         git
+        latexminted
         catppuccin
         mypy
         weasyprint
