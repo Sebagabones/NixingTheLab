@@ -20,7 +20,8 @@ in {
           wrapfig amsmath ulem hyperref capt-of fontspec listings xcolor
           koma-script multirow lstfiracode fvextra upquote lineno tcolorbox
           latexmk minted enumitem catppuccinpalette pdfcol caption
-          latex-graphics-dev booktabs framed changepage;
+          latex-graphics-dev booktabs framed changepage svg transparent moreverb
+          xkeyval standalone luatex85 pdflscape etoc titlesec preview luatex;
       });
     in [
       delta
@@ -36,8 +37,18 @@ in {
       ghostscript_headless
       gnupg
       # Remote connection to gui emacs session
-      cage
       waypipe
+      prettier
+      inkscape
+      pdf2svg
+      tex
+      # The following is requried, but is currently in ./bones.nix
+      # (python3.withPackages (python-pkgs:
+      # with python-pkgs; [
+      #   pygments
+      #   latexminted
+      #   catppuccin
+      # ]))
     ];
 
   programs.emacs = {
