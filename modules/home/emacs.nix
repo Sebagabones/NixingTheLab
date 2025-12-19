@@ -130,6 +130,7 @@ in {
       epkgs.nerd-icons
       epkgs.helpful
       epkgs.compile-angel
+      epkgs.package-lint
     ];
   };
   # Add org-protocol support.
