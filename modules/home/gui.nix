@@ -126,7 +126,6 @@
     overskride
     libinput
     pavucontrol
-    # spotify
     teams-for-linux
     networkmanagerapplet
     wlr-randr
@@ -140,6 +139,7 @@
     esptool
     # End ELEC3020
     # kdePackages.dolphin
+    freecad-wayland
     openscad-unstable
     prusa-slicer
     bitwarden-desktop
@@ -164,7 +164,7 @@
   };
   programs.nixcord = {
     enable = true; # Enable Nixcord (It also installs Discord)
-    vesktop.enable = true; # Vesktop
+    # vesktop.enable = true; # Vesktop
     # dorion.enable = true; # Dorion
     # quickCss = "some CSS"; # quickCSS file
     config = {
@@ -177,7 +177,7 @@
       frameless = true; # Set some Vencord options
       plugins = {
         userMessagesPronouns = { enable = true; };
-        clearUrLs.enable = true;
+
         #   hideAttachments.enable = true; # Enable a Vencord plugin
         #   # ignoreActivities = { # Enable a plugin and set some options
         #   #   enable = true;

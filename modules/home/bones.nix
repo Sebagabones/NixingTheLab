@@ -35,7 +35,6 @@
         latexminted
         catppuccin
         mypy
-        weasyprint
         rich
       ]))
     cmatrix
