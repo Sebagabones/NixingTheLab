@@ -43,8 +43,8 @@
         name = "FiraCode";
       };
       emoji = {
-        package = pkgs.fira-code-symbols;
-        name = "FiraCode Symbols";
+        package = pkgs.noto-fonts-monochrome-emoji;
+        name = "Noto Emoji";
       };
     };
   };
