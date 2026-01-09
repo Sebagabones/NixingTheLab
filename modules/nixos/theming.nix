@@ -43,7 +43,7 @@
         name = "FiraCode";
       };
       emoji = {
-        package = pkgs.noto-fonts-monochrome-emoji;
+        package = pkgs.noto-fonts-color-emoji;
         name = "Noto Emoji";
       };
     };
