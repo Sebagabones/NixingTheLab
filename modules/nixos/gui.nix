@@ -14,6 +14,8 @@
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
+    ssh.askPassword =
+      lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
   };
   hardware = {
     graphics = {

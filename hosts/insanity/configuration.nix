@@ -83,6 +83,7 @@ in {
   # };
   # services.xserver.displayManager.gdm.enable = true;
   services.displayManager.gdm.autoSuspend = false;
+  services.desktopManager.plasma6.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
   systemd.targets.sleep.enable = true;
   systemd.targets.suspend.enable = true;

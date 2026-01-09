@@ -44,6 +44,7 @@
     nixcord = { url = "github:kaylorben/nixcord"; };
     mahoosivelyGay = { url = "github:Sebagabones/reallymahoosivelygay"; };
     spotifyBackend = { url = "github:Sebagabones/mySpotifyBackend"; };
+    plasma-manager = { url = "github:nix-community/plasma-manager"; };
     # temp
   };
 
