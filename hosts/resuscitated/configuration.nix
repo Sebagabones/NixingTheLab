@@ -67,7 +67,6 @@
   # };
 
   lollypops.deployment.group = "Personal";
-  home-manager.backupFileExtension = "backup";
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
   stylix.enable = true;

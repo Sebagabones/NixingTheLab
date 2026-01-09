@@ -103,7 +103,6 @@ in {
   # services.libinput.enable = true;
 
   lollypops.deployment.group = "Personal";
-  home-manager.backupFileExtension = "backup";
 
   stylix.enable = true;
 }
