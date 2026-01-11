@@ -14,6 +14,8 @@
 
   # qt.platformTheme.name = lib.mkForce "adwaita";
   qt.platformTheme.name = lib.mkForce "kvantum";
+  qt.style.name = lib.mkForce "kvantum";
+
   programs.emacs = { package = pkgs.emacs-pgtk; };
   catppuccin = {
     kvantum.enable = true;

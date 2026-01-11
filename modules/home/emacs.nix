@@ -25,7 +25,11 @@ in {
       });
     in [
       delta
-      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      aspell
+      aspellDicts.en
+      aspellDicts.en-computers
+      aspellDicts.en-science
+      # (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ])) #https://github.com/nixos/nixpkgs/issues/476684
       hunspellDicts.en-au
       hunspellDicts.en_GB-large
       basedpyright

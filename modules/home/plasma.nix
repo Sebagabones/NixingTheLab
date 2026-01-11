@@ -1,31 +1,77 @@
-{ inputs, lib, flake, nixpkgs, pkgs, perSystem, ... }: {
+{ inputs, lib, flake, nixpkgs, pkgs, config, perSystem, ... }: {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
+
+  # stylix = { targets.kde = { decorations = "kwin4_decoration_qml_plastik"; }; };
 
   programs.plasma = {
     enable = true;
+    # overrideConfig = true;
+    session.sessionRestore.restoreOpenApplicationsOnLogin =
+      "startWithEmptySession";
+
     panels = [
       # Windows-like panel at the bottom
       {
         location = "top";
         widgets = [
           "org.kde.plasma.kickoff"
+          # {
+          #   name = "org.kde.plasma.pager";
+          #   config = {
+          #     showApplicationIconsOnWindowOutlines = true;
+          #     displayedText = "desktopNumber";
+          #   };
+          # }
+          "org.kde.plasma.pager"
           {
-            name = "org.kde.plasma.pager";
-            config = {
-              showApplicationIconsOnWindowOutlines = true;
-              displayedText = "desktopNumber";
+            iconTasks = {
+              launchers = [
+                "applications:org.kde.dolphin.desktop"
+                "applications:org.kde.konsole.desktop"
+                "org.kde.plasma.webbrowser"
+              ];
             };
-
           }
-          "org.kde.plasma.icontasks"
+
+          # { plasmaPanelColorizer = { general = { enable = true; }; }; }
+
+          {
+            plasmusicToolbar = {
+              songText = { scrolling = { behavior = "alwaysScroll"; }; };
+            };
+          }
+
+          {
+            systemMonitor = {
+              title = "CPU Usage/Temp";
+              showTitle = false;
+              displayStyle = "org,kde.ksysguard.piechart";
+              sensors = [{
+                name = "cpu/all/usage";
+                label = "CPU Usage (%)";
+                color =
+                  "${config.lib.stylix.colors.base0D-rgb-r}, ${config.lib.stylix.colors.base0D-rgb-g}, ${config.lib.stylix.colors.base0D-rgb-b},  ";
+              }];
+              totalSensors = [ "cpu/all/temperature" ];
+            };
+          }
+
           "org.kde.plasma.marginsseparator"
           "org.kde.plasma.systemtray"
           "org.kde.plasma.digitalclock"
         ];
       }
     ];
-    # workspace = {
-    # }
+    workspace = {
+      iconTheme = "Papirus";
+      # lookAndFeel = "stylix";
+      cursor.theme = "Banana";
+      # theme = "default";
+      # windowDecorations = {
+      #   library = "org.kde.kwin.aurorae";
+      #   theme = "kwin4_decoration_qml_plastik";
+      # };
+    };
 
     krunner = {
       position = "center";
@@ -378,7 +424,7 @@
         ''
           {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc.Xwayland.Scale = 1;
-      plasma-localerc.Formats.LANG = "en_US.UTF-8";
+      plasma-localerc.Formats.LANG = "en_AU.UTF-8";
       spectaclerc.ImageSave.translatedScreenshotsFolder = "Screenshots";
       spectaclerc.VideoSave.translatedScreencastsFolder = "Screencasts";
     };

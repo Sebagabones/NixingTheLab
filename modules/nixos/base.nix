@@ -157,7 +157,7 @@
       };
     };
   };
-  home-manager = { backupFileExtension = "newerbackup"; };
+  home-manager = { backupFileExtension = "backup.abcde"; };
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono
