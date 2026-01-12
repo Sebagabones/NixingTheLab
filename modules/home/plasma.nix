@@ -15,20 +15,22 @@
         location = "top";
         widgets = [
           "org.kde.plasma.kickoff"
-          # {
-          #   name = "org.kde.plasma.pager";
-          #   config = {
-          #     showApplicationIconsOnWindowOutlines = true;
-          #     displayedText = "desktopNumber";
-          #   };
-          # }
-          "org.kde.plasma.pager"
+          {
+            name = "org.kde.plasma.pager";
+            config = {
+              General = {
+                showWindowOutlines = true;
+                showApplicationIconsOnWindowOutlines = true;
+                displayedText = "desktopNumber";
+              };
+            };
+          }
+          # "org.kde.plasma.pager"
           {
             iconTasks = {
               launchers = [
                 "applications:org.kde.dolphin.desktop"
                 "applications:org.kde.konsole.desktop"
-                "org.kde.plasma.webbrowser"
               ];
             };
           }
