@@ -139,7 +139,7 @@
     esptool
     # End ELEC3020
     # kdePackages.dolphin
-    freecad-wayland
+    freecad
     openscad-unstable
     prusa-slicer
     bitwarden-desktop
