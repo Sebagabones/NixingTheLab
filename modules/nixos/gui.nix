@@ -14,6 +14,8 @@
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
+    ssh.askPassword =
+      lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
   };
   hardware = {
     graphics = {
@@ -39,6 +41,7 @@
     };
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
+    desktopManager.plasma6.enable = true;
 
     dbus = {
       enable = true;

@@ -124,7 +124,6 @@
     group = "Servers";
     ssh.opts = [ " -p 8909" ];
   };
-  home-manager.backupFileExtension = "backup";
 
   stylix.enable = true;
 }

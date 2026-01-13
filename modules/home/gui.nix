@@ -1,21 +1,27 @@
 { inputs, lib, flake, nixpkgs, pkgs, perSystem, ... }: {
+
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
     flake.homeModules.gnome
+    flake.homeModules.plasma
+
     flake.homeModules.miracle-wm
     ./theming.nix
     flake.homeModules.spotify
     inputs.nixcord.homeModules.nixcord
     flake.homeModules.emacs
-
   ];
+
   # qt.platformTheme.name = lib.mkForce "adwaita";
   qt.platformTheme.name = lib.mkForce "kvantum";
+  qt.style.name = lib.mkForce "kvantum";
+
   programs.emacs = { package = pkgs.emacs-pgtk; };
   catppuccin = {
     kvantum.enable = true;
     vscode.profiles.default.enable = false;
   };
+
   stylix = {
     targets = {
       qt.platform = "qtct";

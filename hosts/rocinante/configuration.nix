@@ -149,7 +149,6 @@ in {
     group = "Servers";
     ssh.opts = [ " -p ${toString sshPort}" ];
   };
-  home-manager.backupFileExtension = "backup";
 
   stylix.enable = true;
 }
