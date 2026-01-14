@@ -1,21 +1,42 @@
-{ flake, pkgs, perSystem, ... }:
+{
+  flake,
+  pkgs,
+  perSystem,
+  ...
+}:
 
 {
-
+  home.packages = [ pkgs.git-agecrypt ];
   programs = {
     git = {
       settings = {
         user.name = "Sebgabones";
         user.email = "133339614+Sebagabones@users.noreply.github.com";
 
-        init = { defaultBranch = "main"; };
-        user = { signingkey = "~/.ssh/id_ed25519.pub"; };
-        push = { autoSetupRemote = true; };
-        pull = { rebase = false; };
-        commit = { gpgsign = true; };
-        gpg = { format = "ssh"; };
-        merge = { conflictStyle = "diff3"; };
-        diff = { external = "difft"; };
+        init = {
+          defaultBranch = "main";
+        };
+        user = {
+          signingkey = "~/.ssh/id_ed25519.pub";
+        };
+        push = {
+          autoSetupRemote = true;
+        };
+        pull = {
+          rebase = false;
+        };
+        commit = {
+          gpgsign = true;
+        };
+        gpg = {
+          format = "ssh";
+        };
+        merge = {
+          conflictStyle = "diff3";
+        };
+        diff = {
+          external = "difft";
+        };
         delta = {
           features = "side-by-side";
           syntax-theme = "tokyoNightNight";
@@ -31,7 +52,9 @@
           line-numbers-plus-style = "#449dab";
           line-numbers-zero-style = "#3b4261";
         };
-        github = { user = "Sebagabones"; };
+        github = {
+          user = "Sebagabones";
+        };
       };
       enable = true;
       # delta = {
@@ -46,6 +69,8 @@
         display = "side-by-side";
       };
     };
-    mergiraf = { enable = true; };
+    mergiraf = {
+      enable = true;
+    };
   };
 }

@@ -1,17 +1,15 @@
 { pkgs, ... }:
-pkgs.stdenv.mkDerivation {
+let
+  repo = builtins.fetchGit {
+    url = "git@github.com:Sebagabones/BerkeleyMono.git";
+    ref = "main";
+    rev = "a983a6393d955ba5854f8479187bbf92e3f1a5ec";
+  };
+in pkgs.stdenv.mkDerivation {
   pname = "berkeley-mono-font";
   version = "20260114";
 
-  src = builtins.fetchGit {
-    url = "ssh://git@github.com/Sebagabones/BerkeleyMono.git";
-    rev = "a983a6393d955ba5854f8479187bbf92e3f1a5ec";
-    # publicKeys = [{
-    #   type = "ssh-ed25519";
-    #   key =
-    #     "AAAAC3NzaC1lZDI1NTE5AAAAIArPKULJOid8eS6XETwUjO48/HKBWl7FTCK0Z//fplDi";
-    # }];
-  };
+  src = repo;
 
   # unpackPhase = ''
   #   runHook preUnpack
