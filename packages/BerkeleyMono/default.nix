@@ -1,32 +1,38 @@
 { pkgs, ... }:
-let
-  repo = builtins.fetchGit {
-    url = "git@github.com:Sebagabones/BerkeleyMono.git";
-    ref = "main";
-    rev = "a983a6393d955ba5854f8479187bbf92e3f1a5ec";
-  };
-in pkgs.stdenv.mkDerivation {
+pkgs.stdenv.mkDerivation {
   pname = "berkeley-mono-font";
   version = "20260114";
 
-  src = repo;
+  src = ../../assests/Berkeley_Mono.zip;
 
-  # unpackPhase = ''
-  #   runHook preUnpack
-  #   # mkdir $src/
-  #   ${pkgs.unzip}/bin/unzip $src
-  #
-  #   runHook postUnpack
-  # '';
+  unpackPhase = ''
+    runHook preUnpack
+    mkdir -p $TMPDIR/fonts/
+
+    ${pkgs.unzip}/bin/unzip $src -d $TMPDIR/fonts/
+
+#    shopt -s nullglob   # avoid literal *.ttf if no matches
+
+    # for font in $TMPDIR/fonts/untouched-berkeley-mono/*.ttf; do
+    # (
+    #     ${pkgs.nerd-font-patcher} --careful --mono --complete --outputdir nerdfont-patch $font
+    # ) &
+    # done
+
+#    wait
+    runHook postUnpack
+  '';
 
   installPhase = ''
     runHook preInstall
-    mkdir -p $out/share/fonts
-    # mkdir $src/patched
-    cp -R $src/ $out/share/fonts/opentype/
-    cp -R $src/ $out/share/fonts/truetype/
+    # mkdir -p  $out/share/fonts/opentype/
+    # mkdir -p  $out/share/fonts/truetype/
+    mkdir -p $out/share/fonts/truetype/
+   # mkdir -p $out/share/fonts/truetype/berkeley_mono_nerdfont 
+    # cp -R $TMPDIR/fonts $out/share/fonts/opentype/
+    cp -R $TMPDIR/fonts/ $out/share/fonts/truetype/berkeley_mono
+    #mv $TMPDIR/fonts/nerdfont-patch $out/share/fonts/truetype/
 
-    # install -Dm644 berkeley-mono-patched/*.ttf -t $out/share/fonts/truetype
 
     runHook postInstall
   '';

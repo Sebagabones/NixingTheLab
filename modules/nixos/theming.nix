@@ -1,7 +1,15 @@
-{ inputs, config, lib, pkgs, perSystem, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  perSystem,
+  ...
+}:
 let
   BerkeleyMono = pkgs.callPackage ../../packages/BerkeleyMono { inherit pkgs; };
-in {
+in
+{
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   stylix = {
