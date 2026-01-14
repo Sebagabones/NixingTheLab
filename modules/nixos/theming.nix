@@ -1,6 +1,7 @@
-{ inputs, config, lib, pkgs, ... }:
-
-{
+{ inputs, config, lib, pkgs, perSystem, ... }:
+let
+  BerkeleyMono = pkgs.callPackage ../../packages/BerkeleyMono { inherit pkgs; };
+in {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   stylix = {
@@ -31,16 +32,16 @@
     # };
     fonts = {
       serif = {
-        package = pkgs.fira-code;
-        name = "FiraCode";
+        package = BerkeleyMono;
+        name = "Berkeley Mono";
       };
       sansSerif = {
-        package = pkgs.fira-code;
-        name = "FiraCode";
+        package = BerkeleyMono;
+        name = "Berkeley Mono";
       };
       monospace = {
-        package = pkgs.fira-code;
-        name = "FiraCode";
+        package = BerkeleyMono;
+        name = "Berkeley Mono";
       };
       emoji = {
         package = pkgs.noto-fonts-color-emoji;
