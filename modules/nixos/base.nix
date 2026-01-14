@@ -1,4 +1,15 @@
-{ modulesPath, config, lib, pkgs, inputs, nixpkgs, flake, home-manager, ... }: {
+{
+  modulesPath,
+  config,
+  lib,
+  pkgs,
+  inputs,
+  nixpkgs,
+  flake,
+  home-manager,
+  ...
+}:
+{
 
   imports = [
     inputs.lollypops.nixosModules.default
@@ -33,7 +44,9 @@
   };
 
   # Hostname
-  networking.hosts = { "127.0.0.1" = [ "${config.networking.hostName}" ]; };
+  networking.hosts = {
+    "127.0.0.1" = [ "${config.networking.hostName}" ];
+  };
   # Users
   boot.tmp.useTmpfs = true;
   boot.tmp.tmpfsSize = "50%";
@@ -43,12 +56,17 @@
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
-      config.nix.registry;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@wheel" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       min-free = 100 * 1024 * 1024;
       max-free = 1024 * 1024 * 1024;
       max-jobs = "auto";
@@ -82,8 +100,13 @@
       isNormalUser = true;
       home = "/home/bones";
       description = "Seb Gazey";
-      extraGroups =
-        [ "qemu-libvirtd" "libvirtd" "wheel" "networkmanager" "podman" ];
+      extraGroups = [
+        "qemu-libvirtd"
+        "libvirtd"
+        "wheel"
+        "networkmanager"
+        "podman"
+      ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/tDV1v2CN6VqwEgq86fV5M9k7/L5pEFNbe1XYe28P+ bones@revitalised"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN12V+UEifCUlKMCvngUp96LgUrw/aDp0zKLgVnHJ0Op bones@sanity"
@@ -93,8 +116,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbb35UUZb29bK6mv+LnHyfnhUtX9n7952K8RCpWxq1Q bones@resuscitated"
         " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6+WU+Zq90kEknj/hdU0T/oAX0quQojFxfZHe3tkP5L bones@pandemonium"
       ];
-      hashedPassword =
-        "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
+      hashedPassword = "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
     };
   };
 
@@ -137,13 +159,14 @@
     settings = {
       PasswordAuthentication = false;
       X11Forwarding = false;
-      PermitRootLogin =
-        "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+      PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
   };
 
   # Nix Settings
-  nix.settings = { download-buffer-size = 671088640; };
+  nix.settings = {
+    download-buffer-size = 671088640;
+  };
 
   # Lollypops
   systemd.tmpfiles.settings = {
@@ -157,7 +180,9 @@
       };
     };
   };
-  home-manager = { backupFileExtension = "backup.abcdefg"; };
+  home-manager = {
+    backupFileExtension = "backup.abcdefghi";
+  };
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono
@@ -167,8 +192,7 @@
 
   stylix.enable = true;
 
-  environment.pathsToLink =
-    [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
+  environment.pathsToLink = [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
   # Services
 
   programs.nix-ld = {
@@ -182,6 +206,8 @@
 
     ];
   };
-  programs.direnv = { enable = true; };
+  programs.direnv = {
+    enable = true;
+  };
 
 }

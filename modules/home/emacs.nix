@@ -34,7 +34,7 @@ in {
       hunspellDicts.en_GB-large
       basedpyright
       multimarkdown
-      nixfmt-classic
+      nixfmt
       openscad-lsp
       ccls
       imagemagick

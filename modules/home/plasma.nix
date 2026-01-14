@@ -1,13 +1,25 @@
-{ inputs, lib, flake, nixpkgs, pkgs, config, perSystem, ... }: {
+{
+  inputs,
+  lib,
+  flake,
+  nixpkgs,
+  pkgs,
+  config,
+  perSystem,
+  ...
+}:
+{
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
 
   # stylix = { targets.kde = { decorations = "kwin4_decoration_qml_plastik"; }; };
-
+  home.packages = with pkgs; [
+    papirus-icon-theme
+    kdePackages.krohnkite
+  ];
   programs.plasma = {
     enable = true;
     # overrideConfig = true;
-    session.sessionRestore.restoreOpenApplicationsOnLogin =
-      "startWithEmptySession";
+    session.sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
 
     panels = [
       # Windows-like panel at the bottom
@@ -39,7 +51,11 @@
 
           {
             plasmusicToolbar = {
-              songText = { scrolling = { behavior = "alwaysScroll"; }; };
+              songText = {
+                scrolling = {
+                  behavior = "alwaysScroll";
+                };
+              };
             };
           }
 
@@ -48,12 +64,13 @@
               title = "CPU Usage/Temp";
               showTitle = false;
               displayStyle = "org,kde.ksysguard.piechart";
-              sensors = [{
-                name = "cpu/all/usage";
-                label = "CPU Usage (%)";
-                color =
-                  "${config.lib.stylix.colors.base0D-rgb-r}, ${config.lib.stylix.colors.base0D-rgb-g}, ${config.lib.stylix.colors.base0D-rgb-b},  ";
-              }];
+              sensors = [
+                {
+                  name = "cpu/all/usage";
+                  label = "CPU Usage (%)";
+                  color = "${config.lib.stylix.colors.base0D-rgb-r}, ${config.lib.stylix.colors.base0D-rgb-g}, ${config.lib.stylix.colors.base0D-rgb-b},  ";
+                }
+              ];
               totalSensors = [ "cpu/all/temperature" ];
             };
           }
@@ -78,15 +95,14 @@
     krunner = {
       position = "center";
       historyBehavior = "enableSuggestions";
-      shortcuts = { launch = "Meta+d"; };
+      shortcuts = {
+        launch = "Meta+d";
+      };
     };
     shortcuts = {
-      ActivityManager.switch-to-activity-2d1286e0-0620-4f4d-8692-472acee6b87d =
-        [ ];
-      "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" =
-        "Meta+Alt+L";
-      "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" =
-        "Meta+Alt+K";
+      ActivityManager.switch-to-activity-2d1286e0-0620-4f4d-8692-472acee6b87d = [ ];
+      "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
+      "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" = "Meta+Alt+K";
       kaccess."Toggle Screen Reader On and Off" = "Meta+Alt+S";
       kmix.decrease_microphone_volume = "Microphone Volume Down";
       kmix.decrease_volume = "Volume Down";
@@ -94,10 +110,16 @@
       kmix.increase_microphone_volume = "Microphone Volume Up";
       kmix.increase_volume = "Volume Up";
       kmix.increase_volume_small = "Shift+Volume Up";
-      kmix.mic_mute = [ "Microphone Mute" "Meta+Volume Mute" ];
+      kmix.mic_mute = [
+        "Microphone Mute"
+        "Meta+Volume Mute"
+      ];
       kmix.mute = "Volume Mute";
       ksmserver."Halt Without Confirmation" = [ ];
-      ksmserver."Lock Session" = [ "Meta+L" "Screensaver" ];
+      ksmserver."Lock Session" = [
+        "Meta+L"
+        "Screensaver"
+      ];
       ksmserver."Log Out" = "Ctrl+Alt+Del";
       ksmserver."Log Out Without Confirmation" = [ ];
       ksmserver.LogOut = [ ];
@@ -110,7 +132,10 @@
       kwin."Decrease Opacity" = [ ];
       kwin."Edit Tiles" = "Meta+T";
       kwin.Expose = "Ctrl+F9";
-      kwin.ExposeAll = [ "Ctrl+F10" "Launch (C)" ];
+      kwin.ExposeAll = [
+        "Ctrl+F10"
+        "Launch (C)"
+      ];
       kwin.ExposeClass = "Ctrl+F7";
       kwin.ExposeClassCurrentDesktop = [ ];
       kwin."Grid View" = "Meta+G";
@@ -207,17 +232,26 @@
       kwin."Switch to Screen to the Right" = [ ];
       kwin."Toggle Night Color" = [ ];
       kwin."Toggle Window Raise/Lower" = [ ];
-      kwin."Walk Through Windows" = [ "Meta+Tab" "Alt+Tab" ];
-      kwin."Walk Through Windows (Reverse)" =
-        [ "Meta+Shift+Tab" "Alt+Shift+Tab" ];
+      kwin."Walk Through Windows" = [
+        "Meta+Tab"
+        "Alt+Tab"
+      ];
+      kwin."Walk Through Windows (Reverse)" = [
+        "Meta+Shift+Tab"
+        "Alt+Shift+Tab"
+      ];
       kwin."Walk Through Windows Alternative" = [ ];
       kwin."Walk Through Windows Alternative (Reverse)" = [ ];
-      kwin."Walk Through Windows of Current Application" = [ "Meta+`" "Alt+`" ];
-      kwin."Walk Through Windows of Current Application (Reverse)" =
-        [ "Meta+~" "Alt+~" ];
+      kwin."Walk Through Windows of Current Application" = [
+        "Meta+`"
+        "Alt+`"
+      ];
+      kwin."Walk Through Windows of Current Application (Reverse)" = [
+        "Meta+~"
+        "Alt+~"
+      ];
       kwin."Walk Through Windows of Current Application Alternative" = [ ];
-      kwin."Walk Through Windows of Current Application Alternative (Reverse)" =
-        [ ];
+      kwin."Walk Through Windows of Current Application Alternative (Reverse)" = [ ];
       kwin."Window Above Other Windows" = [ ];
       kwin."Window Below Other Windows" = [ ];
       kwin."Window Close" = "Meta+Q";
@@ -296,7 +330,10 @@
       kwin."Window to Screen 7" = [ ];
       kwin.disableInputCapture = "Meta+Shift+Esc";
       kwin.view_actual_size = [ ];
-      kwin.view_zoom_in = [ "Meta++" "Meta+=" ];
+      kwin.view_zoom_in = [
+        "Meta++"
+        "Meta+="
+      ];
       kwin.view_zoom_out = "Meta+-";
       mediacontrol.mediavolumedown = [ ];
       mediacontrol.mediavolumeup = [ ];
@@ -306,26 +343,27 @@
       mediacontrol.playpausemedia = "Media Play";
       mediacontrol.previousmedia = "Media Previous";
       mediacontrol.stopmedia = "Media Stop";
-      org_kde_powerdevil."Decrease Keyboard Brightness" =
-        "Keyboard Brightness Down";
-      org_kde_powerdevil."Decrease Screen Brightness" =
-        "Monitor Brightness Down";
-      org_kde_powerdevil."Decrease Screen Brightness Small" =
-        "Shift+Monitor Brightness Down";
+      org_kde_powerdevil."Decrease Keyboard Brightness" = "Keyboard Brightness Down";
+      org_kde_powerdevil."Decrease Screen Brightness" = "Monitor Brightness Down";
+      org_kde_powerdevil."Decrease Screen Brightness Small" = "Shift+Monitor Brightness Down";
       org_kde_powerdevil.Hibernate = "Hibernate";
-      org_kde_powerdevil."Increase Keyboard Brightness" =
-        "Keyboard Brightness Up";
+      org_kde_powerdevil."Increase Keyboard Brightness" = "Keyboard Brightness Up";
       org_kde_powerdevil."Increase Screen Brightness" = "Monitor Brightness Up";
-      org_kde_powerdevil."Increase Screen Brightness Small" =
-        "Shift+Monitor Brightness Up";
+      org_kde_powerdevil."Increase Screen Brightness Small" = "Shift+Monitor Brightness Up";
       org_kde_powerdevil.PowerDown = "Power Down";
       org_kde_powerdevil.PowerOff = "Power Off";
       org_kde_powerdevil.Sleep = "Sleep";
       org_kde_powerdevil."Toggle Keyboard Backlight" = "Keyboard Light On/Off";
       org_kde_powerdevil."Turn Off Screen" = [ ];
-      org_kde_powerdevil.powerProfile = [ "Battery" "Meta+B" ];
+      org_kde_powerdevil.powerProfile = [
+        "Battery"
+        "Meta+B"
+      ];
       plasmashell."Slideshow Wallpaper Next Image" = [ ];
-      plasmashell."activate application launcher" = [ "Meta" "Alt+F1" ];
+      plasmashell."activate application launcher" = [
+        "Meta"
+        "Alt+F1"
+      ];
       plasmashell."activate task manager entry 1" = [ ];
       plasmashell."activate task manager entry 10" = [ ];
       plasmashell."activate task manager entry 2" = [ ];
@@ -360,10 +398,8 @@
       baloofilerc.General."exclude filters" =
         "*~,*.part,*.o,*.la,*.lo,*.loT,*.moc,moc_*.cpp,qrc_*.cpp,ui_*.h,cmake_install.cmake,CMakeCache.txt,CTestTestfile.cmake,libtool,config.status,confdefs.h,autom4te,conftest,confstat,Makefile.am,*.gcode,.ninja_deps,.ninja_log,build.ninja,*.csproj,*.m4,*.rej,*.gmo,*.pc,*.omf,*.aux,*.tmp,*.po,*.vm*,*.nvram,*.rcore,*.swp,*.swap,lzo,litmain.sh,*.orig,.histfile.*,.xsession-errors*,*.map,*.so,*.a,*.db,*.qrc,*.ini,*.init,*.img,*.vdi,*.vbox*,vbox.log,*.qcow2,*.vmdk,*.vhd,*.vhdx,*.sql,*.sql.gz,*.ytdl,*.tfstate*,*.class,*.pyc,*.pyo,*.elc,*.qmlc,*.jsc,*.fastq,*.fq,*.gb,*.fasta,*.fna,*.gbff,*.faa,po,CVS,.svn,.git,_darcs,.bzr,.hg,CMakeFiles,CMakeTmp,CMakeTmpQmake,.moc,.obj,.pch,.uic,.npm,.yarn,.yarn-cache,__pycache__,node_modules,node_packages,nbproject,.terraform,.venv,venv,core-dumps,lost+found";
       baloofilerc.General."exclude filters version" = 9;
-      kactivitymanagerdrc.activities."2d1286e0-0620-4f4d-8692-472acee6b87d" =
-        "Default";
-      kactivitymanagerdrc.main.currentActivity =
-        "2d1286e0-0620-4f4d-8692-472acee6b87d";
+      kactivitymanagerdrc.activities."2d1286e0-0620-4f4d-8692-472acee6b87d" = "Default";
+      kactivitymanagerdrc.main.currentActivity = "2d1286e0-0620-4f4d-8692-472acee6b87d";
       kded5rc.Module-device_automounter.autoload = false;
       kdeglobals.KDE.AnimationDurationFactor = 0.35355339059327373;
       kdeglobals.WM.activeBackground = "30,30,46";
@@ -396,35 +432,25 @@
       kwinrc.Script-krohnkite.tileLayoutOrder = 4;
       kwinrc.Tiling.padding = 4;
       kwinrc."Tiling/01ae9022-4ff6-4c2a-b986-009599f48c63/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/0b7bf014-4fb4-42b0-98af-bbe486858d61/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/26e1fa62-5e87-4146-94c8-d9e3ae76094e/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/33331143-0ef1-4737-a271-d64886a71664/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/7c1269c5-7360-4b8a-9cbe-f31cd63fe9f0/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/93c60cd4-b90c-4e38-afac-6290727bc793/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/b35962ee-be7f-401b-8a56-580cb149d3b5/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/e2a5f9b0-5407-4380-ac51-d19a569d0b8d/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/e2e61a31-a41b-45df-860d-69b1cbea956c/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc."Tiling/eefec68d-81c9-4f93-b5a3-7018ed71847a/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
-        ''
-          {"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
+        ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc.Xwayland.Scale = 1;
       plasma-localerc.Formats.LANG = "en_AU.UTF-8";
       spectaclerc.ImageSave.translatedScreenshotsFolder = "Screenshots";
