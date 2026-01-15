@@ -1,9 +1,19 @@
-{ inputs, config, lib, pkgs, flake, perSystem, ... }: {
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  flake,
+  perSystem,
+  ...
+}:
+{
   home.stateVersion = "24.11";
   programs.home-manager.enable = true;
 
   imports = [
     ./mutable-files.nix
+    # flake.homeModules.gpg
     flake.homeModules.git
     flake.homeModules.theming
     inputs.catppuccin.homeModules.catppuccin
@@ -28,15 +38,16 @@
     lsd
     clang-tools
     procs
-    (python3.withPackages (python-pkgs:
-      with python-pkgs; [
+    (python3.withPackages (
+      python-pkgs: with python-pkgs; [
         pygments
         git
         latexminted
         catppuccin
         mypy
         rich
-      ]))
+      ]
+    ))
     cmatrix
     clang
     unzip
@@ -56,9 +67,12 @@
     age
     bitwarden-cli
     nix-fast-build
+    expect
   ];
 
-  home.sessionVariables = { TERM = "xterm-direct"; };
+  home.sessionVariables = {
+    TERM = "xterm-direct";
+  };
 
   programs = {
     fzf.enable = true;
@@ -76,22 +90,31 @@
     lazygit = {
       enable = true;
       settings = {
-        gui =
-          { # Wanted catppuccin, however nix catppuccin module just made a new config file with other settings missing, so instead:
-            theme = {
-              activeBorderColor = [ "#cba6f7" "bold" ];
-              inactiveBorderColor = [ "#a6adc8" ];
-              optionsTextColor = [ "#89b4fa" ];
-              selectedLineBgColor = [ "#313244" ];
-              cherryPickedCommitBgColor = [ "#45475a" ];
-              cherryPickedCommitFgColor = [ "#cba6f7" ];
-              unstagedChangesColor = [ "#f38ba8" ];
-              defaultFgColor = [ "#cdd6f4" ];
-              searchingActiveBorderColor = [ "#f9e2af" ];
-            };
-            authorColors = { "*" = "#b4befe"; };
+        gui = {
+          # Wanted catppuccin, however nix catppuccin module just made a new config file with other settings missing, so instead:
+          theme = {
+            activeBorderColor = [
+              "#cba6f7"
+              "bold"
+            ];
+            inactiveBorderColor = [ "#a6adc8" ];
+            optionsTextColor = [ "#89b4fa" ];
+            selectedLineBgColor = [ "#313244" ];
+            cherryPickedCommitBgColor = [ "#45475a" ];
+            cherryPickedCommitFgColor = [ "#cba6f7" ];
+            unstagedChangesColor = [ "#f38ba8" ];
+            defaultFgColor = [ "#cdd6f4" ];
+            searchingActiveBorderColor = [ "#f9e2af" ];
           };
-        git = { paging = { externalDiffCommand = "difft --color=always"; }; };
+          authorColors = {
+            "*" = "#b4befe";
+          };
+        };
+        git = {
+          paging = {
+            externalDiffCommand = "difft --color=always";
+          };
+        };
       };
     };
 
@@ -131,7 +154,9 @@
           hostname = "mahoosively.gay";
           port = 7856;
         };
-        ucc = { hostname = "ssh.ucc.asn.au"; };
+        ucc = {
+          hostname = "ssh.ucc.asn.au";
+        };
       };
 
     };
@@ -145,7 +170,9 @@
         # batgrep
         batwatch
       ];
-      config = { theme = "tokyoNightNight"; };
+      config = {
+        theme = "tokyoNightNight";
+      };
       themes = {
         tokyoNightNight = {
           src = pkgs.fetchFromGitHub {
@@ -172,8 +199,7 @@
       history.size = 10000;
       sessionVariables = {
         EDITOR = "emacs";
-        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE =
-          "fg=#${config.lib.stylix.colors.base03-hex},underline"; # can't be arsed trying to convert hex to xterm, so this is hopefully good enough
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=#${config.lib.stylix.colors.base03-hex},underline"; # can't be arsed trying to convert hex to xterm, so this is hopefully good enough
       };
 
       oh-my-zsh = {
@@ -252,8 +278,7 @@
         };
         python = {
           symbol = "";
-          format =
-            "[Python](bold mauve) [$version [($virtualenv)](dimmed mauve)](dimmed mauve)";
+          format = "[Python](bold mauve) [$version [($virtualenv)](dimmed mauve)](dimmed mauve)";
           pyenv_version_name = true;
           detect_extensions = [ "py" ];
           detect_folders = [ ];
@@ -321,7 +346,9 @@
           success_symbol = "[───────────────](overlay0)";
           error_symbol = "[───────────────](red)";
         };
-        package = { disabled = true; };
+        package = {
+          disabled = true;
+        };
         battery = {
           full_symbol = "● ";
           charging_symbol = "◉ ";
@@ -339,6 +366,8 @@
         };
       };
     };
-    gh-dash = { enable = true; };
+    gh-dash = {
+      enable = true;
+    };
   };
 }

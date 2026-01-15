@@ -1,7 +1,18 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }:
-let hostname = "insanity";
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  config,
+  ...
+}:
+let
+  hostname = "insanity";
 
-in {
+in
+{
 
   networking.hostName = "${hostname}";
   system.stateVersion = "25.05";
@@ -22,13 +33,18 @@ in {
     # boot.kernelModules = [ "kvm_intel" ];
     initrd = {
       kernelModules = [ "amdgpu" ];
-      availableKernelModules =
-        [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
     };
   };
   age.rekey = {
-    hostPubkey =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
+    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
     masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
     storageMode = "local";
     localStorageDir = ./. + "/secrets";
@@ -42,8 +58,7 @@ in {
   # Packages
   networking.interfaces.enp6s0.wakeOnLan.enable = true;
   # environment.systemPackages = with pkgs; [ miracle-wm ];
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # hardware.graphics = {
   #   enable = true;
   #   enable32Bit = true;
@@ -52,10 +67,8 @@ in {
   # hardware.bluetooth.enable = true;
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall =
-      true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall =
-      false; # Open ports in the firewall for Source Dedicated Server
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
     extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
   environment.systemPackages = with pkgs; [

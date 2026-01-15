@@ -4,6 +4,6 @@ Some day I may document this, but for now glhf
 
 note to myself, setting up a new machine that has the ablity to deploy will require you to add your age key to secrets/secret.key
 
-After that, you may need to setup git-agecrypt, but you may be able to just run ~git-agecrypt config add -r "<ssh public key>" -p assests/Berkeley_Mono.zip~ and also add the same ssh key to known/authorised hosts ect ect
+After that, you may need to setup git-crypt, but you may just be able to import your gpg key (~gpg --batch --import <file.private-key>~ ~$expect -c 'spawn gpg --edit-key 9436F65232B1A8576F8E988614CFB56CDE807D15 trust quit; send "5\ry\r"; expect eof~ )  also add a ssh key to known/authorised hosts ect ect
 
 (and you may note the =Berkeley_Mono.zip= file in =assests= - don’t worry, its encrypted)

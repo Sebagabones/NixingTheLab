@@ -8,6 +8,7 @@
 }:
 let
   BerkeleyMono = pkgs.callPackage ../../packages/BerkeleyMono { inherit pkgs; };
+  # NOTE: If building this without access to berkeley mono, change this to something like pkgs.fira-code;
 in
 {
   imports = [ inputs.stylix.nixosModules.stylix ];

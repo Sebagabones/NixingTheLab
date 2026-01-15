@@ -6,7 +6,7 @@
 }:
 
 {
-  home.packages = [ pkgs.git-agecrypt ];
+  home.packages = [ pkgs.git-crypt ];
   programs = {
     git = {
       settings = {
