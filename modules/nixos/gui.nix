@@ -1,10 +1,26 @@
-{ config, lib, pkgs, nixpkgs, inputs, ... }: {
-  imports = [ inputs.xremap-flake.nixosModules.default ./theming.nix ];
-  environment.systemPackages = with pkgs; [ pinentry-gnome3 ];
+{
+  config,
+  lib,
+  pkgs,
+  nixpkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    inputs.xremap-flake.nixosModules.default
+    ./theming.nix
+  ];
+  environment.systemPackages = with pkgs; [
+    pinentry-tty
+    pinentry-gnome3
+  ];
 
   stylix = {
     image = ../../assests/background.png;
-    targets.qt = { enable = true; };
+    targets.qt = {
+      enable = true;
+    };
     cursor = {
       package = pkgs.banana-cursor;
       name = "Banana";
@@ -14,8 +30,7 @@
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
-    ssh.askPassword =
-      lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+    ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
   };
   hardware = {
     graphics = {
@@ -25,8 +40,7 @@
     bluetooth.enable = true;
   };
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   # Packages
 
   security = {
@@ -37,7 +51,9 @@
   services = {
     xserver = {
       enable = true;
-      desktopManager = { xterm.enable = false; };
+      desktopManager = {
+        xterm.enable = false;
+      };
     };
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
@@ -60,7 +76,10 @@
     libinput.enable = true;
 
     blueman.enable = true;
-    udev.packages = [ pkgs.platformio-core.udev pkgs.openocd ]; # ELEC3020
+    udev.packages = [
+      pkgs.platformio-core.udev
+      pkgs.openocd
+    ]; # ELEC3020
     avahi = {
       enable = true;
       nssmdns4 = true;
@@ -69,7 +88,10 @@
 
     printing = {
       enable = true;
-      drivers = with pkgs; [ cups-filters cups-browsed ];
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
     };
     xremap = {
       # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
@@ -77,10 +99,14 @@
       enable = true;
       serviceMode = "user";
       userName = "bones";
-      config.modmap = [{
-        name = "Global";
-        remap = { "CapsLock" = "Ctrl"; }; # globally remap CapsLock to Ctrl
-      }];
+      config.modmap = [
+        {
+          name = "Global";
+          remap = {
+            "CapsLock" = "Ctrl";
+          }; # globally remap CapsLock to Ctrl
+        }
+      ];
     };
   };
   networking = {
