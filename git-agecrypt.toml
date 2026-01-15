@@ -1,5 +1,0 @@
-[config]
-"assests/Berkeley_Mono.zip" = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbb35UUZb29bK6mv+LnHyfnhUtX9n7952K8RCpWxq1Q bones@resuscitated",
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt1AaEyY9HIs6qhdW7IrlpWiCTWdm8gqblW6Hvu1naU bones@insanity",
-]

@@ -1,1 +1,2 @@
-assests/Berkeley_Mono.zip filter=git-crypt 
+.gitattributes !filter !diff
+assests/Berkeley_Mono.zip filter=git-crypt diff=git-crypt
