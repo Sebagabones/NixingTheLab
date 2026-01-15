@@ -12,7 +12,6 @@
     ./theming.nix
   ];
   environment.systemPackages = with pkgs; [
-    pinentry-tty
     pinentry-gnome3
   ];
 
@@ -27,11 +26,17 @@
       size = 32;
     };
   };
+  services.gnome.gcr-ssh-agent.enable = false;
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
-    ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+    ssh = {
+      startAgent = true;
+      askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+      enableAskPassword = true;
+    };
   };
+
   hardware = {
     graphics = {
       enable = true;

@@ -69,7 +69,9 @@
     nix-fast-build
     expect
   ];
-
+  programs.gpg = {
+    enable = true;
+  };
   home.sessionVariables = {
     TERM = "xterm-direct";
   };
