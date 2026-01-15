@@ -181,7 +181,7 @@
     };
   };
   home-manager = {
-    backupFileExtension = "backup.abcdefghij";
+    backupFileExtension = "backup.abcdefghijk";
   };
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
