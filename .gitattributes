@@ -1,1 +1,1 @@
-assests/Berkeley_Mono.zip filter=git-crypt diff='git-crypt textconv = unzip -c -a'
+assests/Berkeley_Mono.zip filter=git-crypt 
