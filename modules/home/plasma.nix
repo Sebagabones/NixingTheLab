@@ -10,15 +10,35 @@
 }:
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
-
-  # stylix = { targets.kde = { decorations = "kwin4_decoration_qml_plastik"; }; };
+  home.file.".face".source = ../../assests/Parrot.png; # https://www.pexels.com/photo/red-blue-and-green-bird-on-tree-1331819/
+  stylix = {
+    targets.kde = {
+      enable = false;
+      useWallpaper = true;
+      # decorations = "kwin4_decoration_qml_plastik";
+    };
+  };
   home.packages = with pkgs; [
-    papirus-icon-theme
+    # papirus-icon-theme
+    (catppuccin-papirus-folders.override {
+      flavor = "mocha";
+      accent = "mauve";
+    })
     kdePackages.krohnkite
+    (catppuccin-kde.override {
+      flavour = [ "mocha" ];
+      accents = [ "mauve" ];
+      winDecStyles = [ "classic" ];
+    })
+    (catppuccin-kvantum.override {
+      accent = "mauve";
+      variant = "mocha";
+    })
+    kdePackages.qtstyleplugin-kvantum
   ];
   programs.plasma = {
     enable = true;
-    # overrideConfig = true;
+    overrideConfig = true;
     session.sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
 
     panels = [
@@ -27,10 +47,16 @@
         location = "top";
         widgets = [
           "org.kde.plasma.kickoff"
+          # {
+          #   kickerdash = {
+          #     search = {
+          #       expandSearchResults = true;
+          #     };
+          #   };
+          # }
           {
-            name = "org.kde.plasma.pager";
-            config = {
-              General = {
+            pager = {
+              general = {
                 showWindowOutlines = true;
                 showApplicationIconsOnWindowOutlines = true;
                 displayedText = "desktopNumber";
@@ -49,15 +75,15 @@
 
           # { plasmaPanelColorizer = { general = { enable = true; }; }; }
 
-          {
-            plasmusicToolbar = {
-              songText = {
-                scrolling = {
-                  behavior = "alwaysScroll";
-                };
-              };
-            };
-          }
+          # {
+          #   plasmusicToolbar = {
+          #     songText = {
+          #       scrolling = {
+          #         behavior = "alwaysScroll";
+          #       };
+          #     };
+          #   };
+          # }
 
           {
             systemMonitor = {
@@ -83,15 +109,21 @@
     ];
     workspace = {
       iconTheme = "Papirus";
-      # lookAndFeel = "stylix";
+      lookAndFeel = "Catppuccin-Mocha-Mauve";
       cursor.theme = "Banana";
+      splashScreen = {
+        theme = "org.kde.breeze.desktop";
+        engine = "KSplashQML";
+      };
+      wallpaper = ../../assests/background.png;
       # theme = "default";
+      widgetStyle = "Windows";
       # windowDecorations = {
       #   library = "org.kde.kwin.aurorae";
       #   theme = "kwin4_decoration_qml_plastik";
       # };
     };
-
+    kscreenlocker.appearance.wallpaper = ../../assests/background.png;
     krunner = {
       position = "center";
       historyBehavior = "enableSuggestions";
@@ -401,6 +433,7 @@
       kactivitymanagerdrc.activities."2d1286e0-0620-4f4d-8692-472acee6b87d" = "Default";
       kactivitymanagerdrc.main.currentActivity = "2d1286e0-0620-4f4d-8692-472acee6b87d";
       kded5rc.Module-device_automounter.autoload = false;
+
       kdeglobals.KDE.AnimationDurationFactor = 0.35355339059327373;
       kdeglobals.WM.activeBackground = "30,30,46";
       kdeglobals.WM.activeBlend = "249,226,175";
@@ -408,6 +441,10 @@
       kdeglobals.WM.inactiveBackground = "30,30,46";
       kdeglobals.WM.inactiveBlend = "69,71,90";
       kdeglobals.WM.inactiveForeground = "205,214,244";
+      kdeglobals.KDE.widgetStyle = "Windows";
+      kwinrc."org.kde.kdecoration2".theme = "kwin4_decoration_qml_plastik";
+      ksplashrc.KSplash.Theme = "org.kde.breeze.desktop";
+
       kwinrc.Desktops.Id_1 = "b35962ee-be7f-401b-8a56-580cb149d3b5";
       kwinrc.Desktops.Id_10 = "e2a5f9b0-5407-4380-ac51-d19a569d0b8d";
       kwinrc.Desktops.Id_2 = "0b7bf014-4fb4-42b0-98af-bbe486858d61";
@@ -452,7 +489,7 @@
       kwinrc."Tiling/eefec68d-81c9-4f93-b5a3-7018ed71847a/3ab34133-75f7-4b7a-be9e-3c1dcd5d7b5b".tiles =
         ''{"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}'';
       kwinrc.Xwayland.Scale = 1;
-      plasma-localerc.Formats.LANG = "en_AU.UTF-8";
+      plasma-localerc.Formats.LANG = "en_GB.UTF-8";
       spectaclerc.ImageSave.translatedScreenshotsFolder = "Screenshots";
       spectaclerc.VideoSave.translatedScreencastsFolder = "Screencasts";
     };
