@@ -13,21 +13,22 @@
     {
       devShells.x86_64-linux.default = pkgs.mkShell rec {
         nativeBuildInputs = [
-          pkgs.python313.withPackages
-          (ps: [
-            ps.pygments
-            ps.catppuccin
-            ps.webcolors
-            ps.pdoc
-            ps.dot2tex
-            ps.webcolors
-            ps.pygments
-            ps.catppuccin
-            ps.pdoc
-            ps.dot2tex
-            ps.svg2tikz
-            ps.numpy
-          ])
+          (pkgs.python313.withPackages (
+            ps: with ps; [
+              pygments
+              catppuccin
+              webcolors
+              pdoc
+              dot2tex
+              webcolors
+              pygments
+              catppuccin
+              pdoc
+              dot2tex
+              svg2tikz
+              numpy
+            ]
+          ))
           (pkgs.texlive.combine {
             inherit (pkgs.texlive)
               scheme-basic
