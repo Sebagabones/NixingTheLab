@@ -27,6 +27,12 @@ in
     "${inputs.nixos-hardware}/common/pc"
   ];
 
+  services.hardware.openrgb = {
+    enable = true;
+    startupProfile = "Fans";
+    package = pkgs.openrgb-with-all-plugins;
+  };
+
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -72,6 +78,7 @@ in
     extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
   environment.systemPackages = with pkgs; [
+    openrgb-with-all-plugins
     protonup-qt
     wineWowPackages.waylandFull
   ];
