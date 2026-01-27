@@ -1,4 +1,11 @@
-{ lib, config, pkgs, inputs, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
   imports = [
     # ./pcSpecifics/dconfPc.nix
 

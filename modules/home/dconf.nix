@@ -1,6 +1,12 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 with lib.hm.gvariant;
 
@@ -15,8 +21,7 @@ with lib.hm.gvariant;
       color-scheme = "prefer-dark";
       cursor-size = 32;
       cursor-theme = "Banana";
-      document-font-name =
-        "${config.stylix.fonts.monospace.name}  11"; # for some reason this needs two spaces??
+      document-font-name = "${config.stylix.fonts.monospace.name}  11"; # for some reason this needs two spaces??
       enable-animations = true;
       font-name = "${config.stylix.fonts.monospace.name} 12";
       gtk-theme = "adw-gtk3";
@@ -34,7 +39,9 @@ with lib.hm.gvariant;
       grayscale = false;
     };
 
-    "org/gnome/desktop/session" = { idle-delay = mkUint32 300; };
+    "org/gnome/desktop/session" = {
+      idle-delay = mkUint32 300;
+    };
 
     "org/gnome/desktop/sound" = {
       event-sounds = true;
@@ -81,7 +88,9 @@ with lib.hm.gvariant;
       workspace-names = [ ];
     };
 
-    "org/gnome/mutter" = { dynamic-workspaces = false; };
+    "org/gnome/mutter" = {
+      dynamic-workspaces = false;
+    };
     "org/gnome/mutter/keybindings" = {
       toggle-tiled-left = [ ];
       toggle-tiled-right = [ ];
@@ -100,33 +109,29 @@ with lib.hm.gvariant;
       www = [ "<Super>w" ];
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
-      {
-        binding = "<Super>Return";
-        command = "ghostty";
-        name = "Ghostty";
-      };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Super>Return";
+      command = "ghostty";
+      name = "Ghostty";
+    };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" =
-      {
-        binding = "<Super>t";
-        command = "spotify";
-        name = "Spotify";
-      };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+      binding = "<Super>t";
+      command = "spotify";
+      name = "Spotify";
+    };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" =
-      {
-        binding = "<Super>b";
-        command = "discord";
-        name = "Discord";
-      };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+      binding = "<Super>b";
+      command = "discord";
+      name = "Discord";
+    };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" =
-      {
-        binding = "<Super>c";
-        command = "emacs";
-        name = "Emacs";
-      };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+      binding = "<Super>c";
+      command = "emacs";
+      name = "Emacs";
+    };
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
@@ -147,9 +152,13 @@ with lib.hm.gvariant;
       welcome-dialog-last-shown-version = "48.2";
     };
 
-    "org/gnome/shell/app-switcher" = { current-workspace-only = true; };
+    "org/gnome/shell/app-switcher" = {
+      current-workspace-only = true;
+    };
 
-    "org/gnome/shell/extensions/blur-my-shell" = { settings-version = 2; };
+    "org/gnome/shell/extensions/blur-my-shell" = {
+      settings-version = 2;
+    };
 
     "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
       brightness = 0.46;
@@ -209,8 +218,7 @@ with lib.hm.gvariant;
 
     "org/gnome/shell/extensions/pop-shell" = {
       active-hint = true;
-      hint-color-rgba =
-        "rgba(${config.lib.stylix.colors.base0D-rgb-r}, ${config.lib.stylix.colors.base0D-rgb-g}, ${config.lib.stylix.colors.base0D-rgb-b}, 1)";
+      hint-color-rgba = "rgba(${config.lib.stylix.colors.base0D-rgb-r}, ${config.lib.stylix.colors.base0D-rgb-g}, ${config.lib.stylix.colors.base0D-rgb-b}, 1)";
       search = [ "<Meta>minus" ];
       show-title = false;
       smart-gaps = true;
@@ -228,11 +236,12 @@ with lib.hm.gvariant;
       position = "leftmost-right";
     };
 
-    "org/gnome/shell/extensions/weatherornot" = { position = "clock-right"; };
+    "org/gnome/shell/extensions/weatherornot" = {
+      position = "clock-right";
+    };
 
     "org/gnome/shell/extensions/space-bar/appearance" = {
-      application-styles =
-        ".space-bar {n  -natural-hpadding: 12px;n}nn.space-bar-workspace-label.active {n  margin: 0 4px;n  background-color: rgba(255,255,255,0.3);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive.empty {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,0.5);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}";
+      application-styles = ".space-bar {n  -natural-hpadding: 12px;n}nn.space-bar-workspace-label.active {n  margin: 0 4px;n  background-color: rgba(255,255,255,0.3);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,1);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}nn.space-bar-workspace-label.inactive.empty {n  margin: 0 4px;n  background-color: rgba(0,0,0,0);n  color: rgba(255,255,255,0.5);n  border-color: rgba(0,0,0,0);n  font-weight: 700;n  border-radius: 4px;n  border-width: 0px;n  padding: 3px 8px;n}";
     };
 
     "org/gnome/shell/extensions/space-bar/behavior" = {
@@ -246,12 +255,16 @@ with lib.hm.gvariant;
       open-menu = [ "<Shift><Super>w" ];
     };
 
-    "org/gnome/shell/extensions/space-bar/state" = { version = 33; };
+    "org/gnome/shell/extensions/space-bar/state" = {
+      version = 33;
+    };
     "org/gnome/shell/extensions/notification-configurator" = {
       notification-timeout = 3000;
     };
 
-    "org/gnome/shell/extensions/user-theme" = { name = "Stylix"; };
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Stylix";
+    };
 
     "org/gnome/shell/keybindings" = {
       focus-active-notification = [ "<Shift><Super>n" ];

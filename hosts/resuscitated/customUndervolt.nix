@@ -1,14 +1,21 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 # NOTE: This isn’t really a /custom/ implementation, moreso just the older version that isn’t broken
 let
   cfg = config.services.undervolt;
 
-  mkPLimit = limit: window:
+  mkPLimit =
+    limit: window:
     if (limit == null && window == null) then
       null
     else
-      assert lib.asserts.assertMsg (limit != null && window != null)
-        "Both power limit and window must be set";
+      assert lib.asserts.assertMsg (
+        limit != null && window != null
+      ) "Both power limit and window must be set";
       "${toString limit} ${toString window}";
   cliArgs = lib.cli.toGNUCommandLine { } {
     inherit (cfg) verbose temp turbo;
@@ -29,7 +36,8 @@ let
     power-limit-long = mkPLimit cfg.p1.limit cfg.p1.window;
     power-limit-short = mkPLimit cfg.p2.limit cfg.p2.window;
   };
-in {
+in
+{
   options.services.customUndervolt = {
     enable = lib.mkEnableOption ''
       Undervolting service for Intel CPUs.
@@ -120,7 +128,12 @@ in {
       '';
     };
     p1.window = lib.mkOption {
-      type = with lib.types; nullOr (oneOf [ float int ]);
+      type =
+        with lib.types;
+        nullOr (oneOf [
+          float
+          int
+        ]);
       default = null;
       description = ''
         The P1 Time Window in seconds.
@@ -137,7 +150,12 @@ in {
       '';
     };
     p2.window = lib.mkOption {
-      type = with lib.types; nullOr (oneOf [ float int ]);
+      type =
+        with lib.types;
+        nullOr (oneOf [
+          float
+          int
+        ]);
       default = null;
       description = ''
         The P2 Time Window in seconds.
@@ -166,9 +184,11 @@ in {
       description = "Intel Undervolting Service";
 
       # Apply undervolt on boot, nixos generation switch and resume
-      wantedBy = [ "multi-user.target" "post-resume.target" ];
-      after =
-        [ "post-resume.target" ]; # Not sure why but it won't work without this
+      wantedBy = [
+        "multi-user.target"
+        "post-resume.target"
+      ];
+      after = [ "post-resume.target" ]; # Not sure why but it won't work without this
 
       serviceConfig = {
         Type = "oneshot";
@@ -178,8 +198,7 @@ in {
     };
 
     systemd.timers.customUndervolt = lib.mkIf cfg.useTimer {
-      description =
-        "Undervolt timer to ensure voltage settings are always applied";
+      description = "Undervolt timer to ensure voltage settings are always applied";
       partOf = [ "customUndervolt.service" ];
       wantedBy = [ "multi-user.target" ];
       timerConfig = {

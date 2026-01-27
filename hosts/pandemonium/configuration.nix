@@ -1,8 +1,18 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }:
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  config,
+  ...
+}:
 let
   sshPort = 7656;
   sshPortString = "";
-in {
+in
+{
   networking.hostName = "pandemonium";
   networking.domain = "lab.mahoosively.gay";
   system.stateVersion = "25.05";
@@ -17,13 +27,14 @@ in {
 
   ];
   age.rekey = {
-    hostPubkey =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG3uJxriXS2Y22lRjah2eVWHu9GfKS8JkNbrYE2FXWZz";
+    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG3uJxriXS2Y22lRjah2eVWHu9GfKS8JkNbrYE2FXWZz";
     masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
     storageMode = "local";
     localStorageDir = ./. + "/secrets/";
   };
-  age.secrets = { secret1.rekeyFile = ../../secrets/secret1.age; };
+  age.secrets = {
+    secret1.rekeyFile = ../../secrets/secret1.age;
+  };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot = {
@@ -45,7 +56,10 @@ in {
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" "mgag200" ];
+    kernelModules = [
+      "kvm-intel"
+      "mgag200"
+    ];
     extraModulePackages = [ ];
   };
   networking.hostId = "f70e81b8";
@@ -100,10 +114,9 @@ in {
     MDADM_MONITOR_ARGS = "--scan --syslog";
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      # perSystem.self.fanControl # Fan control for the IBM servers
-    ];
+  environment.systemPackages = with pkgs; [
+    # perSystem.self.fanControl # Fan control for the IBM servers
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -119,16 +132,14 @@ in {
   # ];
 
   hardware = {
-    cpu.intel.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     graphics = {
       enable = true;
       enable32Bit = true;
     };
   };
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   security = {
     rtkit.enable = true;
     polkit.enable = true;

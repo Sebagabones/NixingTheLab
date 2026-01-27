@@ -1,4 +1,11 @@
-{ inputs, flake, config, lib, pkgs, ... }:
+{
+  inputs,
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [

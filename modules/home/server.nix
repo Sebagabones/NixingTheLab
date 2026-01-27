@@ -1,4 +1,12 @@
-{ inputs, lib, flake, pkgs, perSystem, ... }: {
+{
+  inputs,
+  lib,
+  flake,
+  pkgs,
+  perSystem,
+  ...
+}:
+{
   imports = [ flake.homeModules.emacs ];
   # qt.platformTheme.name = lib.mkForce "adwaita";
   home.packages = [ pkgs.cage ];

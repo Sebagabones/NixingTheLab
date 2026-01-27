@@ -1,10 +1,10 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [ inputs.disko.nixosModules.disko ];
   disko.devices = {
     disk = {
       vdb = {
-        device =
-          "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S4EWNM0TB25096Z";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S4EWNM0TB25096Z";
         type = "disk";
         content = {
           type = "gpt";

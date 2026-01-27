@@ -1,4 +1,14 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }: {
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  config,
+  ...
+}:
+{
   networking.hostName = "bonesboundhome";
   networking.domain = "lab.mahoosively.gay";
   system.stateVersion = "25.05";
@@ -13,15 +23,16 @@
   ];
 
   age.rekey = {
-    hostPubkey =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
+    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q";
     masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
     storageMode = "local";
     localStorageDir = ./. + "/secrets/";
   };
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = { efiSupport = true; };
+  boot.loader.grub = {
+    efiSupport = true;
+  };
 
   # Networking
   systemd.network = {
@@ -29,7 +40,10 @@
 
     networks = {
       "10-lan" = {
-        matchConfig.Name = [ "eno5" "vm-*" ];
+        matchConfig.Name = [
+          "eno5"
+          "vm-*"
+        ];
         networkConfig.Bridge = "br0";
       };
 
@@ -69,10 +83,9 @@
     ];
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      perSystem.self.fanControl # Fan control for the IBM servers
-    ];
+  environment.systemPackages = with pkgs; [
+    perSystem.self.fanControl # Fan control for the IBM servers
+  ];
 
   systemd.services."fanControl" = {
     enable = true;
@@ -96,8 +109,14 @@
   # Networking
   networking.firewall = {
     enable = false;
-    allowedTCPPorts = [ 8909 9090 ];
-    allowedUDPPorts = [ 8909 9090 ];
+    allowedTCPPorts = [
+      8909
+      9090
+    ];
+    allowedUDPPorts = [
+      8909
+      9090
+    ];
   };
 
   boot.kernelModules = [ "mgag200" ]; # we love the Matrox G200
@@ -106,16 +125,14 @@
   # ];
 
   hardware = {
-    cpu.intel.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     graphics = {
       enable = true;
       enable32Bit = true;
     };
   };
 
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.dbus.enable = true;

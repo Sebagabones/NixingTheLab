@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   config = {
@@ -9,96 +15,97 @@
       touchpad-horizontal-scroll-speed-override=-1.0
     '';
 
-    xdg.configFile."miracle-wm.yaml".source =
-      (pkgs.formats.yaml { }).generate "miracle-wm.yaml" {
-        action_key = "meta";
+    xdg.configFile."miracle-wm.yaml".source = (pkgs.formats.yaml { }).generate "miracle-wm.yaml" {
+      action_key = "meta";
 
-        custom_actions = [
-          {
-            command = "fuzzel";
-            action = "down";
-            modifiers = [ "primary" ];
-            key = "KEY_D";
-          }
-          {
-            command = "firefox";
-            action = "down";
-            modifiers = [ "primary" ];
-            key = "KEY_W";
-          }
-          {
-            command = "discord";
-            action = "down";
-            modifiers = [ "primary" ];
-            key = "KEY_B";
-          }
-        ];
+      custom_actions = [
+        {
+          command = "fuzzel";
+          action = "down";
+          modifiers = [ "primary" ];
+          key = "KEY_D";
+        }
+        {
+          command = "firefox";
+          action = "down";
+          modifiers = [ "primary" ];
+          key = "KEY_W";
+        }
+        {
+          command = "discord";
+          action = "down";
+          modifiers = [ "primary" ];
+          key = "KEY_B";
+        }
+      ];
 
-        startup_apps = [
-          {
-            command = "waybar";
-            restart_on_death = true;
-          }
-          {
-            command = "swaybg -i  ${../../assests/background.png}";
-            restart_on_death = true;
-            in_systemd_scope = true;
-          }
-        ];
-        border = {
-          size = 2;
-          color = {
-            r = "${config.lib.stylix.colors.base03-rgb-r}";
-            g = "${config.lib.stylix.colors.base03-rgb-g}";
-            b = "${config.lib.stylix.colors.base03-rgb-b}";
-            a = "255";
-          };
-          focus_color = {
-            r = "${config.lib.stylix.colors.base0D-rgb-r}";
-            g = "${config.lib.stylix.colors.base0D-rgb-g}";
-            b = "${config.lib.stylix.colors.base0D-rgb-b}";
-            a = "255";
-          };
+      startup_apps = [
+        {
+          command = "waybar";
+          restart_on_death = true;
+        }
+        {
+          command = "swaybg -i  ${../../assests/background.png}";
+          restart_on_death = true;
+          in_systemd_scope = true;
+        }
+      ];
+      border = {
+        size = 2;
+        color = {
+          r = "${config.lib.stylix.colors.base03-rgb-r}";
+          g = "${config.lib.stylix.colors.base03-rgb-g}";
+          b = "${config.lib.stylix.colors.base03-rgb-b}";
+          a = "255";
         };
-        enable_animations = true;
+        focus_color = {
+          r = "${config.lib.stylix.colors.base0D-rgb-r}";
+          g = "${config.lib.stylix.colors.base0D-rgb-g}";
+          b = "${config.lib.stylix.colors.base0D-rgb-b}";
+          a = "255";
+        };
+      };
+      enable_animations = true;
 
-        animations = [
-          {
-            event = "window_open";
-            type = "grow";
-            function = "ease_out_back";
-            duration = 0.5;
-          }
-          {
-            event = "window_move";
-            type = "slide";
-            function = "ease_in_out_back";
-            duration = 0.25;
-          }
-          {
-            event = "window_close";
-            type = "shrink";
-            function = "ease_out_back";
-            duration = 0.25;
-          }
-          {
-            event = "workspace_switch";
-            type = "slide";
-            function = "ease_in_out_circ";
-            duration = 0.175;
-          }
-        ];
+      animations = [
+        {
+          event = "window_open";
+          type = "grow";
+          function = "ease_out_back";
+          duration = 0.5;
+        }
+        {
+          event = "window_move";
+          type = "slide";
+          function = "ease_in_out_back";
+          duration = 0.25;
+        }
+        {
+          event = "window_close";
+          type = "shrink";
+          function = "ease_out_back";
+          duration = 0.25;
+        }
+        {
+          event = "workspace_switch";
+          type = "slide";
+          function = "ease_in_out_circ";
+          duration = 0.175;
+        }
+      ];
 
-        terminal = "ghostty";
+      terminal = "ghostty";
 
-        default_action_overrides = [{
+      default_action_overrides = [
+        {
           name = "quit_active_window";
           action = "down";
           modifiers = [ "primary" ];
           key = "KEY_Q";
-        }];
+        }
+      ];
 
-      };
+    };
     programs = {
       waybar = {
         enable = true;
@@ -106,7 +113,10 @@
           mainBar = {
             layer = "top";
             # position = "left";
-            modules-left = [ "sway/workspaces" "sway/mode" ];
+            modules-left = [
+              "sway/workspaces"
+              "sway/mode"
+            ];
             modules-center = [ ];
             modules-right = [
               # "mpd"
@@ -122,7 +132,9 @@
               "clock"
             ];
 
-            "sway/mode" = { format = ''<span style="italic">{}</span>''; };
+            "sway/mode" = {
+              format = ''<span style="italic">{}</span>'';
+            };
 
             pulseaudio = {
               format = "{volume}% {icon} {format_source}";
@@ -136,7 +148,11 @@
                 phone = "";
                 portable = "";
                 car = "";
-                default = [ "" "" "" ];
+                default = [
+                  ""
+                  ""
+                  ""
+                ];
               };
               on-click = "pavucontrol";
               # scroll-step = 1;
@@ -154,19 +170,35 @@
               tooltip = false;
             };
 
-            memory = { format = "{}% "; };
+            memory = {
+              format = "{}% ";
+            };
 
             temperature = {
               critical-threshold = 80;
               format = "{temperatureC}°C {icon}";
-              format-icons = [ "" "" "" ];
+              format-icons = [
+                ""
+                ""
+                ""
+              ];
               # thermal-zone = 2;
               # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
             };
 
             backlight = {
               format = "{percent}% {icon}";
-              format-icons = [ "" "" "" "" "" "" "" "" "" ];
+              format-icons = [
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+              ];
               # device = "acpi_video1";
             };
 
@@ -181,12 +213,20 @@
               format-charging = "{capacity}% 󱊦";
               format-plugged = "{capacity}% ";
               format-alt = "{time} {icon}";
-              format-icons = [ "" "" "" "" "" ];
+              format-icons = [
+                ""
+                ""
+                ""
+                ""
+                ""
+              ];
               # format-good = "";
               # format-full = "";
             };
 
-            "battery#bat2" = { bat = "BAT2"; };
+            "battery#bat2" = {
+              bat = "BAT2";
+            };
 
             clock = {
               tooltip-format = ''
@@ -199,7 +239,9 @@
           };
         };
       };
-      wofi = { enable = true; };
+      wofi = {
+        enable = true;
+      };
     };
   };
 }

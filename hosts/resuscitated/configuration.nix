@@ -1,4 +1,14 @@
-{ flake, inputs, lib, perSystem, pkgs, nixpkgs, config, ... }: {
+{
+  flake,
+  inputs,
+  lib,
+  perSystem,
+  pkgs,
+  nixpkgs,
+  config,
+  ...
+}:
+{
   networking.hostName = "resuscitated";
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -15,8 +25,7 @@
   nix.extraOptions = "  builders-use-substitutes = true\n";
 
   age.rekey = {
-    hostPubkey =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q"; # needs to be updated
+    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q"; # needs to be updated
     masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
     storageMode = "local";
     localStorageDir = ./. + "/secrets";
@@ -67,7 +76,6 @@
   # };
 
   lollypops.deployment.group = "Personal";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   stylix.enable = true;
 }
