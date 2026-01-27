@@ -160,8 +160,13 @@
   #   gtk.enable = true;
   # };
 
+  home.file."${config.xdg.configHome}/gtk-2.0/gtkrc".force = true;
   gtk = {
     enable = true;
+    gtk2 = {
+      configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      force = true;
+    };
     cursorTheme = {
       name = "Banana";
       size = 32;
