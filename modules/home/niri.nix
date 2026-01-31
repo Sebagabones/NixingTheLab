@@ -12,10 +12,10 @@ let
   firefox = lib.getExe config.programs.firefox.package;
 in
 {
-  imports = [ inputs.niri.homeModules.niri ];
+  # imports = [ inputs.niri.homeModules.niri ];
 
   programs.niri = {
-    enable = true;
+    enable = false;
     # use the nixpkgs version because it's more up to date, and it's cached
     package = pkgs.niri;
     settings = {

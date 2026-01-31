@@ -172,6 +172,7 @@
     openscad-unstable
     prusa-slicer
     bitwarden-desktop
+    impression
   ];
 
   # pointerCursor = {
