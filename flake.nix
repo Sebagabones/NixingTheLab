@@ -12,7 +12,9 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware = { url = "github:nixos/nixos-hardware/master"; };
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware/master";
+    };
     agenix.url = "github:ryantm/agenix";
     lollypops = {
       url = "github:pinpox/lollypops";
@@ -41,30 +43,41 @@
     xremap-flake.url = "github:xremap/nix-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     catppuccin.url = "github:catppuccin/nix/";
-    nixcord = { url = "github:kaylorben/nixcord"; };
-    mahoosivelyGay = { url = "github:Sebagabones/reallymahoosivelygay"; };
-    spotifyBackend = { url = "github:Sebagabones/mySpotifyBackend"; };
-    plasma-manager = { url = "github:nix-community/plasma-manager"; };
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+    };
+    mahoosivelyGay = {
+      url = "github:Sebagabones/reallymahoosivelygay";
+    };
+    spotifyBackend = {
+      url = "github:Sebagabones/mySpotifyBackend";
+    };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+    };
     # temp
   };
 
-  outputs = inputs:
-    let inherit (inputs.nixpkgs) lib;
-    in inputs.blueprint {
+  outputs =
+    inputs:
+    let
+      inherit (inputs.nixpkgs) lib;
+    in
+    inputs.blueprint {
       inherit inputs;
       systems = [ "x86_64-linux" ];
       nixpkgs.config.allowUnfree = true;
 
-    } // {
+    }
+    // {
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
         inherit (inputs.self) nixosConfigurations;
       };
 
       # Lollypops
-      packages."x86_64-linux".lollypops =
-        inputs.lollypops.packages."x86_64-linux".default.override {
-          configFlake = inputs.self;
-        };
+      packages."x86_64-linux".lollypops = inputs.lollypops.packages."x86_64-linux".default.override {
+        configFlake = inputs.self;
+      };
     };
 }

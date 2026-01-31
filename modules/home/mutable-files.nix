@@ -1,20 +1,36 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 # gratefully borrowed from https://www.foodogsquared.one/posts/2023-03-24-managing-mutable-files-in-nixos/#a-better-way-to-manage-traditional-dotfiles-in-home-manager
 # (code from https://github.com/foo-dogsquared/nixos-config/blob/30f23d969620da60dff7f98aa91f798e36df48f5/modules/home-manager/files/mutable-files.nix)
 
 let
   cfg = config.home.mutableFile;
 
-  runtimeInputs =
-    lib.makeBinPath (with pkgs; [ coreutils archiver curl git gopass ]);
+  runtimeInputs = lib.makeBinPath (
+    with pkgs;
+    [
+      coreutils
+      archiver
+      curl
+      git
+      gopass
+    ]
+  );
 
   # An attribute set to be used to get the fetching script.
-  fetchScript = _: value:
+  fetchScript =
+    _: value:
     let
       url = lib.escapeShellArg value.url;
       path = lib.escapeShellArg value.path;
       extraArgs = lib.escapeShellArgs value.extraArgs;
-    in {
+    in
+    {
       git = ''
         [ -d ${path} ] || git clone ${extraArgs} ${url} ${path}
       '';
@@ -52,8 +68,15 @@ let
   # home-manager where it is expected to be limited to its associated home
   # directory. But that's for the user to know how their user interact with the
   # rest of the system.
-  fileType = baseDir:
-    { name, config, options, ... }: {
+  fileType =
+    baseDir:
+    {
+      name,
+      config,
+      options,
+      ...
+    }:
+    {
       options = {
         url = lib.mkOption {
           type = lib.types.str;
@@ -69,8 +92,7 @@ let
             The path of the mutable file. By default, it will be relative to the
             home directory.
           '';
-          example = lib.literalExpression
-            "\${config.xdg.userDirs.documents}/top-secret";
+          example = lib.literalExpression "\${config.xdg.userDirs.documents}/top-secret";
           default = name;
           apply = p: if lib.hasPrefix "/" p then p else "${baseDir}/${p}";
         };
@@ -87,7 +109,13 @@ let
         };
 
         type = lib.mkOption {
-          type = lib.types.enum [ "git" "fetch" "archive" "gopass" "custom" ];
+          type = lib.types.enum [
+            "git"
+            "fetch"
+            "archive"
+            "gopass"
+            "custom"
+          ];
           description = ''
             Type that configures the behavior for fetching the URL.
 
@@ -131,7 +159,10 @@ let
             {option}`config.home.mutableFile.<name>.type`.
           '';
           default = [ ];
-          example = [ "--depth" "1" ];
+          example = [
+            "--depth"
+            "1"
+          ];
         };
 
         postScript = lib.mkOption {
@@ -146,10 +177,10 @@ let
         };
       };
     };
-in {
+in
+{
   options.home.mutableFile = lib.mkOption {
-    type = with lib.types;
-      attrsOf (submodule (fileType config.home.homeDirectory));
+    type = with lib.types; attrsOf (submodule (fileType config.home.homeDirectory));
     description = ''
       An attribute set of mutable files and directories to be declaratively put
       into the home directory. Take note this is not exactly pure (or
@@ -174,7 +205,10 @@ in {
     systemd.user.services.fetch-mutable-files = {
       Unit = {
         Description = "Fetch mutable home-manager-managed files";
-        After = [ "default.target" "network-online.target" ];
+        After = [
+          "default.target"
+          "network-online.target"
+        ];
         Wants = [ "network-online.target" ];
       };
 
@@ -187,37 +221,42 @@ in {
         Type = "oneshot";
         RemainAfterExit = true;
 
-        ExecStart = let
-          mutableFilesCmds = lib.mapAttrsToList (path: value:
-            let
-              url = lib.escapeShellArg value.url;
-              path = lib.escapeShellArg value.path;
-            in ''
-              (
-                URL=${lib.escapeShellArg url}
-                FILEPATH=${lib.escapeShellArg path}
-                DIRNAME=$(dirname ${lib.escapeShellArg path})
-                mkdir -p "$DIRNAME"
-                ${(fetchScript path value).${value.type}}
-              )
-            '') cfg;
+        ExecStart =
+          let
+            mutableFilesCmds = lib.mapAttrsToList (
+              path: value:
+              let
+                url = lib.escapeShellArg value.url;
+                path = lib.escapeShellArg value.path;
+              in
+              ''
+                (
+                  URL=${lib.escapeShellArg url}
+                  FILEPATH=${lib.escapeShellArg path}
+                  DIRNAME=$(dirname ${lib.escapeShellArg path})
+                  mkdir -p "$DIRNAME"
+                  ${(fetchScript path value).${value.type}}
+                )
+              ''
+            ) cfg;
 
-          shellScript = pkgs.writeShellScriptBin "fetch-mutable-files" ''
-            export PATH=${runtimeInputs}''${PATH:-:$PATH}
-            ${lib.concatStringsSep "\n" mutableFilesCmds}
-          '';
-        in lib.getExe shellScript;
-
-        ExecStartPost = let
-          mutableFilesCmds =
-            lib.mapAttrsToList (path: value: value.postScript) cfg;
-
-          shellScript =
-            pkgs.writeShellScriptBin "fetch-mutable-files-post-script" ''
+            shellScript = pkgs.writeShellScriptBin "fetch-mutable-files" ''
               export PATH=${runtimeInputs}''${PATH:-:$PATH}
               ${lib.concatStringsSep "\n" mutableFilesCmds}
             '';
-        in lib.getExe shellScript;
+          in
+          lib.getExe shellScript;
+
+        ExecStartPost =
+          let
+            mutableFilesCmds = lib.mapAttrsToList (path: value: value.postScript) cfg;
+
+            shellScript = pkgs.writeShellScriptBin "fetch-mutable-files-post-script" ''
+              export PATH=${runtimeInputs}''${PATH:-:$PATH}
+              ${lib.concatStringsSep "\n" mutableFilesCmds}
+            '';
+          in
+          lib.getExe shellScript;
       };
 
       Install.WantedBy = [ "default.target" ];

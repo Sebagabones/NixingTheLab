@@ -9,16 +9,17 @@
   ...
 }:
 {
-  networking.hostName = "resuscitated";
-  system.stateVersion = "25.05";
+  networking.hostName = "x210";
+  system.stateVersion = "25.11";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   imports = [
     flake.nixosModules.base
     flake.nixosModules.gui
     ./disk.nix
-    ./customUndervolt.nix
-    "${inputs.nixos-hardware}/lenovo/thinkpad/t480"
+    "${inputs.nixos-hardware}/common/cpu/intel/meteor-lake"
+    "${inputs.nixos-hardware}/common/gpu/intel/meteor-lake"
+
   ];
   nix.distributedBuilds = false;
   # optional, useful when the builder has a faster internet connection than yours
@@ -32,29 +33,20 @@
 
   };
   rekey.secrets = { };
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "ahci"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+    "rtsx_usb_sdmmc"
+  ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "kvm_intel" ];
-  # boot.initrd.kernelModules = [ "amdgpu" ];
-  # programs.wayland.miracle-wm.enable = true;
-  # Packages
-
-  services.customUndervolt = {
-    enable = true;
-    useTimer = true;
-    tempBat = 85;
-    temp = 85;
-    coreOffset = -90;
-    p1 = {
-      limit = 38;
-      window = 27;
-    };
-
-    p2 = {
-      limit = 38;
-      window = 2.0e-3;
-    };
-  };
+  boot.kernelModules = [
+    "kvm_intel"
+  ];
 
   # services.tlp = {
   #   enable = true;

@@ -1,4 +1,14 @@
-{ inputs, lib, flake, nixpkgs, pkgs, perSystem, ... }: {
+{
+  config,
+  inputs,
+  lib,
+  flake,
+  nixpkgs,
+  pkgs,
+  perSystem,
+  ...
+}:
+{
 
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
@@ -16,7 +26,9 @@
   qt.platformTheme.name = lib.mkForce "kvantum";
   qt.style.name = lib.mkForce "kvantum";
 
-  programs.emacs = { package = pkgs.emacs-pgtk; };
+  programs.emacs = {
+    package = pkgs.emacs-pgtk;
+  };
   catppuccin = {
     kvantum.enable = true;
     vscode.profiles.default.enable = false;
@@ -26,8 +38,12 @@
     targets = {
       qt.platform = "qtct";
       nixcord.enable = false;
-      vscode = { enable = false; };
-      qt = { enable = false; };
+      vscode = {
+        enable = false;
+      };
+      qt = {
+        enable = false;
+      };
       firefox = {
         profileNames = [ "default" ];
         firefoxGnomeTheme.enable = true;
@@ -35,7 +51,9 @@
     };
   };
 
-  programs.fuzzel = { enable = true; };
+  programs.fuzzel = {
+    enable = true;
+  };
 
   programs.ghostty = {
     enable = true;
@@ -83,8 +101,7 @@
         "browser.newtabpage.enabled" = false;
         "browser.toolbars.bookmarks.visibility" = "never";
 
-        "browser.contentblocking.category" =
-          "standard"; # not strict because it conflicts with adnauseam
+        "browser.contentblocking.category" = "standard"; # not strict because it conflicts with adnauseam
         "layout.css.visited_links_enabled" = false;
 
         "signon.rememberSignons" = false;
@@ -111,8 +128,12 @@
     };
   };
 
-  programs.spotify-player = { enable = true; };
-  programs.autorandr = { enable = true; };
+  programs.spotify-player = {
+    enable = true;
+  };
+  programs.autorandr = {
+    enable = true;
+  };
   programs.vscode = {
     enable = true;
     profiles.default.extensions = with pkgs.vscode-extensions; [
@@ -124,7 +145,9 @@
       ms-vscode-remote.remote-ssh
     ];
   };
-  home.sessionVariables = { NIXOS_OZONE_WL = "1"; }; # for VS-Code
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  }; # for VS-Code
 
   home.packages = with pkgs; [
     # brightnessctl
@@ -149,6 +172,7 @@
     openscad-unstable
     prusa-slicer
     bitwarden-desktop
+    impression
   ];
 
   # pointerCursor = {
@@ -160,8 +184,13 @@
   #   gtk.enable = true;
   # };
 
+  home.file."${config.xdg.configHome}/gtk-2.0/gtkrc".force = true;
   gtk = {
     enable = true;
+    gtk2 = {
+      configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      force = true;
+    };
     cursorTheme = {
       name = "Banana";
       size = 32;
@@ -176,13 +205,16 @@
     config = {
       transparent = true;
       useQuickCss = true; # use out quickCSS
-      themeLinks = [ # or use an online theme
+      themeLinks = [
+        # or use an online theme
         "https://catppuccin.github.io/discord/dist/catppuccin-mocha-mauve.theme.css"
 
       ];
       frameless = true; # Set some Vencord options
       plugins = {
-        userMessagesPronouns = { enable = true; };
+        userMessagesPronouns = {
+          enable = true;
+        };
 
         #   hideAttachments.enable = true; # Enable a Vencord plugin
         #   # ignoreActivities = { # Enable a plugin and set some options
