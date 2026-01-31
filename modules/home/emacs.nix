@@ -81,6 +81,10 @@ in
       multimarkdown
       nixfmt
       openscad-lsp
+      gopls
+      go
+      gotools
+      go-tools
       ccls
       imagemagick
       ghostscript_headless

@@ -51,6 +51,8 @@
     cmatrix
     clang
     unzip
+    go	
+    godef
     zip
     pandoc
     starship
