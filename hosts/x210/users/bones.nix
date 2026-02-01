@@ -16,9 +16,9 @@
     touchpads = [
       {
         naturalScroll = true;
-        name = "Synaptics TM3276-022";
-        vendorId = "06cb";
-        productId = "0000";
+        name = "SynPS/2 Synaptics TouchPad";
+        vendorId = "0002";
+        productId = "0007";
       }
     ];
   };

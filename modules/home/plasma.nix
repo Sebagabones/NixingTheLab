@@ -215,7 +215,7 @@
       kwin.MoveZoomLeft = [ ];
       kwin.MoveZoomRight = [ ];
       kwin.MoveZoomUp = [ ];
-      kwin.Overview = "Meta+W";
+      kwin.Overview = [ ];
       kwin."Setup Window Shortcut" = [ ];
       kwin."Show Desktop" = [ ];
       kwin."Switch One Desktop Down" = "Meta+Ctrl+Down";
@@ -389,11 +389,9 @@
       org_kde_powerdevil."Turn Off Screen" = [ ];
       org_kde_powerdevil.powerProfile = [
         "Battery"
-        "Meta+B"
       ];
       plasmashell."Slideshow Wallpaper Next Image" = [ ];
       plasmashell."activate application launcher" = [
-        "Meta"
         "Alt+F1"
       ];
       plasmashell."activate task manager entry 1" = [ ];
@@ -423,6 +421,8 @@
       plasmashell."switch to previous activity" = [ ];
       plasmashell."toggle do not disturb" = [ ];
       "services/com.mitchellh.ghostty.desktop"._launch = "Meta+Return";
+      "services/firefox.desktop"._launch = "Meta+W";
+      "services/discord.desktop"._launch = "Meta+B";
 
     };
     configFile = {

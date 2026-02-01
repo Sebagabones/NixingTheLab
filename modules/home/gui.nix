@@ -87,8 +87,13 @@
     };
   };
 
+  home.sessionVariables.MOZ_USE_XINPUT2 = "1";
   programs.firefox = {
     enable = true;
+    # preferences = {
+    #   "widget.use-xdg-desktop-portal.file-picker" = 1;
+    # };
+
     profiles.default = {
       isDefault = true;
       settings = {
