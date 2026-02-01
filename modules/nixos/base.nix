@@ -29,7 +29,7 @@
   };
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [ "archiver-3.5.1" ];
+    # permittedInsecurePackages = [ "archiver-3.5.1" ];
   };
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
