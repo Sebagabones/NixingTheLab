@@ -32,9 +32,7 @@ in
     storageMode = "local";
     localStorageDir = ./. + "/secrets/";
   };
-  age.secrets = {
-    secret1.rekeyFile = ../../secrets/secret1.age;
-  };
+  age.secrets = { };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot = {

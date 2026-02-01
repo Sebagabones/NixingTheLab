@@ -51,7 +51,7 @@
     cmatrix
     clang
     unzip
-    go	
+    go
     godef
     zip
     pandoc
