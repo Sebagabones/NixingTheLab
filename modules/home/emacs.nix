@@ -9,6 +9,7 @@ let
 in
 {
   # Automatically install Emacs config from here.
+  # TODO: work out why this isn’t working anymore - maybe the removal of archiver? dunno - orrr maybe it was to do with xdg movement, idk that seems weird too though
   home.mutableFile.${emacsInstallation} = {
     url = "https://github.com/Sebagabones/myEmacsConfig.git";
     type = "git";
@@ -87,6 +88,10 @@ in
       multimarkdown
       nixfmt
       openscad-lsp
+      gopls
+      go
+      gotools
+      go-tools
       ccls
       ruff
       ty

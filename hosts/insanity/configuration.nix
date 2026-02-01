@@ -55,10 +55,8 @@ in
     storageMode = "local";
     localStorageDir = ./. + "/secrets";
   };
-  # rekey.secrets = { secret1.file = ../../secrets/secret1.age; };
-  age.secrets = {
-    # secret1.rekeyFile = ../../secrets/secret1.age;
-  };
+
+  age.secrets = { };
   # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages
