@@ -29,7 +29,7 @@
     btop.enable = true;
     gh-dash.enable = true;
   };
-  home.preferXdgDirectories = true;
+  # home.preferXdgDirectories = true;
   home.packages = with pkgs; [
     ghostty.terminfo
     atool

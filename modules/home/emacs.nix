@@ -74,7 +74,13 @@ in
       aspellDicts.en
       aspellDicts.en-computers
       aspellDicts.en-science
-      # (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ])) #https://github.com/nixos/nixpkgs/issues/476684
+      # (aspellWithDicts (
+      #   dicts: with dicts; [
+      #     en
+      #     en-computers
+      #     en-science
+      #   ]
+      # )) # https://github.com/nixos/nixpkgs/issues/476684
       hunspellDicts.en-au
       hunspellDicts.en_GB-large
       basedpyright
@@ -82,6 +88,8 @@ in
       nixfmt
       openscad-lsp
       ccls
+      ruff
+      ty
       imagemagick
       ghostscript_headless
       gnupg
