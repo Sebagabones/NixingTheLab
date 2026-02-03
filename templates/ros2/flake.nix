@@ -7,7 +7,11 @@
   };
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+      nix-ros-overlay,
+    }:
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
     in
