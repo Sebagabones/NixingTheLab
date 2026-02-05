@@ -32,44 +32,51 @@
 
           packages = [
             pkgs.colcon # for some reason this like, isn't inside of the ros overlay??
-
             # NOTE: Regular packages go here
             (
               with pkgs.rosPackages.jazzy;
               buildEnv {
-                paths = [
-                  # NOTE: packages from ros overlay go here
+                paths =
+                  let
+                    wrapped-rqt-robot-steering = rqt-robot-steering.overrideAttrs (old: {
+                      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.qt5.wrapQtAppsHook ];
+                      dontWrapQtApps = false;
+                      postFixup = ''
+                        wrapQtApp "$out/lib/rqt_robot_steering/rqt_robot_steering"
+                      '';
+                    });
 
-                  ros-core
-                  ur
-                  urdf
-                  ros-core
-                  ament-cmake-core
-                  python-cmake-module
+                  in
+                  [
+                    # NOTE: packages from ros overlay go here
+                    ros-core
+                    ur
+                    urdf
+                    ros-core
+                    ament-cmake-core
+                    python-cmake-module
 
-                  # Gazebo/Rviz
-                  gz-sim-vendor
-                  rviz2
-                  ros-gz-bridge
-                  ros-gz
-                  gz-launch-vendor
+                    # Gazebo/Rviz
+                    gz-sim-vendor
+                    rviz2
+                    ros-gz-bridge
+                    ros-gz
+                    gz-launch-vendor
 
-                  nav2-minimal-tb4-sim
-                  nav2-minimal-tb3-sim
+                    nav2-minimal-tb4-sim
+                    nav2-minimal-tb3-sim
 
-                  # rqt metapackages
-                  rqt-common-plugins
-                  rqt-tf-tree
-                  tf2-tools
+                    # rqt metapackages
+                    rqt-common-plugins
+                    rqt-tf-tree
+                    tf2-tools
 
-                  # packages used in this project
-                  example-interfaces
-                  sensor-msgs
-                  slam-toolbox
-
-                  rqt-robot-steering
-                  #
-                ];
+                    # packages used in this project
+                    example-interfaces
+                    sensor-msgs
+                    slam-toolbox
+                    wrapped-rqt-robot-steering
+                  ];
               }
             )
           ];
