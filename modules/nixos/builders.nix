@@ -11,8 +11,8 @@
       # systems = [ "x86_64-linux" "aarch64-linux" ];
       maxJobs = 80; # leave 8 threads free
       speedFactor = 2;
-      supportedFeatures = [ "big-parallel" ];
-      mandatoryFeatures = [ "big-parallel" ];
+      # supportedFeatures = [ "big-parallel" ];
+      # mandatoryFeatures = [ "big-parallel" ];
     }
   ];
 
