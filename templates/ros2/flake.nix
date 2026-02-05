@@ -1,101 +1,83 @@
 {
   description = "ROS2 template";
-
   inputs = {
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs"; # IMPORTANT!!!
   };
-
   outputs =
     {
       self,
-      nixpkgs,
       nix-ros-overlay,
+      nixpkgs,
     }:
-    let
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
-    in
-    {
-      devShells.x86_64-linux.default = pkgs.mkShell rec {
-        nativeBuildInputs = [
-          # (pkgs.python313.withPackages (
-          #   ps: with ps; [
-          #     pygments
-          #     catppuccin
-          #     webcolors
-          #     pdoc
-          #     dot2tex
-          #     webcolors
-          #     pygments
-          #     catppuccin
-          #     pdoc
-          #     dot2tex
-          #     svg2tikz
-          #     numpy
-          #   ]
-          # ))
-          (
-            with pkgs.rosPackages.humble;
-            buildEnv {
-              paths = [
-                ros-core
-                ros-jazzy-ur
-                # ... other ROS packages
-              ];
-            }
-          )
-          (pkgs.texlive.combine {
-            inherit (pkgs.texlive)
-              scheme-basic
-              dvisvgm
-              dvipng # for preview and export as html
-              wrapfig
-              amsmath
-              ulem
-              hyperref
-              capt-of
-              fontspec
-              listings
-              xcolor
-              koma-script
-              multirow
-              lstfiracode
-              fvextra
-              upquote
-              lineno
-              tcolorbox
-              latexmk
-              minted
-              enumitem
-              catppuccinpalette
-              pdfcol
-              caption
-              latex-graphics-dev
-              booktabs
-              framed
-              changepage
-              svg
-              transparent
-              dot2texi
-              moreverb
-              xkeyval
-              graphviz
-              standalone
-              luatex85
-              pdflscape
-              etoc
-              titlesec
-              preview
-              ;
-          })
-          pkgs.latexminted
-          pkgs.inkscape
-          pkgs.pdf2svg
-        ];
+    nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.permittedInsecurePackages = [ "freeimage-3.18.0-unstable-2024-04-18" ];
 
-        shellHook = ''
-          export PYTHONPATH=$(pwd)
-        '';
-      };
-    };
+          overlays = [
+            nix-ros-overlay.overlays.default
+          ];
+        };
+      in
+      {
+        devShells.default = pkgs.mkShell {
+          name = "Example project";
+
+          # NOTE: These two enviroment variables are set for gazebo, as it hates wayland
+          QT_QPA_PLATFORM = "xcb";
+          WAYLAND_DISPLAY = "";
+
+          packages = [
+            pkgs.colcon # for some reason this like, isn't inside of the ros overlay??
+
+            # NOTE: Regular packages go here
+            (
+              with pkgs.rosPackages.jazzy;
+              buildEnv {
+                paths = [
+                  # NOTE: packages from ros overlay go here
+
+                  ros-core
+                  ur
+                  urdf
+                  ros-core
+                  ament-cmake-core
+                  python-cmake-module
+
+                  # Gazebo/Rviz
+                  gz-sim-vendor
+                  rviz2
+                  ros-gz-bridge
+                  ros-gz
+                  gz-launch-vendor
+
+                  nav2-minimal-tb4-sim
+                  nav2-minimal-tb3-sim
+
+                  # rqt metapackages
+                  rqt-common-plugins
+                  rqt-tf-tree
+                  tf2-tools
+
+                  # packages used in this project
+                  example-interfaces
+                  sensor-msgs
+                  slam-toolbox
+
+                  rqt-robot-steering
+                  #
+                ];
+              }
+            )
+          ];
+        };
+      }
+    );
+  nixConfig = {
+    extra-substituters = [ "https://ros.cachix.org" ];
+    extra-trusted-public-keys = [ "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo=" ];
+  };
 }
