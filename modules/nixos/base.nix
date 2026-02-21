@@ -122,6 +122,23 @@
       ];
       hashedPassword = "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
     };
+    users.lauren = {
+      isNormalUser = true;
+      home = "/home/lauren";
+      description = "Lauren Pudney";
+      extraGroups = [
+        "qemu-libvirtd"
+        "libvirtd"
+        "kvm"
+        "wheel"
+        "networkmanager"
+        "podman"
+      ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGchFYZLrQ2V3pTnRsXJ8sAZQ8zU3GPZTsaJ/nZulr15 lauren@sebisthebest"
+      ];
+      hashedPassword = "$y$j9T$/Qj7yKmjZ775/eVyUcfOe1$eLVuG6FckmVT.tNOJZCqqqxwUZ.0GSApSVboIWHOdb2";
+    };
   };
 
   # GPG things
