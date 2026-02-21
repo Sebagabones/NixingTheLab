@@ -158,6 +158,10 @@
           hostname = "mahoosively.gay";
           port = 7856;
         };
+        deposition = {
+          hostname = "deposition.lab.mahoosively.gay";
+          port = 5876;
+        };
         ucc = {
           hostname = "ssh.ucc.asn.au";
         };

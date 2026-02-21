@@ -60,6 +60,14 @@ in
     ];
     extraModulePackages = [ ];
   };
+
+  # Remote builder keys
+  users.users.root = {
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8jRqCL02AT+TDvYx+8uHp6/RtMM8kn7Yl+wx6V21qO root@deposition"
+    ];
+
+  };
   networking.hostId = "f70e81b8";
   # Networking
   # systemd.network = {
