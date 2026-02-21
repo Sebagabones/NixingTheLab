@@ -49,6 +49,11 @@
     "kvm_intel"
   ];
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
   # services.tlp = {
   #   enable = true;
   #   settings = {
