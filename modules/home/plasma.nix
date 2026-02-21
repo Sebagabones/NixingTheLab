@@ -442,7 +442,7 @@
       kdeglobals.WM.inactiveBlend = "69,71,90";
       kdeglobals.WM.inactiveForeground = "205,214,244";
       kdeglobals.KDE.widgetStyle = "Windows";
-      kwinrc."org.kde.kdecoration2".theme = "kwin4_decoration_qml_plastik";
+      # kwinrc."org.kde.kdecoration2".theme = "kwin4_decoration_qml_plastik";
       ksplashrc.KSplash.Theme = "org.kde.breeze.desktop";
 
       kwinrc.Desktops.Id_1 = "b35962ee-be7f-401b-8a56-580cb149d3b5";

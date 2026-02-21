@@ -141,14 +141,22 @@
   };
   programs.vscode = {
     enable = true;
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-      enkia.tokyo-night
-      ms-python.python
-      charliermarsh.ruff
-      mkhl.direnv
-      ms-azuretools.vscode-docker
-      ms-vscode-remote.remote-ssh
-    ];
+
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        enkia.tokyo-night
+        tuttieee.emacs-mcx
+        ms-python.python
+        charliermarsh.ruff
+        mkhl.direnv
+        ms-azuretools.vscode-docker
+        ms-vscode-remote.remote-ssh
+      ];
+    };
+    profiles.default.userSettings = {
+      # ...
+      "workbench.colorTheme" = "Tokyo Night";
+    };
   };
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -178,6 +186,7 @@
     prusa-slicer
     bitwarden-desktop
     impression
+    localsend
   ];
 
   # pointerCursor = {
