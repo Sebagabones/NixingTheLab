@@ -4,26 +4,28 @@
     user = "root";
     group = "root";
     enable = true;
-    # firmwares = {
-    #   mcu = {
-    #     enable = true;
-    #     # Generate this config by running klipper-genconf
-    #     # Currently broken: https://github.com/NixOS/nixpkgs/pull/200228
-    #     # Workaround: Run nix-shell -p python3 --command klipper-genconf instead
-    #     # configFile = ./avr.cfg;
-    #     serial = "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK06VNAB-if00-port0"; # May need to change this
-    #   };
-    # };
+    firmwares = {
+      mcu = {
+        enable = true;
+        enableKlipperFlash = true;
+        # Generate this config by running klipper-genconf
+        # Currently broken: https://github.com/NixOS/nixpkgs/pull/200228
+        # Workaround: Run nix-shell -p python3 --command klipper-genconf instead
+        configFile = ./ender5.cfg;
+
+        serial = "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB0M3TDH-if00-port0";
+      };
+    };
     settings = {
       printer = {
         kinematics = "cartesian";
         max_velocity = 300;
         max_accel = 2500;
-        max_z_velocity = 5;
-        max_z_accel = 100;
+        max_z_velocity = 7;
+        max_z_accel = 150;
       };
       mcu = {
-        serial = "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK06VNAB-if00-port0"; # May need to change this
+        serial = "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB0M3TDH-if00-port0";
       };
 
       stepper_x = {
@@ -55,9 +57,9 @@
         enable_pin = "!PK0";
         microsteps = 16;
         rotation_distance = 4;
-        endstop_pin = "probe;z_virtual_endstop";
+        endstop_pin = "probe:z_virtual_endstop";
         position_max = 400;
-        position_min = 0;
+        position_min = -5;
         homing_speed = 10.0;
 
       };
@@ -97,18 +99,32 @@
         control_pin = "PB5";
         x_offset = -45;
         y_offset = 0;
-        z_offset = 0;
+        z_offset = 3.085;
         speed = 3.0;
         pin_up_touch_mode_reports_triggered = false;
 
       };
       bed_mesh = {
-        speed = 100;
-        horizontal_move_z = 8;
-        mesh_min = "50, 50";
+        speed = 175;
+        horizontal_move_z = 5;
+        mesh_min = "25, 25";
         mesh_max = "300, 300";
-        probe_count = "3, 3";
+        probe_count = "5, 5";
+        algorithm = "bicubic";
+        mesh_pps = "3, 3";
+      };
+      bed_screws = {
+        screw1 = "25, 25";
+        screw2 = "325, 25";
+        screw3 = "325, 325";
+        screw4 = "25, 325";
+      };
 
+      "delayed_gcode bed_mesh_init" = {
+        initial_duration = 0.01;
+        gcode = "
+        BED_MESH_PROFILE LOAD=default
+          ";
       };
       "filament_switch_sensor filament_sensor" = {
         switch_pin = "PE4";
@@ -119,6 +135,87 @@
         z_hop = 10;
         z_hop_speed = 5;
       };
+      # fluidd parts
+      virtual_sdcard.path = "/var/lib/moonraker/gcodes";
+      display_status = { };
+      pause_resume = { };
+
+      "gcode_macro PAUSE" = {
+        description = "Pause the actual running print";
+        rename_existing = "PAUSE_BASE";
+        # change this if you need more or less extrusion
+        variable_extrude = 1.0;
+        gcode = "
+          ##### read E from pause macro #####
+          {% set E = printer[' gcode_macro PAUSE '].extrude|float %}
+          ##### set park positon for x and y #####
+          # default is your max posion from your printer.cfg
+          {% set x_park = printer.toolhead.axis_maximum.x|float - 5.0 %}
+          {% set y_park = printer.toolhead.axis_maximum.y|float - 5.0 %}
+          ##### calculate save lift position #####
+          {% set max_z = printer.toolhead.axis_maximum.z|float %}
+          {% set act_z = printer.toolhead.position.z|float %}
+          {% if act_z < (max_z - 2.0) %}
+          {% set z_safe = 2.0 %}
+          {% else %}
+          {% set z_safe = max_z - act_z %}
+          {% endif %}
+          ##### end of definitions #####
+            PAUSE_BASE
+          G91
+          {% if printer.extruder.can_extrude|lower == 'true' %}
+          G1 E-{E} F2100
+          {% else %}
+          {action_respond_info(' Extruder not hot enough ')}
+          {% endif %}
+          {% if ' xyz ' in printer.toolhead.homed_axes %}
+          G1 Z{z_safe} F900
+          G90
+          G1 X{x_park} Y{y_park} F6000
+          {% else %}
+          {action_respond_info(' Printer not homed')}
+          {% endif %}
+          ";
+      };
+
+      "gcode_macro RESUME" = {
+        description = "Resume the actual running print";
+        rename_existing = "RESUME_BASE";
+        gcode = "
+          ### read E from pause macro #####
+          {% set E = printer[' gcode_macro PAUSE '].extrude|float %}
+          #### get VELOCITY parameter if specified ####
+          {% if 'VELOCITY' in params|upper %}
+          {% set get_params = ('VELOCITY=' + params.VELOCITY)  %}
+          {%else %}
+          {% set get_params = ' ' %}
+          {% endif %}
+          ##### end of definitions #####
+          {% if printer.extruder.can_extrude|lower == 'true' %}
+          G91
+          G1 E{E} F2100
+          {% else %}
+          {action_respond_info('
+            Extruder
+            not
+            hot
+            enough
+            ')}
+          {% endif %}
+            RESUME_BASE {get_params}
+        ";
+      };
+      "gcode_macro CANCEL_PRINT" = {
+        description = "Cancel the actual running print";
+        rename_existing = "CANCEL_PRINT_BASE";
+        gcode = "
+          TURN_OFF_HEATERS
+          CANCEL_PRINT_BASE
+        ";
+      };
     };
+    extraSettings = "
+
+";
   };
 }

@@ -17,7 +17,6 @@
   imports = [
     flake.nixosModules.base
     ./disk.nix
-    ./kiosk.nix
     ./klipper.nix
     "${inputs.nixos-hardware}/common/pc/ssd"
   ];
@@ -60,29 +59,32 @@
 
   # Networking
   networking = {
-    useDHCP = true;
-    nameservers = [ "192.168.1.1" ];
-    networkmanager.ensureProfiles = {
-      environmentFiles = [
-        config.age.secrets.wifi.path
-      ];
-      profiles = {
-        definitelyNotRunningAServerHere = {
-          connection = {
-            id = "definitelyNotRunningAServerHere";
-            type = "wifi";
 
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "definitelyNotRunningAServerHere";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-psk";
-            psk = "$DEFINITELYNOTRUNNINGASERVERHERE_PSK";
+    nameservers = [ "192.168.1.1" ];
+    networkmanager = {
+      enable = true;
+      wifi.powersave = true;
+      ensureProfiles = {
+        environmentFiles = [
+          config.age.secrets.wifi.path
+        ];
+        profiles = {
+          definitelyNotRunningAServerHere = {
+            connection = {
+              id = "definitelyNotRunningAServerHere";
+              type = "wifi";
+            };
+            ipv4 = {
+              method = "auto";
+            };
+            wifi = {
+              mode = "infrastructure";
+              ssid = "definitelyNotRunningAServerHere";
+            };
+            wifi-security = {
+              key-mgmt = "wpa-psk";
+              psk = "$DEFINITELYNOTRUNNINGASERVERHERE_PSK";
+            };
           };
         };
       };
@@ -123,6 +125,12 @@
   };
 
   environment.systemPackages = with pkgs; [
+    xterm
+    avrdude
+    klipper-genconf
+    klipper-estimator
+    klipper-firmware
+    super-slicer
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -136,9 +144,7 @@
     group = "Servers";
     ssh.opts = [ " -p 5876" ];
   };
-  users.users.bones = {
-    linger = true;
-  };
+
   stylix.enable = true;
   services.moonraker = {
     user = "root";
@@ -148,12 +154,13 @@
       octoprint_compat = { };
       history = { };
       authorization = {
-        force_logins = true;
+        force_logins = false;
         cors_domains = [
           "*.local"
           "*.lan"
           "*://app.fluidd.xyz"
           "*://my.mainsail.xyz"
+          "*.lab.mahoosively.gay"
         ];
         trusted_clients = [
           "10.0.0.0/8"
@@ -170,5 +177,38 @@
   services.fluidd.enable = true;
   services.fluidd.nginx.locations."/webcam".proxyPass = "http://127.0.0.1:8080/stream";
   services.nginx.clientMaxBodySize = "1000m";
+
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+  services.getty = {
+    autologinUser = "bones";
+    autologinOnce = true;
+  };
+  environment.loginShellInit = ''
+    [[ "$(tty)" == /dev/tty1 ]] && sway
+  '';
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "performance";
+
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 100;
+
+      START_CHARGE_THRESH_BAT0 = 70;
+      STOP_CHARGE_THRESH_BAT0 = 75;
+
+    };
+  };
+  systemd.services.ModemManager.enable = false;
+  systemd.services."dbus-org.freedesktop.ModemManager1".enable = false;
 
 }
