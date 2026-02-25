@@ -33,6 +33,7 @@
 
           # Reload the configuration file
           "${mod}+Shift+c" = "reload";
+          "${mod}+s" = "exec ${pkgs.super-slicer}/bin/superslicer";
 
           # Exit sway (logs you out of your Wayland session)
           "${mod}+Shift+e" =

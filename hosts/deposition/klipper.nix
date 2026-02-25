@@ -99,7 +99,7 @@
         control_pin = "PB5";
         x_offset = -45;
         y_offset = 0;
-        z_offset = 3.085;
+        z_offset = 3.250;
         speed = 3.0;
         pin_up_touch_mode_reports_triggered = false;
 
@@ -215,7 +215,24 @@
       };
     };
     extraSettings = "
-
+[bed_mesh default]
+version = 1
+points =
+      -0.116250, -0.078750, -0.040000, -0.062500, -0.076250
+      -0.141250, -0.098750, -0.041250, -0.056250, -0.061250
+      -0.132500, -0.060000, -0.002500, -0.028750, -0.045000
+      -0.042500, -0.012500, 0.031250, -0.005000, -0.037500
+      -0.028750, 0.026250, 0.072500, 0.047500, 0.032500
+x_count = 5
+y_count = 5
+mesh_x_pps = 3
+mesh_y_pps = 3
+algo = bicubic
+tension = 0.2
+min_x = 25.0
+max_x = 300.0
+min_y = 25.0
+max_y = 300.0
 ";
   };
 }
