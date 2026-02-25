@@ -1,12 +1,9 @@
 {
-  modulesPath,
   config,
   lib,
   pkgs,
   inputs,
-  nixpkgs,
   flake,
-  home-manager,
   ...
 }:
 {

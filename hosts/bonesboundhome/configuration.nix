@@ -4,7 +4,6 @@
   lib,
   perSystem,
   pkgs,
-  nixpkgs,
   config,
   ...
 }:

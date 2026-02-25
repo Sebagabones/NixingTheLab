@@ -1,7 +1,5 @@
 {
-  flake,
   pkgs,
-  perSystem,
   ...
 }:
 

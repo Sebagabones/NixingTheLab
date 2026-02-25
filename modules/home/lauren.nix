@@ -1,10 +1,5 @@
 {
-  inputs,
-  config,
-  lib,
   pkgs,
-  flake,
-  perSystem,
   ...
 }:
 {

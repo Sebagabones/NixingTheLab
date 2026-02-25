@@ -2,9 +2,6 @@
   flake,
   inputs,
   lib,
-  perSystem,
-  pkgs,
-  nixpkgs,
   config,
   ...
 }:

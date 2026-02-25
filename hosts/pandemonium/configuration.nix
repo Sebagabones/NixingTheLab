@@ -2,15 +2,12 @@
   flake,
   inputs,
   lib,
-  perSystem,
   pkgs,
-  nixpkgs,
   config,
   ...
 }:
 let
   sshPort = 7656;
-  sshPortString = "";
 in
 {
   networking.hostName = "pandemonium";

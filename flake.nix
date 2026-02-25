@@ -60,9 +60,6 @@
 
   outputs =
     inputs:
-    let
-      inherit (inputs.nixpkgs) lib;
-    in
     inputs.blueprint {
       inherit inputs;
       systems = [ "x86_64-linux" ];

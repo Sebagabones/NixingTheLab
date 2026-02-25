@@ -1,9 +1,6 @@
 {
-  inputs,
-  lib,
   flake,
   pkgs,
-  perSystem,
   ...
 }:
 {

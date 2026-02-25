@@ -3,7 +3,6 @@
   inputs,
   lib,
   flake,
-  nixpkgs,
   pkgs,
   perSystem,
   ...

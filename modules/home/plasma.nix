@@ -1,11 +1,7 @@
 {
   inputs,
-  lib,
-  flake,
-  nixpkgs,
   pkgs,
   config,
-  perSystem,
   ...
 }:
 {

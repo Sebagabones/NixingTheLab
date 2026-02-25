@@ -1,8 +1,5 @@
 {
-  flake,
   inputs,
-  lib,
-  perSystem,
   pkgs,
   config,
   ...

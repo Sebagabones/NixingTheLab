@@ -1,9 +1,5 @@
 {
   inputs,
-  flake,
-  config,
-  lib,
-  pkgs,
   # osConfig,
   ...
 }:
