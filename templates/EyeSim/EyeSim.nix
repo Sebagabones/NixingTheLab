@@ -130,5 +130,5 @@ in
 
     ];
 
-  runScript = "${EyeSim}/opt/${pname}/EyeSim";
+  runScript = "${EyeSim}/opt/${pname}/EyeSim.x86_64";
 })
