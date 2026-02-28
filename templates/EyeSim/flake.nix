@@ -28,8 +28,16 @@
         gccsim = pkgs.callPackage ./gccsim.nix {
           inherit version hash;
         };
+        Eyepy = pkgs.callPackage ./Eyepy.nix {
+          inherit version hash; # Passed to EyeSimLib
+        };
         default = pkgs.linkFarm "EyeSim" {
-          inherit EyeSimLib EyeSim gccsim;
+          inherit
+            EyeSimLib
+            EyeSim
+            gccsim
+            Eyepy
+            ;
         };
       };
       devShells.${system}.default =
@@ -37,6 +45,7 @@
           EyeSim = self.packages.x86_64-linux.EyeSim;
           EyeSimLib = self.packages.x86_64-linux.EyeSimLib;
           gccsim = self.packages.x86_64-linux.gccsim;
+          Eyepy = self.packages.x86_64-linux.Eyepy;
         in
         pkgs.mkShell {
           buildInputs = [
@@ -56,7 +65,7 @@
             export CPATH=${EyeSimLib}/include:${pkgs.libx11.dev}/include:${pkgs.libxext.dev}/include:${pkgs.libxi.dev}/include:${pkgs.libxmu.dev}/include
             export LIBRARY_PATH=${EyeSimLib}/lib:${pkgs.libx11}/lib:${pkgs.libxext}/lib:${pkgs.libxi}/lib:${pkgs.libxmu}/lib
             export LD_LIBRARY_PATH=${EyeSimLib}/lib:${pkgs.libx11}/lib:${pkgs.libxext}/lib:${pkgs.libxi}/lib:${pkgs.libxmu}/lib
-            export PYTHONPATH=${EyeSimLib}/lib:$PYTHONPATH
+            export PYTHONPATH=${EyeSimLib}/lib:${Eyepy}:$PYTHONPATH
           '';
         };
 

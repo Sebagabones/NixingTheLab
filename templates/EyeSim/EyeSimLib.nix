@@ -13,17 +13,12 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
     url = "https://roblab.org/eyesim/ftp/EyeSim-${version}-Linux.tar.gz";
     hash = "${hash}";
   };
-  # src = ./EyeSim;
-
-  buildInputs = [
-    # Some of these are almost definitely not necessary
-  ];
   outputs = [
     "out"
     "doc"
   ];
   installPhase = ''
-    mkdir -p $out/bin $out/include $out/lib
+    mkdir -p $out/{bin,include,lib}
 
     runHook preInstall
     cp -a install/include/. $out/include/    #Used by gccsim and python
