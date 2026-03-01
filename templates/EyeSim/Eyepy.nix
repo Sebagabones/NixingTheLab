@@ -17,8 +17,8 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
   src = pkgs.fetchFromGitHub {
     owner = "Sebagabones";
     repo = "eyepy";
-    rev = "7714989f3770f4a7f833fc5857bcf7908d5577d5";
-    hash = "sha256-938yEonLTxUchGAkSplgRwQjEXarSBEwSHH1mxpk3SM=";
+    rev = "aad5d7f44b3bd1e1c1b867e2fda0dd69fb4f63fe";
+    hash = "sha256-+JYMkEVpqkgAAivIU6tg5K5q0lH5XDGYRGy2z26QS3Q=";
   };
 
   outputs = [

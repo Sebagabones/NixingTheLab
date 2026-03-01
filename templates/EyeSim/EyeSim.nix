@@ -15,8 +15,9 @@ pkgs.stdenvNoCC.mkDerivation {
   };
 
   installPhase = ''
-    mkdir -p "$out"/{bin,libexec}
+    mkdir -p "$out"/{bin,libexec,resources}
     cp -r . "$out/libexec/EyeSim"
+    cp -a eyesimX/. $out/resources/
     chmod -R u+w "$out/libexec/EyeSim"
     rm -rf "$out/libexec/EyeSim/__MACOSX"
 
