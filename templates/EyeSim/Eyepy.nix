@@ -17,8 +17,8 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
   src = pkgs.fetchFromGitHub {
     owner = "Sebagabones";
     repo = "eyepy";
-    rev = "0dc4a74ddf45aab0a2deb1baecc6efd7333522e5";
-    hash = "sha256-Gmggs5N5P54+Qdm8hQVBi5enh6+6thoPfSXIwdKIGNY=";
+    rev = "5b9cd1fce89aa211515ed350430c37eb49823c3f";
+    hash = "sha256-Hl6Ftg+fn299H5MGXrql29sa7dpic5qZpfUSXwAJOU8=";
   };
 
   outputs = [
@@ -28,7 +28,7 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
     mkdir -p $out/eyepy
 
     runHook preInstall
-    cp *.py $out/eyepy
+    cp -r . $out/eyepy/
     cp ${EyeSimLib}/lib/eye.py $out/eyepy/eye.py
   '';
 
