@@ -90,7 +90,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt1AaEyY9HIs6qhdW7IrlpWiCTWdm8gqblW6Hvu1naU bones@insanity"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6+WU+Zq90kEknj/hdU0T/oAX0quQojFxfZHe3tkP5L bones@pandemonium"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0v56VlLL/6BNK8rNW+fIMIYSgTURqi2H9ZumDbudtL bones@x210"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210" # TODO: may need to remove, testing with remote builders
+        # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210" # TODO: may need to remove, testing with remote builders
       ];
     };
 
@@ -115,7 +115,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbb35UUZb29bK6mv+LnHyfnhUtX9n7952K8RCpWxq1Q bones@resuscitated"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6+WU+Zq90kEknj/hdU0T/oAX0quQojFxfZHe3tkP5L bones@pandemonium"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0v56VlLL/6BNK8rNW+fIMIYSgTURqi2H9ZumDbudtL bones@x210"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210" # TODO: may need to remove, testing with remote builders
+        # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210" # TODO: may need to remove, testing with remote builders
       ];
       hashedPassword = "$y$j9T$ag5S35mvZrqGflNCwyFku/$vaAnqMkW1rY3IyCq7jyuuC.ErYpq1eQqhGXYmB23Gf4";
     };
