@@ -162,6 +162,12 @@
           hostname = "deposition.lab.mahoosively.gay";
           port = 5876;
         };
+        insanity = {
+          # TODO: Move this so it is only on laptops, and not for alllll of my systems, as pandemonium doesn't need to ssh into itself to access insanity
+          proxyJump = "pandemonium";
+          hostname = "insanity.lab.mahoosively.gay";
+          port = 22;
+        };
         ucc = {
           hostname = "ssh.ucc.asn.au";
         };
