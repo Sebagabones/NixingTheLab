@@ -87,6 +87,7 @@ in
       multimarkdown
       nixfmt
       openscad-lsp
+      lemminx
       gopls
       go
       gotools

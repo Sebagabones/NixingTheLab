@@ -164,7 +164,6 @@
     btop
     sqlite
     pkg-config
-    nextdns
   ];
   programs.zsh.enable = true;
   programs.ssh = {
@@ -221,24 +220,6 @@
 
   environment.pathsToLink = [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
   # Services
-  services.nextdns = {
-
-    enable = true;
-    arguments = [
-      "-config"
-      "c369fa"
-      "-cache-size"
-      "10MB"
-    ];
-
-  };
-  systemd.services.nextdns-activate = {
-    script = ''
-      /run/current-system/sw/bin/nextdns activate
-    '';
-    after = [ "nextdns.service" ];
-    wantedBy = [ "multi-user.target" ];
-  };
 
   programs.nix-ld = {
     enable = true;

@@ -181,6 +181,7 @@
     # End ELEC3020
     # kdePackages.dolphin
     freecad
+    povray
     openscad-unstable
     prusa-slicer
     bitwarden-desktop

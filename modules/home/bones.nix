@@ -40,6 +40,8 @@
       python-pkgs: with python-pkgs; [
         pygments
         git
+        numpy
+        pandas
         latexminted
         catppuccin
         mypy
@@ -173,7 +175,7 @@
         batman
         prettybat
         batpipe
-        # batgrep
+        batgrep
         batwatch
       ];
       config = {
