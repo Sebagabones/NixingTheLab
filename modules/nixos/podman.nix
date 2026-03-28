@@ -4,7 +4,7 @@
   virtualisation.containers.enable = true;
   virtualisation = {
     libvirtd = {
-      enable = true;
+      enable = false;
       qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
     };
 
@@ -12,7 +12,7 @@
     spiceUSBRedirection.enable = true;
 
     podman = {
-      enable = true;
+      enable = false;
 
       # Create a `docker` alias for podman, to use it as a drop-in replacement
       dockerCompat = true;
@@ -22,10 +22,10 @@
     };
   };
 
-  services.spice-vdagentd.enable = true; # enable copy and paste between host and guest
-  services.qemuGuest.enable = true;
+  services.spice-vdagentd.enable = false; # enable copy and paste between host and guest
+  services.qemuGuest.enable = false;
   networking.firewall.trustedInterfaces = [ "virbr0" ];
-  programs.virt-manager.enable = true;
+  programs.virt-manager.enable = false;
 
   # Useful other development tools
   environment.systemPackages = with pkgs; [

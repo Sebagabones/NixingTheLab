@@ -10,7 +10,7 @@
     ./theming.nix
   ];
   environment.systemPackages = with pkgs; [
-    pinentry-gnome3
+    # pinentry-gnome3
     nextdns
   ];
 
@@ -78,12 +78,12 @@
       };
     };
     displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    # desktopManager.gnome.enable = true;
     desktopManager.plasma6.enable = true;
 
     dbus = {
       enable = true;
-      packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
+      # packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
     };
 
     pulseaudio.enable = false;
@@ -97,7 +97,7 @@
 
     libinput.enable = true;
 
-    blueman.enable = true;
+    # blueman.enable = true;
     udev.packages = [
       pkgs.platformio-core.udev
       pkgs.openocd

@@ -31,6 +31,7 @@
   home.packages = with pkgs; [
     ghostty.terminfo
     atool
+    nix-output-monitor
     httpie
     nixd
     lsd

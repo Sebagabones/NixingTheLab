@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   services.klipper = {
     user = "root";

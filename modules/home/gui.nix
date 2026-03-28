@@ -11,10 +11,10 @@
 
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
-    flake.homeModules.gnome
+    # flake.homeModules.gnome
     flake.homeModules.plasma
 
-    flake.homeModules.miracle-wm
+    # flake.homeModules.miracle-wm
     ./theming.nix
     flake.homeModules.spotify
     inputs.nixcord.homeModules.nixcord
@@ -173,7 +173,7 @@
     wl-clipboard
     brightnessctl
     libreoffice-qt6-fresh
-    gnome-screenshot # for emacs
+    gnome-screenshot # for emacs TODO: At some point change this so emacs doesnt depend on it - ideally use flameshot
     # For ELEC3020:
     jre8 # For RETRO
     platformio
@@ -210,6 +210,7 @@
       size = 32;
       package = pkgs.banana-cursor;
     };
+    # gtk4.theme = null;
   };
   programs.nixcord = {
     enable = true; # Enable Nixcord (It also installs Discord)

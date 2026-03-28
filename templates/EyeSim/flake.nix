@@ -42,10 +42,10 @@
       };
       devShells.${system}.default =
         let
-          EyeSim = self.packages.x86_64-linux.EyeSim;
-          EyeSimLib = self.packages.x86_64-linux.EyeSimLib;
-          gccsim = self.packages.x86_64-linux.gccsim;
-          Eyepy = self.packages.x86_64-linux.Eyepy;
+          inherit (self.packages.x86_64-linux) EyeSim;
+          inherit (self.packages.x86_64-linux) EyeSimLib;
+          inherit (self.packages.x86_64-linux) gccsim;
+          inherit (self.packages.x86_64-linux) Eyepy;
         in
         pkgs.mkShell {
           buildInputs = [

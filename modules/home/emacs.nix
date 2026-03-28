@@ -22,51 +22,49 @@ in
   home.packages =
     with pkgs;
     let
-      tex = (
-        pkgs.texlive.combine {
-          inherit (pkgs.texlive)
-            scheme-basic
-            dvisvgm
-            dvipng # for preview and export as html
-            wrapfig
-            amsmath
-            ulem
-            hyperref
-            capt-of
-            fontspec
-            listings
-            xcolor
-            koma-script
-            multirow
-            lstfiracode
-            fvextra
-            upquote
-            lineno
-            tcolorbox
-            latexmk
-            minted
-            enumitem
-            catppuccinpalette
-            pdfcol
-            caption
-            latex-graphics-dev
-            booktabs
-            framed
-            changepage
-            svg
-            transparent
-            moreverb
-            xkeyval
-            standalone
-            luatex85
-            pdflscape
-            etoc
-            titlesec
-            preview
-            luatex
-            ;
-        }
-      );
+      tex = pkgs.texlive.combine {
+        inherit (pkgs.texlive)
+          scheme-basic
+          dvisvgm
+          dvipng # for preview and export as html
+          wrapfig
+          amsmath
+          ulem
+          hyperref
+          capt-of
+          fontspec
+          listings
+          xcolor
+          koma-script
+          multirow
+          lstfiracode
+          fvextra
+          upquote
+          lineno
+          tcolorbox
+          latexmk
+          minted
+          enumitem
+          catppuccinpalette
+          pdfcol
+          caption
+          latex-graphics-dev
+          booktabs
+          framed
+          changepage
+          svg
+          transparent
+          moreverb
+          xkeyval
+          standalone
+          luatex85
+          pdflscape
+          etoc
+          titlesec
+          preview
+          luatex
+          ;
+      };
     in
     [
       delta
