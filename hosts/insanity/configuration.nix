@@ -58,7 +58,19 @@ in
   # programs.xwayland.enable = true;
   # programs.wayland.miracle-wm.enable = true;
   # Packages
-  networking.interfaces.enp6s0.wakeOnLan.enable = true;
+  networking = {
+    useDHCP = lib.mkForce true;
+    nameservers = [ "192.168.1.1" ];
+    # networkmanager = {
+    #   enable = true;
+    #   dns = "dnsmasq";
+    # };
+    interfaces.enp6s0.wakeOnLan.enable = true;
+  };
+  services.resolved.enable = false;
+  # services.xrdp.enable = true;
+  # services.xrdp.defaultWindowManager = "startplasma-wayland";
+  # networking.firewall.allowedTCPPorts = [ 3389 ];
   # environment.systemPackages = with pkgs; [ miracle-wm ];
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # hardware.graphics = {

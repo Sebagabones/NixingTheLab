@@ -17,12 +17,14 @@ in
 
   imports = [
     flake.nixosModules.base
+    # flake.nixosModules.nonmobile
+
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/skylake"
     "${inputs.nixos-hardware}/common/pc/ssd"
     ./website.nix
-
   ];
+
   age.rekey = {
     hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG3uJxriXS2Y22lRjah2eVWHu9GfKS8JkNbrYE2FXWZz";
     masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
@@ -85,16 +87,6 @@ in
   #   };
   # };
 
-  networking = {
-    useDHCP = true;
-    nameservers = [ "192.168.1.1" ];
-    # interfaces = {
-    #   eno2.useDHCP = true;
-    #   eno3.useDHCP = true;
-    #   eno5.useDHCP = true;
-    # };
-  };
-
   # SSH
   services.openssh = {
 
@@ -130,6 +122,10 @@ in
     allowedUDPPorts = [ sshPort ];
   };
 
+  networking = {
+    useDHCP = lib.mkForce true;
+    nameservers = [ "192.168.1.1" ];
+  };
   # Packages
   # environment.systemPackages = with pkgs; [
   # ];

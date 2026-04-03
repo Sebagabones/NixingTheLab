@@ -56,8 +56,12 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Networking
+  services.avahi = {
+    enable = true;
+    publish.enable = true;
+    nssmdns4 = true;
+  };
   networking = {
-
     nameservers = [ "192.168.1.1" ];
     networkmanager = {
       enable = true;

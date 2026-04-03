@@ -184,7 +184,7 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      X11Forwarding = false;
+      X11Forwarding = true;
       PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
   };
@@ -210,6 +210,7 @@
     backupFileExtension = "backup";
   };
   fonts.packages = with pkgs; [
+    xauth
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono
     fira-code-symbols
