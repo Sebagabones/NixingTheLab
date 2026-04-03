@@ -173,7 +173,7 @@
     wl-clipboard
     brightnessctl
     libreoffice-qt6-fresh
-    gnome-screenshot # for emacs TODO: At some point change this so emacs doesnt depend on it - ideally use flameshot
+    kdePackages.spectacle # for emacs
     # For ELEC3020:
     jre8 # For RETRO
     platformio

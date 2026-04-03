@@ -25,7 +25,7 @@
       size = 32;
     };
   };
-  services.gnome.gcr-ssh-agent.enable = false;
+  # services.gnome.gcr-ssh-agent.enable = false;
   programs = {
     dconf.enable = true;
     xwayland.enable = true;

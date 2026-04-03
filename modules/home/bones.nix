@@ -37,12 +37,14 @@
     lsd
     clang-tools
     procs
+    ttl
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
         pygments
         git
         numpy
         pandas
+        matplotlib
         latexminted
         catppuccin
         mypy
