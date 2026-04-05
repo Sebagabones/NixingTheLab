@@ -73,6 +73,8 @@
     bitwarden-cli
     nix-fast-build
     expect
+    alire
+    gprbuild
   ];
   programs.gpg = {
     enable = true;

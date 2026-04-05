@@ -1,10 +1,12 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 let
   emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
+  ada-lsp = inputs.nix-ada.packages.x86_64-linux.ada-language-server;
 in
 {
   # Automatically install Emacs config from here.
@@ -93,6 +95,7 @@ in
       ccls
       ruff
       ty
+      ada-lsp
       imagemagick
       ghostscript_headless
       gnupg

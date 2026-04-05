@@ -161,6 +161,7 @@
     btop
     sqlite
     pkg-config
+    gnat
   ];
   programs.zsh.enable = true;
   programs.ssh = {
