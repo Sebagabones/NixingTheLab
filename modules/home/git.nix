@@ -35,6 +35,7 @@
         diff = {
           external = "difft";
         };
+        signing.format = "openpgp";
         delta = {
           features = "side-by-side";
           syntax-theme = "tokyoNightNight";
@@ -69,6 +70,7 @@
     };
     mergiraf = {
       enable = true;
+      enableGitIntegration = true;
     };
   };
 }

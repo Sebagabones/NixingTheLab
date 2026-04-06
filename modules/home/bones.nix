@@ -31,17 +31,20 @@
   home.packages = with pkgs; [
     ghostty.terminfo
     atool
+    nix-output-monitor
     httpie
     nixd
     lsd
     clang-tools
     procs
+    ttl
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
         pygments
         git
         numpy
         pandas
+        matplotlib
         latexminted
         catppuccin
         mypy
@@ -70,6 +73,8 @@
     bitwarden-cli
     nix-fast-build
     expect
+    alire
+    gprbuild
   ];
   programs.gpg = {
     enable = true;
@@ -133,45 +138,39 @@
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
-        "*" = {
-          forwardAgent = false;
-          addKeysToAgent = "no";
-          compression = true;
-          serverAliveInterval = 0;
-          serverAliveCountMax = 3;
-          hashKnownHosts = false;
-          userKnownHostsFile = "~/.ssh/known_hosts";
-          controlMaster = "no";
-          controlPath = "~/.ssh/master-%r@%n:%p";
-          controlPersist = "no";
+      matchBlocks =
+        let
+          domain = "lab.mahoosively.gay";
+        in
+        {
+          "*" = {
+            forwardAgent = false;
+            addKeysToAgent = "no";
+            compression = true;
+            serverAliveInterval = 0;
+            serverAliveCountMax = 3;
+            hashKnownHosts = false;
+            userKnownHostsFile = "~/.ssh/known_hosts";
+            controlMaster = "no";
+            controlPath = "~/.ssh/master-%r@%n:%p";
+            controlPersist = "no";
+          };
+          pandemonium = {
+            hostname = "pandemonium.${domain}";
+            port = 7656;
+          };
+          insanity = {
+            hostname = "insanity.${domain}";
+            port = 22;
+          };
+          deposition = {
+            hostname = "deposition.${domain}";
+            port = 5876;
+          };
+          ucc = {
+            hostname = "ssh.ucc.asn.au";
+          };
         };
-        pandemonium = {
-          hostname = "mahoosively.gay";
-          port = 7656;
-        };
-        bonesboundhome = {
-          hostname = "mahoosively.gay";
-          port = 8909;
-        };
-        bonesrunhome = {
-          hostname = "mahoosively.gay";
-          port = 7856;
-        };
-        deposition = {
-          hostname = "deposition.lab.mahoosively.gay";
-          port = 5876;
-        };
-        insanity = {
-          # TODO: Move this so it is only on laptops, and not for alllll of my systems, as pandemonium doesn't need to ssh into itself to access insanity
-          proxyJump = "pandemonium";
-          hostname = "insanity.lab.mahoosively.gay";
-          port = 22;
-        };
-        ucc = {
-          hostname = "ssh.ucc.asn.au";
-        };
-      };
 
     };
     bat = {

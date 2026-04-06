@@ -56,6 +56,9 @@
       url = "github:nix-community/plasma-manager";
     };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    nix-ada = {
+      url = "github:andrewathalye/nix-ada";
+    };
     # temp
   };
 

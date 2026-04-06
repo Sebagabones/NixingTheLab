@@ -10,7 +10,7 @@
     ./theming.nix
   ];
   environment.systemPackages = with pkgs; [
-    pinentry-gnome3
+    # pinentry-gnome3
     nextdns
   ];
 
@@ -25,7 +25,7 @@
       size = 32;
     };
   };
-  services.gnome.gcr-ssh-agent.enable = false;
+  # services.gnome.gcr-ssh-agent.enable = false;
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
@@ -51,24 +51,6 @@
     rtkit.enable = true;
     polkit.enable = true;
   };
-  services.nextdns = {
-
-    enable = true;
-    arguments = [
-      "-config"
-      "c369fa"
-      "-cache-size"
-      "10MB"
-    ];
-
-  };
-  systemd.services.nextdns-activate = {
-    script = ''
-      /run/current-system/sw/bin/nextdns activate
-    '';
-    after = [ "nextdns.service" ];
-    wantedBy = [ "multi-user.target" ];
-  };
 
   services = {
     xserver = {
@@ -78,12 +60,12 @@
       };
     };
     displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    # desktopManager.gnome.enable = true;
     desktopManager.plasma6.enable = true;
 
     dbus = {
       enable = true;
-      packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
+      # packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
     };
 
     pulseaudio.enable = false;
@@ -97,7 +79,7 @@
 
     libinput.enable = true;
 
-    blueman.enable = true;
+    # blueman.enable = true;
     udev.packages = [
       pkgs.platformio-core.udev
       pkgs.openocd
@@ -132,10 +114,7 @@
     };
   };
   networking = {
-    networkmanager = {
-      enable = true;
-      wifi.powersave = true;
-    };
+    useDHCP = true;
   };
 
 }

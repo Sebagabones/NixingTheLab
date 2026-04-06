@@ -8,6 +8,8 @@
   imports = [
     inputs.self.homeModules.bones
     inputs.self.homeModules.gui
+    inputs.self.homeModules.laptop
+
     # inputs.agenix.homeManagerModules.default
     # inputs.agenix-rekey.homeManagerModules.default
   ];

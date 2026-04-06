@@ -22,6 +22,7 @@ in
   security.acme.defaults.email = "admin+acme@${domain}";
   services = {
     inadyn = {
+      # enable = true; TODO: Fix inadyn
       enable = true;
       configFile = config.age.secrets.inadyn.path;
     };

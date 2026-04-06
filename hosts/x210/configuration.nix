@@ -7,6 +7,13 @@
 }:
 {
   networking.hostName = "x210";
+  networking = {
+    networkmanager = {
+      enable = true;
+      wifi.powersave = true;
+    };
+    useDHCP = lib.mkForce true;
+  };
   system.stateVersion = "25.11";
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -73,4 +80,23 @@
   lollypops.deployment.group = "Personal";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   stylix.enable = true;
+  # services.nextdns = {
+  #
+  #   enable = true;
+  #   arguments = [
+  #     "-config"
+  #     "c369fa"
+  #     "-cache-size"
+  #     "10MB"
+  #   ];
+  #
+  # };
+  # systemd.services.nextdns-activate = {
+  #   script = ''
+  #     /run/current-system/sw/bin/nextdns activate
+  #   '';
+  #   after = [ "nextdns.service" ];
+  #   wantedBy = [ "multi-user.target" ];
+  # };
+
 }
