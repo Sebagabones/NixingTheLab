@@ -55,6 +55,7 @@
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
     };
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     # temp
   };
 
