@@ -104,6 +104,8 @@
         "wheel"
         "networkmanager"
         "podman"
+        "plugdev"
+        "dialout"
       ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/tDV1v2CN6VqwEgq86fV5M9k7/L5pEFNbe1XYe28P+ bones@revitalised"
@@ -134,7 +136,11 @@
       hashedPassword = "$y$j9T$/Qj7yKmjZ775/eVyUcfOe1$eLVuG6FckmVT.tNOJZCqqqxwUZ.0GSApSVboIWHOdb2";
     };
   };
-
+  services.udev.packages = [ pkgs.libphidget22 ];
+  services.udev.extraRules = ''
+    SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="06c2", ATTRS{idProduct}=="00[3-a][0-f]", MODE="666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"
+  '';
   # GPG things
   services.pcscd.enable = true;
   programs.gnupg.agent = {
