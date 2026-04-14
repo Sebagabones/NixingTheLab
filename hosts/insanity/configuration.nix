@@ -88,7 +88,7 @@ in
   environment.systemPackages = with pkgs; [
     openrgb-with-all-plugins
     protonup-qt
-    wineWowPackages.waylandFull
+    wineWow64Packages.waylandFull
   ];
 
   # environment.pathsToLink =
