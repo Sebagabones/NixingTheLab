@@ -20,12 +20,20 @@
       # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
+    docker = {
+      enable = true;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+    };
+
   };
 
-  services.spice-vdagentd.enable = false; # enable copy and paste between host and guest
-  services.qemuGuest.enable = false;
+  # services.spice-vdagentd.enable = false; # enable copy and paste between host and guest
+  # services.qemuGuest.enable = false;
   networking.firewall.trustedInterfaces = [ "virbr0" ];
-  programs.virt-manager.enable = false;
+  # programs.virt-manager.enable = false;
 
   # Useful other development tools
   environment.systemPackages = with pkgs; [
@@ -35,5 +43,6 @@
     podman-compose # start group of containers for dev
     distrobox
     dnsmasq
+    gnome-boxes
   ];
 }
