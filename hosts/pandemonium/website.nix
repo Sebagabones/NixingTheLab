@@ -23,6 +23,7 @@ in
   services = {
     inadyn = {
       # enable = true; TODO: Fix inadyn
+      enable = false;
       configFile = config.age.secrets.inadyn.path;
     };
     nginx = {

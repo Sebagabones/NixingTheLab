@@ -15,6 +15,7 @@
     inputs.agenix-rekey.nixosModules.default
     flake.nixosModules.podman
     flake.nixosModules.builders
+    # inputs.determinate.nixosModules.default
     ./theming.nix
   ];
 

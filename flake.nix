@@ -55,10 +55,7 @@
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
     };
-    nix-ada = {
-      url = "github:andrewathalye/nix-ada";
-    };
-    # temp
+
   };
 
   outputs =
