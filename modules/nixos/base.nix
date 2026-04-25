@@ -197,6 +197,8 @@
   # Nix Settings
   nix.settings = {
     download-buffer-size = 671088640;
+    substituters = [ "http://cache.mahoosively.gay" ];
+    trusted-public-keys = [ "cache.mahoosively.gay:VEmKWBBlwZmKaPeVvsfjZAdKPJkDh9Zqi2fdWl1gZQg=" ];
   };
 
   # Lollypops

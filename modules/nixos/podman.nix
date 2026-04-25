@@ -43,6 +43,6 @@
     podman-compose # start group of containers for dev
     distrobox
     dnsmasq
-    gnome-boxes
+    # gnome-boxes
   ];
 }

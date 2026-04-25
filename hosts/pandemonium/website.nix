@@ -17,7 +17,10 @@ in
     inadyn.rekeyFile = ../../secrets/inadyn.age;
     spotifyBackendConfiguration.rekeyFile = ../../secrets/reallymahoosivelygay/mySpotifyBackend/env.age;
   };
-
+  services.harmonia = {         # TODO: At some point, move this to use agenix
+    enable = true;
+    signKeyPaths = [ "/var/lib/secrets/harmonia.secret" ];
+  };
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "admin+acme@${domain}";
   services = {
@@ -55,6 +58,20 @@ in
                 #     # required when the server wants to use HTTP Authentication
                 "proxy_pass_header Authorization;";
           };
+        };
+        "cache.${domain}" = {
+          enableACME = true;
+          forceSSL = true;
+
+          locations."/".extraConfig = ''
+            proxy_pass http://127.0.0.1:5000;
+            proxy_set_header Host $host;
+            proxy_redirect http:// https://;
+            proxy_http_version 1.1;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+          '';
         };
       };
     };
