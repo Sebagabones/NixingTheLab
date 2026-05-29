@@ -17,7 +17,8 @@ in
     inadyn.rekeyFile = ../../secrets/inadyn.age;
     spotifyBackendConfiguration.rekeyFile = ../../secrets/reallymahoosivelygay/mySpotifyBackend/env.age;
   };
-  services.harmonia = {         # TODO: At some point, move this to use agenix
+  services.harmonia.cache = {
+    # TODO: At some point, move this to use agenix
     enable = true;
     signKeyPaths = [ "/var/lib/secrets/harmonia.secret" ];
   };
