@@ -64,7 +64,42 @@ in
           titlesec
           preview
           luatex
+          semantex
+          sectsty
+          graphviz
+          leftindex
+          mathtools
+          circuitikz
+          xfrac
+          soulpos
+          microtype
+          setspace
+          biblatex
+          fancyhdr
+          tocbibind
           ;
+
+        nicematrix = {
+          pkgs = [
+            (pkgs.runCommand "nicematrix"
+              {
+                src = pkgs.fetchurl {
+                  url = "https://raw.githubusercontent.com/fpantigny/nicematrix/106b00df06a78228b314d447bbb33dc16da54e89/nicematrix.sty";
+                  sha256 = "sha256-xlZjF/+l52AotGJ/wvfaRGIX6LEeksnFRjTFkT6x5do=";
+                };
+                passthru = {
+                  pname = "nicematrix";
+                  version = "7.9a";
+                  tlType = "run";
+                };
+              }
+              "
+        mkdir -p $out/tex/latex/nicematrix/
+        cp $src $out/tex/latex/nicematrix/nicematrix.sty
+      "
+            )
+          ];
+        };
       };
     in
     [
@@ -103,6 +138,9 @@ in
       inkscape
       pdf2svg
       tex
+      mermaid-cli
+      gdb
+      biber
       # The following is requried, but is currently in ./bones.nix
       # (python3.withPackages (python-pkgs:
       # with python-pkgs; [

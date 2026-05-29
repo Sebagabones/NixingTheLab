@@ -59,8 +59,11 @@
         xterm.enable = false;
       };
     };
-    displayManager.gdm.enable = true;
-    # desktopManager.gnome.enable = true;
+    displayManager = {
+      gdm.enable = true;
+#      defaultSession = "mango"; # derived from mango.desktop filename
+    };
+
     desktopManager.plasma6.enable = true;
 
     dbus = {

@@ -6,7 +6,7 @@
   };
 
   outputs =
-    { nixpkgs }:
+    { self, nixpkgs }:
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
     in
@@ -71,6 +71,7 @@
               etoc
               titlesec
               preview
+              semantex
               ;
           })
           pkgs.latexminted

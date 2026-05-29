@@ -38,9 +38,12 @@
     clang-tools
     procs
     ttl
+    antlr4_11
     (python3.withPackages (
       python-pkgs: with python-pkgs; [
         pygments
+
+        sympy
         git
         numpy
         pandas
