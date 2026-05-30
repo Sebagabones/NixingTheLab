@@ -139,7 +139,7 @@
                          'if [ #D != {} ]; then tmux kill-pane -t {}; fi'"
         bind 2 split-window -v -c "#{pane_current_path}" \; select-pane -l
         bind 3 split-window -h -c "#{pane_current_path}" \; select-pane -l
-        bind 4 split-window -h -c "#{pane_current_path}" \; select-pane -l # at some point add fzf to choose path here
+        bind 4 split-window -h -c "#{pane_current_path}" \; select-pane -l # TODO: at some point add fzf to choose path here
 
         bind k confirm-before -p "kill-pane '#W:#P'? (y/n)" kill-pane
         bind b choose-tree
@@ -156,7 +156,7 @@
         # Emacs tabs
         bind-key t switch-client -T emacs-style-tabs-table
         bind-key -T emacs-style-tabs-table 2 new-window
-        bind-key -T emacs-style-tabs-table f new-window #at some point add in fzf to pick dir to open in
+        bind-key -T emacs-style-tabs-table f new-window # TODO: at some point add in fzf to pick dir to open in
         bind-key -T emacs-style-tabs-table 0 if-shell "tmux display-message -p '#{session_windows}' | grep -v '^1$'"\
                         "kill-window"\
                         "display 'Attempt to delete sole window'"
@@ -166,7 +166,7 @@
 
         bind -T prefix q display-panes -d 0
 
-        bind o if-shell -F "#{e|>=:#{window_panes},3}" "display-panes" "select-pane -t :.+"
+        bind o if-shell -F "#{e|>=:#{window_panes},3}" "display-panes -d 0" "select-pane -t :.+"
 
         bind-key -n C-g if-shell -F '#{pane_in_mode}' 'send-keys q' 'send-keys C-c'
         bind-key -T copy-mode C-g send-keys -X cancel
@@ -215,9 +215,10 @@
         set -g default-terminal "xterm-256color"
 
         # Settings
+        set -g pane-border-lines simple
+        set -g pane-active-border-style "fg=#565f89"
         set -g destroy-unattached on
         set -g display-time 2000
-        set -g display-panes-time 2000
         set -g @tokyo-night-tmux_window_id_style digital   # window tab numbers
         set -g @tokyo-night-tmux_pane_id_style hsquare     # pane number shown in status bar
         set -g @tokyo-night-tmux_zoom_id_style dsquare     # pane number shown when zoomed
