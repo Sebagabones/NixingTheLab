@@ -25,10 +25,6 @@
     accent = "mauve";
     grub.enable = false;
   };
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [ ];
-  };
   # Lollypops
   # Generate lollypops deployment configurations for all hosts
   lollypops.deployment = {

@@ -51,7 +51,7 @@
   };
 
   programs.fuzzel = {
-    enable = true;
+    enable = false;
   };
 
   programs.ghostty = {

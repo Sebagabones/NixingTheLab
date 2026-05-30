@@ -55,7 +55,10 @@
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
     };
-
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

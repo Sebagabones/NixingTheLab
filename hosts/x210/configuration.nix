@@ -57,7 +57,7 @@
     enable = true;
     algorithm = "zstd";
   };
-
+  services.displayManager.hiddenUsers = [ "lauren" ];
   # services.tlp = {
   #   enable = true;
   #   settings = {
