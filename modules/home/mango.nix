@@ -203,7 +203,7 @@ in
     };
   programs.noctalia-shell = {
     enable = true;
-
+    # TODO: Look into hooks for screen lid for locking - also go and setup idle screen turn off lol
     # Plugin management (sources and states)
     plugins = {
       sources = [
@@ -307,7 +307,12 @@ in
             }
             {
               id = "Battery";
-              displayMode = "onhover";
+              displayMode = "icon-always";
+              deviceNativePath = "__default__";
+              hideIfIdle = false;
+              hideIfNotDetected = true;
+              showNoctaliaPerformance = true;
+              showPowerProfiles = true;
             }
             {
               id = "ControlCenter";
