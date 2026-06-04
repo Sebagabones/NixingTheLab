@@ -1,0 +1,31 @@
+/* Download the catppuccin stylus import.json, and update it so all mentions catppuccin/userstyles/ are changed to Sebgagabones/userstyles, and then import it. - the changes to lib.less were  */
+@catppuccin: {
+    @mocha: {
+        @rosewater: #f5e0dc;
+        @flamingo: #f2cdcd;
+        @pink: #f5c2e7;
+        @mauve: #bb9af7;
+        @red: #f7768e;
+        @maroon: #eba0ac;
+        @peach: #fab387;
+        @yellow: #f9e2af;
+        @green: #9ece6a;
+        @teal: #0db9d7;
+        @sky: #7dcfff;
+        @sapphire: #7dcfff;
+        @blue: #7199ee;
+        @lavender: #b4befe;
+        @text: #c0caf5;
+        @subtext1: #bac2de;
+        @subtext0: #a9b1d6;
+        @overlay2: #a0a8cd;
+        @overlay1: #787c99;
+        @overlay0: #444b6a;
+        @surface2: #444b6a;
+        @surface1: #2f3549;
+        @surface0: #2f3549;
+        @base: #11121d;
+        @mantle: #181825;
+        @crust: #11111b;
+    }
+}

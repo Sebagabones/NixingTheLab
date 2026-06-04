@@ -5,12 +5,13 @@
     enable = true;
     autoEnable = true;
     # polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/da-one-ocean.yaml";
     # base16Scheme =
     #   "${pkgs.base16-schemes}/share/themes/tokyo-night-terminal-dark.yaml";
-    # base16Scheme =
-    #   "${pkgs.base16-schemes}/share/themes/tokyodark-terminal.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark-terminal.yaml";
+    base16Scheme = ../../assests/theme.yaml;
 
     targets = {
       bat.enable = false;

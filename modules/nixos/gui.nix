@@ -2,6 +2,7 @@
   lib,
   pkgs,
   inputs,
+  config,
   ...
 }:
 {
@@ -14,11 +15,15 @@
     # pinentry-gnome3
     nextdns
   ];
-
+  nixpkgs.overlays = [ ];
   stylix = {
-    image = ../../assests/background.png;
-    targets.qt = {
-      enable = true;
+    # image = ../../assests/background.png;
+    image = ../../assests/CatsWithNix.png;
+
+    targets = {
+      qt = {
+        enable = true;
+      };
     };
     cursor = {
       package = pkgs.banana-cursor;
@@ -36,27 +41,28 @@
       enableAskPassword = true;
     };
     mango = {
-      enable = false;
+      # package = inputs.mangowm.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (
+      #   finalAttrs: previousAttrs: {
+      #     patches = (previousAttrs.patches or [ ]) ++ [
+      #       (pkgs.fetchpatch {
+      #         url = "https://patch-diff.githubusercontent.com/raw/mangowm/mango/pull/676.diff";
+      #         hash = "sha256-wRQiF2BHFHEipeU3K2gtBgm/Xr+oz9KfETJgCfttaoI=";
+      #       })
+      #     ];
+      #     buildInputs = (previousAttrs.buildInputs or [ ]) ++ [
+      #       pkgs.cjson
+      #     ];
+      #     # This was done at version = "0.14.0", applying this https://github.com/mangowm/mango/pull/676 ;
+      #   }
+      # );
+      enable = true;
       addLoginEntry = true;
     };
     foot = {
       enable = true;
-      theme = "tokyonight-night";
+      # theme = "tokyonight-night";
       enableZshIntegration = true;
       xdg.serverAutostart = true;
-      settings = {
-        main = {
-          font = "Berkeley Mono";
-          bold-text-in-bright = "no";
-          dpi-aware = "yes";
-          box-drawings-uses-font-glyphs = "no"; # Maybe enable this? idk
-        };
-        scrollback = {
-          lines = 100000;
-        };
-        mouse.hide-when-typing = "yes";
-        # colors.alpha = "0.99";
-      };
     };
   };
 
@@ -157,10 +163,10 @@
           full_color = true;
           animation = "colormix";
           animation_frame_delay = 50;
-          colormix_col1 = "0x00CBA6F7";
-          colormix_col2 = "0X0074C7EC";
-          colormix_col3 = "0x0011111B";
-          bg = "0x0011111B";
+          colormix_col1 = "0x00${config.lib.stylix.colors.base0E}";
+          colormix_col2 = "0X00${config.lib.stylix.colors.base0D}";
+          colormix_col3 = "0x00${config.lib.stylix.colors.base00}";
+          bg = "0x00${config.lib.stylix.colors.base00}";
           auth_fails = 3;
           hide_version_string = true;
           initial_info_text = "Still Alive Huh?";
@@ -230,9 +236,33 @@
         }
       ];
     };
+    power-profiles-daemon.enable = true;
+    upower.enable = true;
+
+    static-web-server =
+      let # static webpage for firefox to load to as homepage
+        indexHtml = pkgs.writeTextDir "index.html" ''
+          <html>
+            <body style="background-color:${config.lib.stylix.colors.withHashtag.base00}"></body>
+          </html>
+        '';
+      in
+      {
+        enable = true;
+        listen = "127.0.0.1:8231";
+        root = indexHtml;
+      };
+
+    logind = {
+      enable = true;
+      settings = {
+        Login.HandleLidSwitch = "suspend";
+      };
+    };
   };
   networking = {
     useDHCP = true;
+    networkmanager.enable = true;
   };
 
 }

@@ -5,7 +5,7 @@
 }:
 {
   programs.ssh = {
-    matchBlocks = {
+    settings = {
       pandemonium = lib.mkForce {
         hostname = "mahoosively.gay";
         port = 7656;

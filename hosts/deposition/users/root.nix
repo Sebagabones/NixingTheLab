@@ -8,7 +8,7 @@ _:
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       pandemonium = {
         hostname = "pandemonium.lab.mahoosively.gay";
         port = 7656;

@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   # Enable common container config files in /etc/containers
-  virtualisation.containers.enable = true;
+  virtualisation.containers.enable = false;
   virtualisation = {
     libvirtd = {
       enable = false;
@@ -21,7 +21,7 @@
       defaultNetwork.settings.dns_enabled = true;
     };
     docker = {
-      enable = true;
+      enable = false;
       rootless = {
         enable = true;
         setSocketVariable = true;
