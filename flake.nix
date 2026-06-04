@@ -63,6 +63,9 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    thymis = {
+      url = "github:Aquamonix/thymis";
+    };
   };
 
   outputs =

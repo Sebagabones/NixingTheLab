@@ -14,22 +14,61 @@ let
 in
 {
   age.secrets = {
-    inadyn.rekeyFile = ../../secrets/inadyn.age;
+    ddclient.rekeyFile = ../../secrets/ddclient.age;
+    harmonia.rekeyFile = ../../secrets/harmonia.age;
+    thymis.rekeyFile = ../../secrets/thymis.age;
+
     spotifyBackendConfiguration.rekeyFile = ../../secrets/reallymahoosivelygay/mySpotifyBackend/env.age;
   };
-  services.harmonia.cache = {
-    # TODO: At some point, move this to use agenix
-    enable = true;
-    signKeyPaths = [ "/var/lib/secrets/harmonia.secret" ];
-  };
+
+  imports = [
+    inputs.thymis.nixosModules.thymis-controller
+  ];
+
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "admin+acme@${domain}";
   services = {
-    inadyn = {
-      # enable = true; TODO: Fix inadyn
-      enable = false;
-      configFile = config.age.secrets.inadyn.path;
+
+    harmonia.cache = {
+      # TODO: At some point, move this to use agenix
+      enable = true;
+      signKeyPaths = [ config.age.secrets.harmonia.path ];
     };
+
+    ddclient = {
+      enable = true;
+      usev4 = "webv4, webv4=ipify-ipv4";
+      usev6 = "";
+      protocol = "namecheap";
+      server = "dynamicdns.park-your-domain.com";
+      domains = [
+        "mahoosively.gay"
+        "api.mahoosively.gay"
+        "cache.mahoosively.gay"
+        "thymis-testing.mahoosively.gay" # remove once youve tested this out lol
+        "lab.mahoosively.gay"
+        "www.mahoosively.gay"
+      ];
+      passwordFile = config.age.secrets.ddclient.path;
+    };
+
+    thymis-controller = {
+      enable = true;
+      system-binfmt-aarch64-enable = true; # Enables emulation of aarch64 binaries
+      system-binfmt-x86_64-enable = false; # Enables emulation of x86_64 binaries
+      # recommended-nix-gc-settings-enable = true; # Enables recommended Nix garbage collection settings
+      project-path = "/var/lib/thymis"; # Directory for the project
+      base-url = "https://thymis-testing.mahoosively.gay/"; # Base URL of the controller
+      agent-access-url = "https://thymis-testing.mahoosively.gay/"; # URL for agents to access the controller
+      auth-basic = true; # Enable basic authentication
+      auth-basic-username = "admin"; # Username for basic authentication
+      auth-basic-password-file = config.age.secrets.thymis.path; # File containing the password for basic authentication
+      listen-host = "127.0.0.1"; # Host on which the controller listens for incoming connections
+      listen-port = 8000; # Port on which the controller listens for incoming connections
+      nginx-vhost-enable = true; # Whether to enable the Nginx virtual host
+      nginx-vhost-name = "thymis-testing.${domain}"; # Name of the Nginx virtual host
+    };
+
     nginx = {
       enable = true;
       recommendedGzipSettings = true;
@@ -73,6 +112,12 @@ in
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection $connection_upgrade;
           '';
+        };
+
+        "thymis-testing.${domain}" = {
+          serverName = "thymis-controller";
+          enableACME = true; # Enable ACME for automatic SSL certificate management
+          forceSSL = true; # Force SSL for the virtual host
         };
       };
     };
