@@ -1620,11 +1620,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1780470590,
-        "narHash": "sha256-NgPDDSI7s5q3IrVyUJEDuiuax3Ule1x7s7j9ldUZY+o=",
+        "lastModified": 1780646834,
+        "narHash": "sha256-FqfcUbXXKGg6Dsru6H5TiKKERSjo3VvumnL4Bdmezk0=",
         "owner": "Aquamonix",
         "repo": "thymis",
-        "rev": "75c77eeab1aeb0f4ac86348ed3788ca957c20dbd",
+        "rev": "19450312d9c2d77758dfbd8423121e382f955de4",
         "type": "github"
       },
       "original": {

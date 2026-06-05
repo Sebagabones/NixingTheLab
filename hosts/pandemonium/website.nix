@@ -62,8 +62,9 @@ in
       agent-access-url = "https://thymis-testing.mahoosively.gay/"; # URL for agents to access the controller
       auth-basic = true; # Enable basic authentication
       auth-basic-username = "admin"; # Username for basic authentication
-      auth-basic-password-file = config.age.secrets.thymis.path; # File containing the password for basic authentication
-      listen-host = "127.0.0.1"; # Host on which the controller listens for incoming connections
+      # auth-basic-password-file = config.age.secrets.thymis.path; # File containing the password for basic authentication
+      auth-basic-password-file = "/var/lib/thymis/auth-basic-password";
+      listen-host = "0.0.0.0"; # Host on which the controller listens for incoming connections
       listen-port = 8000; # Port on which the controller listens for incoming connections
       nginx-vhost-enable = true; # Whether to enable the Nginx virtual host
       nginx-vhost-name = "thymis-testing.${domain}"; # Name of the Nginx virtual host
@@ -115,7 +116,7 @@ in
         };
 
         "thymis-testing.${domain}" = {
-          serverName = "thymis-controller";
+          serverName = "thymis-testing.${domain}";	
           enableACME = true; # Enable ACME for automatic SSL certificate management
           forceSSL = true; # Force SSL for the virtual host
         };
@@ -137,6 +138,7 @@ in
   };
   networking.firewall.allowedTCPPorts = [
     80
+    8000
     443
   ];
 
