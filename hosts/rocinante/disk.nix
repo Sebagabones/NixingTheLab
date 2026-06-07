@@ -27,22 +27,26 @@ let
 in
 {
   imports = [ inputs.disko.nixosModules.disko ];
+
   disko.devices = {
     disk = {
-      bootssd = {
-        device = "/dev/disk/by-id/ata-CT250MX500SSD1_2402E88CC199";
+      # Boot SSD's
+      bootssd1 = {
+        device = "/dev/disk/by-id/ata-CT250MX500SSD1_2402E88CBFC0";
         type = "disk";
         content = {
           type = "gpt";
           partitions = {
+            BOOT = {
+              size = "1M";
+              type = "EF02"; # for grub MBR
+            };
             ESP = {
-              type = "EF00";
               size = "1024M";
+              type = "EF00";
               content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                type = "mdraid";
+                name = "boot";
               };
             };
             zfs = {
@@ -55,6 +59,61 @@ in
           };
         };
       };
+
+      bootssd2 = {
+        device = "/dev/disk/by-id/ata-CT250MX500SSD1_2402E88CC199";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            BOOT = {
+              size = "1M";
+              type = "EF02"; # for grub MBR
+            };
+            ESP = {
+              size = "1024M";
+              type = "EF00";
+              content = {
+                type = "mdraid";
+                name = "boot";
+              };
+            };
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zroot";
+              };
+            };
+          };
+        };
+      };
+
+      # Scratch SSD
+      scratch_ssd = {
+        device = "/dev/disk/by-id/ata-PLEXTOR_PX-256S3G_P02812106309";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "xfs";
+                mountpoint = "/scratch";
+                mountOptions = [
+                  "defaults"
+                  "pquota"
+                  "logbufs=8"
+                  "logbsize=256k"
+                ];
+              };
+            };
+          };
+        };
+      };
+
       ##########################
       ## 3TB Drives: -> zdata ##
       ##########################
@@ -79,6 +138,7 @@ in
         device = "/dev/disk/by-id/scsi-35000cca0461efe20";
         content = hardDriveDefaultsContent;
       };
+
       ###############################
       ## 2TB Drives: -> zdonttrust ##
       ## These are not numbered in ##
@@ -110,6 +170,22 @@ in
         content = notToBeTrustedDefaultsContent;
       };
     };
+
+    mdadm = {
+      boot = {
+        type = "mdadm";
+        level = 1;
+        metadata = "1.0";
+        extraArgs = [ "--bitmap=internal" ];
+        content = {
+          type = "filesystem";
+          format = "vfat";
+          mountpoint = "/boot";
+          mountOptions = [ "umask=0077" ];
+        };
+      };
+    };
+
     zpool = {
       zroot = {
         type = "zpool";
@@ -162,7 +238,7 @@ in
           mountpoint = "none";
           relatime = "on";
           xattr = "sa";
-          "com.sun:auto-snapshot" = "false";
+          "com.sun:auto-snapshot" = "true";
         };
         options = {
           ashift = "12";
@@ -192,6 +268,7 @@ in
           };
         };
       };
+
       zdonttrust = {
         type = "zpool";
         mountpoint = "/donttrust";
@@ -228,23 +305,6 @@ in
           ashift = "12";
           autotrim = "on";
         };
-        # datasets = {
-        #   mainStorage = {
-        #     type = "zfs_fs";
-        #     mountpoint = "/storage/main";
-        #     options = { compression = "zstd"; };
-        #   };
-        #   immich = {
-        #     type = "zfs_fs";
-        #     mountpoint = "/storage/immich";
-        #     options = { compression = "zstd"; };
-        #   };
-        #   git = {
-        #     type = "zfs_fs";
-        #     mountpoint = "/storage/git";
-        #     options = { compression = "zstd"; };
-        #   };
-        # };
       };
     };
   };

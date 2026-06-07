@@ -44,18 +44,38 @@ in
     storageMode = "local";
     localStorageDir = ./. + "/secrets";
   };
+
   rekey.secrets = { };
+  systemd.services."mdmonitor".environment = {
+    MDADM_MONITOR_ARGS = "--scan --syslog";
+  };
+
   boot = {
+    loader = {
+      efi = {
+        canTouchEfiVariables = false;
+      };
+      grub = {
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+        device = "nodev";
+      };
+      systemd-boot.enable = false;
+    };
+    swraid = {
+      enable = true;
+      mdadmConf = ''
+        HOMEHOST ${config.networking.hostName}
+        MAILADDR=TODO@SetThisUp
+      '';
+    };
     zfs = {
+      forceImportRoot = false;
       devNodes = "/dev/disk/by-uuid";
       extraPools = [
         "zroot"
         "zdonttrust"
       ];
-    };
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
     };
     initrd = {
       systemd.enable = true;
@@ -69,10 +89,16 @@ in
         "usbhid"
         "sd_mod"
       ];
-      supportedFilesystems = [ "zfs" ];
+      supportedFilesystems = [
+        "zfs"
+        "xfs"
+      ];
     };
 
-    supportedFilesystems = [ "zfs" ];
+    supportedFilesystems = [
+      "zfs"
+      "xfs"
+    ];
     kernelPackages = latestKernelPackage;
     kernelModules = [
       "mgag200"
@@ -80,11 +106,6 @@ in
     ]; # we love the Matrox G200
   };
 
-  fileSystems."/" = {
-    device = "zroot/root";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
   fileSystems = {
     "/storage/main" = {
       device = "zdata/mainStorage";
@@ -104,14 +125,24 @@ in
 
     };
   };
+
   fileSystems."/donttrust" = {
     device = "zdonttrust";
     fsType = "zfs";
     options = [ "zfsutil" ];
   };
-  services.zfs.autoScrub = {
-    enable = true;
-    pools = [ "zdata" ];
+
+  services.zfs = {
+    autoScrub = {
+      enable = true;
+      pools = [
+        "zdata"
+        "zdonttrust"
+      ];
+    };
+    autoSnapshot = {
+      enable = true;
+    };
   };
   # Networking
   systemd.network = {
@@ -135,8 +166,6 @@ in
   };
 
   environment.systemPackages = with pkgs; [ ];
-
-  nixpkgs.config.allowUnfree = true;
 
   # Networking
   networking.firewall = {
