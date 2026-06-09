@@ -164,6 +164,10 @@
             hostname = "pandemonium.${domain}";
             port = 7656;
           };
+          rocinante = {
+            hostname = "rocinante.${domain}";
+            port = 8909;
+          };
           insanity = {
             hostname = "insanity.${domain}";
             port = 22;
