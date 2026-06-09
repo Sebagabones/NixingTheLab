@@ -16,6 +16,23 @@
   };
   system.stateVersion = "25.11";
   nixpkgs.hostPlatform = "x86_64-linux";
+  networking.firewall = {
+    enable = false;
+  };
+  systemd.services.systemd-udev-settle.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.network.wait-online.enable = false;
+  systemd.services.cups-browsed.enable = false;
+  boot.initrd.systemd.network.wait-online.enable = false;
+  systemd.tpm2.enable = false;
+  systemd.oomd.enable = false;
+  services.mpd.startWhenNeeded = true;
+  services.openssh.startWhenNeeded = true;
+  services.system76-scheduler.enable = true;
+  systemd.sleep.settings.Sleep = {
+
+    HibernateDelaySec = "1h";
+  };
 
   imports = [
     flake.nixosModules.base
