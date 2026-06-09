@@ -31,13 +31,13 @@
       size = 32;
     };
   };
-  # services.gnome.gcr-ssh-agent.enable = false;
+  # services.gnome.gcr-ssh-agent.enable = true;
   programs = {
     dconf.enable = true;
     xwayland.enable = true;
     ssh = {
       startAgent = true;
-      askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+      # askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
       enableAskPassword = true;
     };
     mango = {
@@ -185,7 +185,7 @@
       '';
     };
 
-    desktopManager.plasma6.enable = true;
+    desktopManager.plasma6.enable = false;
 
     dbus = {
       enable = true;
@@ -204,10 +204,10 @@
     libinput.enable = true;
 
     # blueman.enable = true;
-    udev.packages = [
-      pkgs.platformio-core.udev
-      pkgs.openocd
-    ]; # ELEC3020
+    # udev.packages = [
+    #   pkgs.platformio-core.udev
+    #   pkgs.openocd
+    # ]; # ELEC3020
     avahi = {
       enable = true;
       nssmdns4 = true;
@@ -216,6 +216,7 @@
 
     printing = {
       enable = true;
+      startWhenNeeded = true;
       drivers = with pkgs; [
         cups-filters
         cups-browsed
@@ -224,7 +225,7 @@
     xremap = {
       # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
       # LMAO, looks like this doesnt work on gnome - fix it sometime
-      enable = true;
+      enable = false;
       serviceMode = "user";
       userName = "bones";
       config.modmap = [
@@ -256,12 +257,16 @@
     logind = {
       enable = true;
       settings = {
-        Login.HandleLidSwitch = "suspend";
+        Login = {
+          HandleLidSwitch = "ignore";
+          HandleLidSwitchExternalPower = "ignore";
+          HandleLidSwitchDocked = "ignore";
+        };
       };
     };
   };
   networking = {
-    useDHCP = true;
+    # useDHCP = true;
     networkmanager.enable = true;
   };
 
