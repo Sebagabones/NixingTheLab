@@ -67,12 +67,12 @@
       cores = 0;
     };
     gc = {
-      automatic = true;
+      automatic = false;
       randomizedDelaySec = "1800";
-      options = "--delete-older-than 18d";
+      # options = "--delete-older-than +7";
+      # TODO: Go look at https://git.scottworley.com/nix-profile-gc
     };
     optimise.automatic = true;
-
   };
   users = {
     mutableUsers = false;
