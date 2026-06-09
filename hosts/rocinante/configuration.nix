@@ -71,9 +71,10 @@ in
     };
     zfs = {
       forceImportRoot = false;
-      devNodes = "/dev/disk/by-uuid";
+      devNodes = "/dev/disk/by-id";
       extraPools = [
         "zroot"
+        "zdata"
         "zdonttrust"
       ];
     };
@@ -106,31 +107,31 @@ in
     ]; # we love the Matrox G200
   };
 
-  fileSystems = {
-    "/storage/main" = {
-      device = "zdata/mainStorage";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/storage/immich" = {
-      device = "zdata/immich";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
+  # fileSystems = {
+  #   "/storage/main" = {
+  #     device = "zdata/mainStorage";
+  #     fsType = "zfs";
+  #     options = [ "zfsutil" ];
+  #   };
+  #   "/storage/immich" = {
+  #     device = "zdata/immich";
+  #     fsType = "zfs";
+  #     options = [ "zfsutil" ];
 
-    };
-    "/storage/git" = {
-      device = "zdata/git";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
+  #     };
+  #   "/storage/git" = {
+  #     device = "zdata/git";
+  #     fsType = "zfs";
+  #     options = [ "zfsutil" ];
 
-    };
-  };
-
-  fileSystems."/donttrust" = {
-    device = "zdonttrust";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
+  #     };
+  # };
+  #
+  # fileSystems."/donttrust" = {
+  #   device = "zdonttrust";
+  #   fsType = "zfs";
+  #   options = [ "zfsutil" ];
+  # };
 
   services.zfs = {
     autoScrub = {
