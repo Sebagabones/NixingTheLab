@@ -12,7 +12,8 @@
       enable = true;
       wifi.powersave = true;
     };
-    useDHCP = lib.mkForce true;
+    # useDHCP = lib.mkForce true;
+    useNetworkd = true;
   };
   system.stateVersion = "25.11";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -69,7 +70,7 @@
   boot.kernelModules = [
     "kvm_intel"
   ];
-
+  boot.kernelParams = [ "mem_sleep_default=deep" ];
   zramSwap = {
     enable = true;
     algorithm = "zstd";

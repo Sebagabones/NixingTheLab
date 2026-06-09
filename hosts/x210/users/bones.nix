@@ -13,16 +13,16 @@
     # inputs.agenix.homeManagerModules.default
     # inputs.agenix-rekey.homeManagerModules.default
   ];
-  programs.plasma.input = {
-    touchpads = [
-      {
-        naturalScroll = true;
-        name = "SynPS/2 Synaptics TouchPad";
-        vendorId = "0002";
-        productId = "0007";
-      }
-    ];
-  };
+  # programs.plasma.input = {
+  #   touchpads = [
+  #     {
+  #       naturalScroll = true;
+  #       name = "SynPS/2 Synaptics TouchPad";
+  #       vendorId = "0002";
+  #       productId = "0007";
+  #     }
+  #   ];
+  # };
 
   # While i got the below to work, forge doesn’t seem to work with it being done through nix (my best bet is that because it is read only? idk):
 
