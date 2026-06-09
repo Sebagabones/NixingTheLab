@@ -12,7 +12,7 @@
   imports = [
     # perSystem.spicetify-nix.homeManagerModulesfor.spicetify
     # flake.homeModules.gnome
-    flake.homeModules.plasma
+    # flake.homeModules.plasma
     ./mango.nix
     # flake.homeModules.miracle-wm
     ./theming.nix
