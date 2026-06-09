@@ -14,7 +14,10 @@ in
   networking.domain = "lab.mahoosively.gay";
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
-
+  nix.settings.extra-platforms = [
+    "aarch64-linux"
+    "armv7l-linux"
+  ];
   imports = [
     flake.nixosModules.base
     # flake.nixosModules.nonmobile
