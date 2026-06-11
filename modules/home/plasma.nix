@@ -33,7 +33,7 @@
     kdePackages.qtstyleplugin-kvantum
   ];
   programs.plasma = {
-    enable = true;
+    enable = false;
     overrideConfig = true;
     session.sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
 

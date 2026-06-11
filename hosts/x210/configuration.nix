@@ -74,6 +74,7 @@
   networking.firewall = {
     enable = false;
   };
+
   systemd.services.systemd-udev-settle.enable = false;
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.network.wait-online.enable = false;
@@ -84,10 +85,13 @@
   services.mpd.startWhenNeeded = true;
   services.openssh.startWhenNeeded = true;
   services.system76-scheduler.enable = true;
-  systemd.sleep.settings.Sleep = {
-
-    HibernateDelaySec = "1h";
-  };
+  # systemd.sleep.settings.Sleep = {
+  #   AllowSuspend = "yes";
+  #   AllowSuspendThenHibernate = "yes";
+  #   AllowHibernation = "yes";
+  #   MemorySleepMode = "deep";
+  #   HibernateDelaySec = "1m";
+  # };
 
   imports = [
     flake.nixosModules.base
@@ -119,7 +123,7 @@
   boot.kernelModules = [
     "kvm_intel"
   ];
-  boot.kernelParams = [ "mem_sleep_default=deep" ];
+  # boot.kernelParams = [ "mem_sleep_default=deep" ];
   zramSwap = {
     enable = true;
     algorithm = "zstd";

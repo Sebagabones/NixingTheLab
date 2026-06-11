@@ -120,7 +120,7 @@ in
         switchbind =
           let
             lock-screen = pkgs.writeShellScript "lock-screen.sh" ''
-              noctalia-shell ipc call lockScreen lock && wlr-randr --output eDP-1 --off
+              noctalia-shell ipc call lockScreen lock && systemctl suspend
             '';
             unlock-screen = pkgs.writeShellScript "unlock-screen.sh" ''
               wlr-randr --output eDP-1 --on
@@ -129,7 +129,7 @@ in
           [
             # "HandleLidSwitch=ignore"
             "fold,spawn,${lock-screen}"
-            "unfold,spawn,${unlock-screen}"
+            # "unfold,spawn,${unlock-screen}"
           ];
 
         # Use lists for duplicate keys like bind and tagrule

@@ -254,16 +254,16 @@
         root = indexHtml;
       };
 
-    logind = {
-      enable = true;
-      settings = {
-        Login = {
-          HandleLidSwitch = "ignore";
-          HandleLidSwitchExternalPower = "ignore";
-          HandleLidSwitchDocked = "ignore";
-        };
-      };
-    };
+    # logind = {
+    #   enable = true;
+    #   settings = {
+    #     # Login = {
+    #     #   HandleLidSwitch = "ignore";
+    #     #   HandleLidSwitchExternalPower = "ignore";
+    #     #   HandleLidSwitchDocked = "ignore";
+    #     # };
+    #   };
+    # };
   };
   networking = {
     # useDHCP = true;
