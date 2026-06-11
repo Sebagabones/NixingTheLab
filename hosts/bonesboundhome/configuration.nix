@@ -103,8 +103,6 @@
     wantedBy = [ "multi-user.target" ];
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   # Networking
   networking.firewall = {
     enable = false;

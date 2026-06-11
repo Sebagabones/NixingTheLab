@@ -135,8 +135,6 @@
     super-slicer
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   security.rtkit.enable = true;
   security.polkit.enable = true;

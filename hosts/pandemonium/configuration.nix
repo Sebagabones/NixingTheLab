@@ -113,8 +113,6 @@ in
     # perSystem.self.fanControl # Fan control for the IBM servers
   ];
 
-  # nixpkgs.config.allowUnfree = true;
-
   # Networking
   networking.firewall = {
     enable = false;

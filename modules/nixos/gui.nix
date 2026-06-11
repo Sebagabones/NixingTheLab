@@ -185,7 +185,7 @@
       '';
     };
 
-    desktopManager.plasma6.enable = false;
+    # desktopManager.plasma6.enable = false;
 
     dbus = {
       enable = true;
