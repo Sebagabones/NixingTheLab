@@ -74,7 +74,9 @@
       inherit inputs;
       systems = [ "x86_64-linux" ];
       nixpkgs.config.allowUnfree = true;
-
+      nixpkgs.overlays = [
+        inputs.agenix-rekey.overlays.default
+      ];
     }
     // {
       agenix-rekey = inputs.agenix-rekey.configure {

@@ -100,6 +100,7 @@
         "kvm"
         "wheel"
         "networkmanager"
+        "wpa_supplicant"
         "podman"
         "plugdev"
         "dialout"
@@ -126,6 +127,7 @@
         "kvm"
         "wheel"
         "networkmanager"
+        "wpa_supplicant"
         "podman"
       ];
       openssh.authorizedKeys.keys = [

@@ -2,17 +2,71 @@
   flake,
   inputs,
   lib,
+  pkgs,
   config,
   ...
 }:
 {
+  age.rekey = {
+    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHxr05SaTIbofegcG8i63h61rmqymTtmfZbdqYBhmyNs";
+    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
+    storageMode = "local";
+    localStorageDir = ./. + "/secrets";
+  };
+
+  age = {
+    secrets = {
+      wireless = {
+        rekeyFile = ../../secrets/wifi.age;
+        owner = "wpa_supplicant";
+        group = "wpa_supplicant";
+        mode = "0440";
+      };
+    };
+  };
   networking.hostName = "x210";
   networking = {
     networkmanager = {
-      enable = true;
+      enable = lib.mkForce false;
       wifi.powersave = true;
     };
-    # useDHCP = lib.mkForce true;
+    wireless = {
+      secretsFile = config.age.secrets.wireless.path;
+      enable = true;
+      userControlled = true;
+      networks = {
+        "definitelyNotRunningAServerHere" = {
+          priority = 30;
+          authProtocols = [ "WPA-PSK" ];
+          pskRaw = "ext:definitelyNotRunningAServerHere";
+        };
+        "UCC-5" = {
+          priority = 3;
+          authProtocols = [ "WPA-EAP" ];
+          auth = ''
+            eap=PEAP
+            scan_ssid=1
+            identity="bones"
+            phase1="peaplabel=0"
+            phase2="auth=MSCHAPV2"
+            password=ext:pass_UCC5
+          '';
+        };
+        "Unifi" = {
+          priority = 1;
+          authProtocols = [ "WPA-EAP" ];
+          auth = ''
+            scan_ssid=1
+            eap=PEAP
+            identity="23417131@student.uwa.edu.au"
+            phase1="peaplabel=0"
+            phase2="auth=MSCHAPV2"
+            password=ext:pass_unifi
+          '';
+        };
+      };
+    };
+    # useDHCP = true;
     useNetworkd = true;
   };
   system.stateVersion = "25.11";
@@ -48,14 +102,9 @@
     # optional, useful when the builder has a faster internet connection than yours
     extraOptions = "  builders-use-substitutes = true\n";
   };
-  age.rekey = {
-    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaWtBEVSXHRwujQDE0mgFwtTDNAU+rIlyt3HCGCKn2q"; # needs to be updated
-    masterIdentities = [ "/home/bones/NixingTheLab/secrets/secret.key" ];
-    storageMode = "local";
-    localStorageDir = ./. + "/secrets";
-
-  };
-  rekey.secrets = { };
+  environment.systemPackages = with pkgs; [
+    wpa_supplicant_gui
+  ];
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "thunderbolt"

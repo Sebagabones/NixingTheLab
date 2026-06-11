@@ -80,6 +80,7 @@
     bitwarden-cli
     nix-fast-build
     expect
+    agenix-rekey
   ];
   programs.gpg = {
     enable = true;
