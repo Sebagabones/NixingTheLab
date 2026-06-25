@@ -19,15 +19,13 @@
     flake.homeModules.spotify
     inputs.nixcord.homeModules.nixcord
     flake.homeModules.emacs
+    inputs.xremap-flake.homeManagerModules.default
   ];
 
   # qt.platformTheme.name = lib.mkForce "adwaita";
   # qt.platformTheme.name = lib.mkForce "kvantum";
   # qt.style.name = lib.mkForce "kvantum";
 
-  programs.emacs = {
-    package = pkgs.emacs-pgtk;
-  };
   catppuccin = {
     kvantum.enable = true;
     vscode.profiles.default.enable = false;
@@ -739,6 +737,22 @@
   #   x11.enable = true;
   #   gtk.enable = true;
   # };
+  services = {
+    xremap = {
+      enable = true;
+      withWlroots = true;
+      # serviceMode = "system";
+      # userName = "bones";
+      config.modmap = [
+        {
+          name = "Global";
+          remap = {
+            "CapsLock" = "Ctrl";
+          }; # globally remap CapsLock to Ctrl
+        }
+      ];
+    };
+  };
 
   home.file."${config.xdg.configHome}/gtk-2.0/gtkrc".force = true;
   gtk = {

@@ -22,6 +22,7 @@
         };
         pull = {
           rebase = false;
+          ff = "only";
         };
         commit = {
           gpgsign = true;

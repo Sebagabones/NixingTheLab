@@ -138,9 +138,9 @@ in
                       "display 'Attempt to delete sole ordinary panel'"
       bind 1 run-shell "tmux list-panes | grep -o '%[[:digit:]]\\+' | xargs -I{} sh -c \
                        'if [ #D != {} ]; then tmux kill-pane -t {}; fi'"
-      bind 2 split-window -v -c "#{pane_current_path}"
-      bind 3 split-window -h -c "#{pane_current_path}"
-      bind 4 split-window -h -c "#{pane_current_path}"  # TODO: at some point add fzf to choose path here
+      bind 2 split-window -v -c "#{pane_current_path}" \; select-pane -l
+      bind 3 split-window -h -c "#{pane_current_path}" \; select-pane -l
+      bind 4 split-window -h -c "#{pane_current_path}" \; select-pane -l # TODO: at some point add fzf to choose path here
 
       bind k confirm-before -p "kill-pane '#W:#P'? (y/n)" kill-pane
       bind b choose-tree

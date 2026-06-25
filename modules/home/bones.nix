@@ -32,7 +32,7 @@
 
   # home.preferXdgDirectories = true;
   home.packages = with pkgs; [
-    ghostty.terminfo
+    # ghostty.terminfo
     atool
     nix-output-monitor
     httpie
@@ -181,8 +181,8 @@
             hostname = "ssh.ucc.asn.au";
           };
         };
-
     };
+
     bat = {
       enable = true;
       extraPackages = with pkgs.bat-extras; [
@@ -222,6 +222,7 @@
       history.size = 10000;
       sessionVariables = {
         EDITOR = "emacs";
+        DOTNET_ROOT = "${pkgs.dotnet-sdk}/share/dotnet/";
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=#${config.lib.stylix.colors.base03-hex},underline"; # can't be arsed trying to convert hex to xterm, so this is hopefully good enough
       };
 

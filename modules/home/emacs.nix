@@ -10,10 +10,10 @@ in
 {
   # Automatically install Emacs config from here.
   # TODO: work out why this isn’t working anymore - maybe the removal of archiver? dunno - orrr maybe it was to do with xdg movement, idk that seems weird too though
-  home.mutableFile.${emacsInstallation} = {
-    url = "https://github.com/Sebagabones/myEmacsConfig.git";
-    type = "git";
-  };
+  # home.mutableFile.${emacsInstallation} = {
+  #   url = "https://github.com/Sebagabones/myEmacsConfig.git";
+  #   type = "git";
+  # };
   # Enable Emacs server for them quicknotes.
   services.emacs = {
     enable = true;
@@ -141,6 +141,10 @@ in
       mermaid-cli
       gdb
       biber
+      dotnet-sdk
+      fsautocomplete
+      fsharp
+      tree-sitter-grammars.tree-sitter-fsharp
       # The following is requried, but is currently in ./bones.nix
       # (python3.withPackages (python-pkgs:
       # with python-pkgs; [
@@ -152,86 +156,171 @@ in
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [
-      epkgs.org-noter-pdftools
-      epkgs.org-pdftools
-      epkgs.pdf-tools
-      epkgs.vterm
-      epkgs.vterm-toggle
-      epkgs.tabspaces
-      epkgs.pyvenv
-      epkgs.numpydoc
-      epkgs.git-gutter
-      epkgs.latex-pretty-symbols
-      epkgs.treemacs
-      epkgs.treemacs-projectile
-      epkgs.lsp-treemacs
-      epkgs.treemacs-nerd-icons
-      epkgs.elpaca
-      epkgs.base16-theme
-      epkgs.solaire-mode
-      epkgs.corfu
-      epkgs.cape
-      epkgs.vertico
-      epkgs.orderless
-      epkgs.marginalia
-      epkgs.org
-      epkgs.use-package
-      epkgs.embark
-      epkgs.embark-consult
-      epkgs.outline-indent
-      epkgs.stripspace
-      epkgs.undo-fu
-      epkgs.hl-todo
-      epkgs.consult-todo
-      epkgs.magit-todos
-      epkgs.vim-tab-bar
-      epkgs.ox-gfm
-      epkgs.org-modern
-      epkgs.org-appear
-      epkgs.org-fragtog
-      epkgs.engrave-faces
-      epkgs.org-attach-screenshot
-      epkgs.org-sidebar
-      epkgs.htmlize
-      epkgs.markdown-mode
-      epkgs.flycheck
-      epkgs.ccls
-      epkgs.color-identifiers-mode
-      epkgs.platformio-mode
-      epkgs.counsel
-      epkgs.magit
-      epkgs.difftastic
-      epkgs.scad-mode
-      epkgs.lsp-pyright
-      epkgs.git-gutter-fringe
-      epkgs.direnv
-      epkgs.forge
-      epkgs.rg
-      epkgs.ivy-prescient
-      epkgs.corfu-prescient
-      epkgs.embark
-      epkgs.embark-consult
-      epkgs.rainbow-delimiters
-      epkgs.highlight-defined
-      epkgs.aggressive-indent
-      epkgs.rmsbolt
-      epkgs.apheleia
-      epkgs.flycheck-inline
-      epkgs.clipetty
-      epkgs.ace-jump-mode
-      epkgs.dap-mode
-      epkgs.hydra
-      epkgs.magit-delta
-      epkgs.transient
-      epkgs.which-key
-      epkgs.fira-code-mode
-      epkgs.nerd-icons
-      epkgs.helpful
-      epkgs.compile-angel
-      epkgs.package-lint
-    ];
+    package = (
+      pkgs.emacsWithPackagesFromUsePackage {
+        config = ./emacs.el;
+        defaultInitFile = true;
+        package = pkgs.emacs-pgtk;
+        override =
+          epkgs:
+          epkgs
+          // {
+
+            # org-modern-indent
+            org-modern-indent = pkgs.callPackage ./emacsPkgs/org-modern-indent.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+            };
+
+            # fsharp-ts-mode
+            fsharp-ts-mode = pkgs.callPackage ./emacsPkgs/fsharp-ts-mode.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+            };
+
+            # uv.el
+            uv = pkgs.callPackage ./emacsPkgs/uv-el.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+              inherit (epkgs) tomlparse;
+              inherit (epkgs) transient;
+            };
+
+            # simple-comment-markup
+            simple-comment-markup = pkgs.callPackage ./emacsPkgs/simple-comment-markup.nix {
+              inherit (pkgs) fetchgit;
+              inherit (epkgs) melpaBuild;
+            };
+
+            # screenshot
+            screenshot = pkgs.callPackage ./emacsPkgs/screenshot.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+              inherit (epkgs) posframe;
+            };
+
+            # doxymacs
+            doxymacs = pkgs.callPackage ./emacsPkgs/doxymacs.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+            };
+
+            # cicode-mode
+            cicode-mode = pkgs.callPackage ./emacsPkgs/cicode-mode-el.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+              inherit (epkgs) ht;
+            };
+
+            # math-at-point
+            math-at-point = pkgs.callPackage ./emacsPkgs/math-at-point.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+            };
+
+            # comment-dwim-2
+            comment-dwim-2 = pkgs.callPackage ./emacsPkgs/comment-dwim-2.nix {
+              inherit (pkgs) fetchFromGitHub;
+              inherit (epkgs) melpaBuild;
+            };
+
+          };
+        extraEmacsPackages = epkgs: [
+          epkgs.comment-dwim-2
+        ];
+      }
+    );
+    # package = (
+    #   pkgs.emacsWithPackagesFromUsePackage {
+    #     config = ./emacs.el;
+    #     defaultInitFile = true;
+    #   }
+    # );
+    # extraPackages = epkgs: [
+    #   epkgs.org-noter-pdftools
+    #   epkgs.org-pdftools
+    #   epkgs.pdf-tools
+    #   epkgs.vterm
+    #   epkgs.vterm-toggle
+    #   epkgs.tabspaces
+    #   epkgs.pyvenv
+    #   epkgs.numpydoc
+    #   epkgs.git-gutter
+    #   epkgs.latex-pretty-symbols
+    #   epkgs.treemacs
+    #   epkgs.treemacs-projectile
+    #   epkgs.lsp-treemacs
+    #   epkgs.treemacs-nerd-icons
+    #   epkgs.elpaca
+    #   epkgs.base16-theme
+    #   epkgs.solaire-mode
+    #   epkgs.corfu
+    #   epkgs.cape
+    #   epkgs.vertico
+    #   epkgs.orderless
+    #   epkgs.marginalia
+    #   epkgs.org
+    #   epkgs.use-package
+    #   epkgs.embark
+    #   epkgs.embark-consult
+    #   epkgs.outline-indent
+    #   epkgs.stripspace
+    #   epkgs.undo-fu
+    #   epkgs.hl-todo
+    #   epkgs.consult-todo
+    #   epkgs.magit-todos
+    #   epkgs.vim-tab-bar
+    #   epkgs.ox-gfm
+    #   epkgs.org-modern
+    #   epkgs.org-appear
+    #   epkgs.org-fragtog
+    #   epkgs.engrave-faces
+    #   epkgs.org-attach-screenshot
+    #   epkgs.org-sidebar
+    #   epkgs.htmlize
+    #   epkgs.markdown-mode
+    #   epkgs.flycheck
+    #   epkgs.ccls
+    #   epkgs.color-identifiers-mode
+    #   epkgs.platformio-mode
+    #   epkgs.counsel
+    #   epkgs.magit
+    #   epkgs.difftastic
+    #   epkgs.scad-mode
+    #   epkgs.lsp-pyright
+    #   epkgs.git-gutter-fringe
+    #   epkgs.direnv
+    #   epkgs.forge
+    #   epkgs.rg
+    #   epkgs.ivy-prescient
+    #   epkgs.corfu-prescient
+    #   epkgs.embark
+    #   epkgs.embark-consult
+    #   epkgs.rainbow-delimiters
+    #   epkgs.highlight-defined
+    #   epkgs.aggressive-indent
+    #   epkgs.rmsbolt
+    #   epkgs.apheleia
+    #   epkgs.flycheck-inline
+    #   epkgs.clipetty
+    #   epkgs.ace-jump-mode
+    #   epkgs.dap-mode
+    #   epkgs.hydra
+    #   epkgs.magit-delta
+    #   epkgs.transient
+    #   epkgs.which-key
+    #   epkgs.fira-code-mode
+    #   epkgs.nerd-icons
+    #   epkgs.helpful
+    #   epkgs.compile-angel
+    #   epkgs.package-lint
+    #   epkgs.fsharp-ts-mode
+    #   epkgs.eglot
+    #   epkgs.treesit-grammars.with-all-grammars
+    #   epkgs.uniline
+    # ];
   };
+
   # Add org-protocol support.
   xdg.desktopEntries.org-protocol = {
     name = "org-protocol";
@@ -248,4 +337,5 @@ in
     "text/plain" = [ "emacs.desktop" ];
     "x-scheme-handler/org-protocol" = [ "org-protocol.desktop" ];
   };
+
 }

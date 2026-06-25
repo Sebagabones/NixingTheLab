@@ -85,7 +85,10 @@
   services.mpd.startWhenNeeded = true;
   services.openssh.startWhenNeeded = true;
   services.system76-scheduler.enable = true;
+
+  # If sleep breaks, this will eb why
   # systemd.sleep.settings.Sleep = {
+  #
   #   AllowSuspend = "yes";
   #   AllowSuspendThenHibernate = "yes";
   #   AllowHibernation = "yes";
@@ -101,11 +104,11 @@
     "${inputs.nixos-hardware}/common/gpu/intel/meteor-lake"
 
   ];
-  nix = {
-    distributedBuilds = false;
-    # optional, useful when the builder has a faster internet connection than yours
-    extraOptions = "  builders-use-substitutes = true\n";
-  };
+  # nix = {
+  #   # distributedBuilds = false;
+  #   # optional, useful when the builder has a faster internet connection than yours
+  #   extraOptions = "  builders-use-substitutes = true\n";
+  # };
   environment.systemPackages = with pkgs; [
     wpa_supplicant_gui
   ];
@@ -150,6 +153,18 @@
 
   lollypops.deployment.group = "Personal";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        # ControllerMode = "dual";
+        # FastConnectable = true;
+        Experimental = true;
+      };
+    };
+  };
+  # services.blueman.enable = true;
   stylix.enable = true;
   # services.nextdns = {
   #
@@ -169,5 +184,43 @@
   #   after = [ "nextdns.service" ];
   #   wantedBy = [ "multi-user.target" ];
   # };
+
+  nix = {
+    distributedBuilds = false; # You will probably need to set this to true to use the below:
+    extraOptions = "  builders-use-substitutes = true\n";
+    buildMachines = [
+      {
+        hostName = "eu.nixbuild.net";
+        system = "aarch64-linux";
+        maxJobs = 100;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
+      }
+      {
+        hostName = "eu.nixbuild.net";
+        system = "armv7l-linux";
+        maxJobs = 100;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
+      }
+    ];
+  };
+
+  programs.ssh.extraConfig = ''
+    Host eu.nixbuild.net
+    PubkeyAcceptedKeyTypes ssh-ed25519
+    ServerAliveInterval 60
+  '';
+
+  programs.ssh.knownHosts = {
+    nixbuild = {
+      hostNames = [ "eu.nixbuild.net" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+    };
+  };
 
 }

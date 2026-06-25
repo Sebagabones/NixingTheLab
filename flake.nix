@@ -66,6 +66,9 @@
     thymis = {
       url = "github:Aquamonix/thymis";
     };
+    emacs = {
+      url = "github:nix-community/emacs-overlay";
+    };
   };
 
   outputs =
@@ -76,6 +79,7 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         inputs.agenix-rekey.overlays.default
+        inputs.emacs.overlays.default
       ];
     }
     // {

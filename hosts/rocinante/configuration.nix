@@ -69,6 +69,7 @@ in
         MAILADDR=TODO@SetThisUp
       '';
     };
+
     zfs = {
       forceImportRoot = false;
       devNodes = "/dev/disk/by-id";
@@ -78,6 +79,7 @@ in
         "zdonttrust"
       ];
     };
+
     initrd = {
       systemd.enable = true;
       availableKernelModules = [
@@ -107,37 +109,45 @@ in
     ]; # we love the Matrox G200
   };
 
-  # fileSystems = {
-  #   "/storage/main" = {
-  #     device = "zdata/mainStorage";
-  #     fsType = "zfs";
-  #     options = [ "zfsutil" ];
-  #   };
-  #   "/storage/immich" = {
-  #     device = "zdata/immich";
-  #     fsType = "zfs";
-  #     options = [ "zfsutil" ];
+  fileSystems = {
+    "/storage/main" = {
+      device = "zdata/mainStorage";
+      fsType = "zfs";
+      options = [
+        "zfsutil"
+      ];
+    };
+    "/storage/immich" = {
+      device = "zdata/immich";
+      fsType = "zfs";
+      options = [
+        "zfsutil"
+      ];
 
-  #     };
-  #   "/storage/git" = {
-  #     device = "zdata/git";
-  #     fsType = "zfs";
-  #     options = [ "zfsutil" ];
+    };
+    "/storage/git" = {
+      device = "zdata/git";
+      fsType = "zfs";
+      options = [
+        "zfsutil"
+      ];
+    };
+  };
 
-  #     };
-  # };
-  #
-  # fileSystems."/donttrust" = {
-  #   device = "zdonttrust";
-  #   fsType = "zfs";
-  #   options = [ "zfsutil" ];
-  # };
+  fileSystems."/donttrust" = {
+    device = "zdonttrust";
+    fsType = "zfs";
+    options = [
+      "zfsutil"
+    ];
+  };
 
   services.zfs = {
     autoScrub = {
       enable = true;
       pools = [
         "zdata"
+        "zroot"
         "zdonttrust"
       ];
     };

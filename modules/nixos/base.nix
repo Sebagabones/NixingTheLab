@@ -87,6 +87,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6+WU+Zq90kEknj/hdU0T/oAX0quQojFxfZHe3tkP5L bones@pandemonium"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0v56VlLL/6BNK8rNW+fIMIYSgTURqi2H9ZumDbudtL bones@x210"
         # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210" # TODO: may need to remove, testing with remote builders
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210"
       ];
     };
 
@@ -132,6 +133,7 @@
       ];
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGchFYZLrQ2V3pTnRsXJ8sAZQ8zU3GPZTsaJ/nZulr15 lauren@sebisthebest"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJEOFO+HMXrlRI0LttK+KVeKV/XuDy4Vvb8VpLTZkN0S lauren@pandemonium"
       ];
       hashedPassword = "$y$j9T$/Qj7yKmjZ775/eVyUcfOe1$eLVuG6FckmVT.tNOJZCqqqxwUZ.0GSApSVboIWHOdb2";
     };
@@ -148,34 +150,70 @@
     # enableSSHSupport = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    ghostty.terminfo
-    zsh
-    curl
-    dhcpcd
-    lm_sensors
-    gcc
-    grc
-    clang
-    wget
-    screen
-    uutils-coreutils-noprefix
-    ripgrep
-    bat
-    git
-    fd
-    btop
-    sqlite
-    pkg-config
-    gnat
-  ];
+  environment = {
+    pathsToLink = [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
+    sessionVariables = {
+      DOTNET_ROOT = "${pkgs.dotnet-sdk}/share/dotnet/";
+    };
+    systemPackages = with pkgs; [
+      # ghostty.terminfo
+      zsh
+      curl
+      dhcpcd
+      lm_sensors
+      gcc
+      grc
+      clang
+      wget
+      screen
+      uutils-coreutils-noprefix
+      ripgrep
+      bat
+      git
+      fd
+      btop
+      sqlite
+      pkg-config
+      gnat
+      lshw
+      pciutils
+    ];
+  };
   programs.zsh.enable = true;
   programs.ssh = {
     # for remote building
     extraConfig = "
-    Host pandemonium
-      Port 7656
-      HostName mahoosively.gay
+     Host deposition
+       hostname deposition.lab.mahoosively.gay
+       port 5876
+
+     Host insanity
+       hostname insanity.lab.mahoosively.gay
+       port 22
+       proxyJump pandemonium
+
+     Host pandemonium
+       hostname mahoosively.gay
+       port 7656
+
+     Host rocinante
+       hostname rocinante.lab.mahoosively.gay
+       port 8909
+
+     Host ucc
+       hostname ssh.ucc.asn.au
+
+     Host *
+       addKeysToAgent no
+       compression yes
+       controlMaster no
+       controlPath ~/.ssh/master-%r@%n:%p
+       controlPersist no
+       forwardAgent no
+       hashKnownHosts no
+       serverAliveCountMax 3
+       serverAliveInterval 0
+       userKnownHostsFile ~/.ssh/known_hosts
     ";
   };
   # programs.fish.useBabelfish = true;
@@ -225,7 +263,6 @@
 
   stylix.enable = true;
 
-  environment.pathsToLink = [ "/share/zsh" ]; # gets ZSH completion for system packages (e.g. systemd).
   # Services
 
   programs.nix-ld = {

@@ -7,7 +7,6 @@
 }:
 {
   imports = [
-    inputs.xremap-flake.nixosModules.default
     inputs.mangowm.nixosModules.mango
     ./theming.nix
   ];
@@ -222,21 +221,7 @@
         cups-browsed
       ];
     };
-    xremap = {
-      # NOTE: not locked to a specific DE - useful as miracle-wm doesn't wlroots lol
-      # LMAO, looks like this doesnt work on gnome - fix it sometime
-      enable = false;
-      serviceMode = "user";
-      userName = "bones";
-      config.modmap = [
-        {
-          name = "Global";
-          remap = {
-            "CapsLock" = "Ctrl";
-          }; # globally remap CapsLock to Ctrl
-        }
-      ];
-    };
+
     power-profiles-daemon.enable = true;
     upower.enable = true;
 
