@@ -19,7 +19,8 @@
     # flake.homeModules.gui
   ];
   catppuccin = {
-    enable = false; # not globally
+    enable = true; # not globally
+    autoEnable = false;
     flavor = "mocha";
     accent = "mauve";
     cache.enable = true;

@@ -40,20 +40,7 @@
       enableAskPassword = true;
     };
     mango = {
-      # package = inputs.mangowm.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (
-      #   finalAttrs: previousAttrs: {
-      #     patches = (previousAttrs.patches or [ ]) ++ [
-      #       (pkgs.fetchpatch {
-      #         url = "https://patch-diff.githubusercontent.com/raw/mangowm/mango/pull/676.diff";
-      #         hash = "sha256-wRQiF2BHFHEipeU3K2gtBgm/Xr+oz9KfETJgCfttaoI=";
-      #       })
-      #     ];
-      #     buildInputs = (previousAttrs.buildInputs or [ ]) ++ [
-      #       pkgs.cjson
-      #     ];
-      #     # This was done at version = "0.14.0", applying this https://github.com/mangowm/mango/pull/676 ;
-      #   }
-      # );
+      # package =
       enable = true;
       addLoginEntry = true;
     };
@@ -80,49 +67,20 @@
     rtkit.enable = true;
     polkit.enable = true;
   };
-  # systemd.services.lyu  {
-  #   # this service is "wanted by" (see systemd man pages, or other tutorials) the system
-  #   # level that allows multiple users to login and interact with the machine non-graphically
-  #   # (see the Red Hat tutorial or Arch Linux Wiki for more information on what each target means)
-  #   # this is the "node" in the systemd dependency graph that will run the service
-  #   wantedBy = [ "multi-user.target" ];
-  #   # systemd service unit declarations involve specifying dependencies and order of execution
-  #   # of systemd nodes; here we are saying that we want our service to start after the network has
-  #   # set up (as our IRC client needs to relay over the network)
-  #   after = [
-  #     "systemd-user-sessions.service"
-  #     "plymouth-quit-wait.service"
-  #     "getty@%i.service"
-  #   ];
-  #   conflicts = "getty@%i.service";
-  #   description = "TUI display manager";
-  #   serviceConfig = {
-  #     # see systemd man pages for more information on the various options for "Type": "notify"
-  #     # specifies that this is a service that waits for notification from its predecessor (declared in
-  #     # `after=`) before starting
-  #     Type = "idle";
-  #     # username that systemd will look for; if it exists, it will start a service associated with that user
-  #     User = "username";
-  #     # the command to execute when the service starts up
-  #     # ExecStart = "${pkgs.screen}/bin/screen -dmS irc ${pkgs.irssi}/bin/irssi";
-  #     ExecStart = "exec ${pkgs.kmscon}/bin/kmscon --vt=%I --seats=seat0 --no-drm --login -- ${pkgs.ly}/bin/ly --use-kmscon-vt";
-  #     StandardInput = "tty";
-  #     TTYPath = "/dev/%I";
-  #     TTYReset = "yes";
-  #     TTYVHangup = "yes";
+
+  # systemd.services = {
+  #   display-manager = {
+  #     wants = [ "systemd-udev-settle.service" ];
+  #     after = [ "systemd-udev-settle.service" ];
+  #     # after = [ "kmsconvt@tty1.service" ];
+  #     # conflicts = [ "kmsconvt@tty1.service" ];
+
+  #       # serviceConfig = {
+  #     #   UtmpIdentifier = "tty1";
+  #     #   TTYVTDisallocate = "yes";
+  #     # };
   #   };
   # };
-  systemd.services = {
-    display-manager = {
-      wants = [ "systemd-udev-settle.service" ];
-      after = [ "systemd-udev-settle.service" ];
-
-      serviceConfig = {
-        UtmpIdentifier = "tty1";
-        TTYVTDisallocate = "yes";
-      };
-    };
-  };
   i18n.defaultLocale = "en_AU.UTF-8";
   environment.variables = {
     LANG = "en_AU.UTF-8";
@@ -130,22 +88,19 @@
   };
 
   services = {
-    kmscon = {
-      enable = true;
-      hwRender = true;
-      useXkbConfig = true;
-      fonts = [
-        {
-          name = "Berkeley Mono";
-          package = pkgs.callPackage ../../packages/BerkeleyMono { inherit pkgs; };
-        }
-      ];
+    seatd.enable = true;
+    # kmscon = {
+    #   enable = true;
 
-      extraConfig = ''
-        font-engine=pango
-        font-size=32
-      '';
-    };
+    #       useXkbConfig = true;
+
+    #       config = {
+    #     font-engine = "pango";
+    #     font-size = lib.mkForce 32;
+    #     font-name = "Berkeley Mono";
+    #     hwaccel = true;
+    #   };
+    # };
     xserver = {
       enable = true;
       desktopManager = {
@@ -155,33 +110,75 @@
     displayManager = {
       enable = true;
       defaultSession = "mango";
-
-      ly = {
+      lemurs = {
         enable = true;
         settings = {
-          full_color = true;
-          animation = "colormix";
-          animation_frame_delay = 50;
-          colormix_col1 = "0x00${config.lib.stylix.colors.base0E}";
-          colormix_col2 = "0X00${config.lib.stylix.colors.base0D}";
-          colormix_col3 = "0x00${config.lib.stylix.colors.base00}";
-          bg = "0x00${config.lib.stylix.colors.base00}";
-          auth_fails = 3;
-          hide_version_string = true;
-          initial_info_text = "Still Alive Huh?";
+          username_field.remember = true;
+          # Where to log the main lemurs control flow.
+          main_log_path = "/var/log/lemurs.log";
+
+          client_log_path = "/var/log/lemurs.client.log";
+          do_log = true;
+          # wayland.scripts_path = wayland_scripts;
         };
       };
 
-      generic.execCmd = lib.mkForce ''
-        exec ${pkgs.kmscon}/bin/kmscon \
-          --font-engine pango \
-          --font-name "Berkeley Mono" \
-          --font-size 32 \
-          --vt=1 \
-          --login \
-          -- \
-          ${pkgs.ly}/bin/ly --use-kmscon-vt
-      '';
+      # ly =
+      #   let
+      #     c = config.lib.stylix.colors;
+      #     BLACK = "232323";
+      #     DARK_RED = "D75F5F";
+      #     DARK_GREEN = "87AF5F";
+      #     DARK_YELLOW = "D7AF87";
+      #     DARK_BLUE = "8787AF";
+      #     DARK_MAGENTA = "BD53A5";
+      #     DARK_CYAN = "5FAFAF";
+      #     LIGHT_GRAY = "E5E5E5";
+      #     DARK_GRAY = "2B2B2B";
+      #     RED = "E33636";
+      #     GREEN = "98E34D";
+      #     YELLOW = "FFD75F";
+      #     BLUE = "7373C9";
+      #     MAGENTA = "D633B2";
+      #     CYAN = "44C9C9";
+      #     WHITE = "FFFFFF";
+      #     setPalette = pkgs.writeShellScript "ly-palette" ''
+      #         if [ "$TERM" = "linux" ]; then
+
+      #            	COLORS="${BLACK} ${DARK_RED} ${DARK_GREEN} ${DARK_YELLOW} ${DARK_BLUE} ${DARK_MAGENTA} ${DARK_CYAN} ${LIGHT_GRAY} ${DARK_GRAY} ${RED} ${GREEN} ${YELLOW} ${BLUE} ${MAGENTA} ${CYAN} ${WHITE}"
+
+      #            	i=0
+      #       	while [ $i -lt 16 ]; do
+      #       		printf "\033]P%x%s" ''${i} "$(echo "$COLORS" | cut -d ' ' -f$(( i + 1)))"
+
+      #            		i=$(( i + 1 ))
+      #       	done
+
+      #            	clear # for fixing background artifacting after changing color
+      #         fi
+      #     '';
+      #   in
+      #   {
+      #     x11Support = false;
+      #     enable = true;
+      #     settings = {
+      #       # use_kmscon_vt = true;
+      #       start_cmd = "${setPalette}";
+      #       full_color = false;
+      #       animation = "colormix";
+      #       animation_frame_delay = 50;
+      #       # colormix_col1 = "0x00${config.lib.stylix.colors.base0E}";
+      #       # colormix_col2 = "0x00${config.lib.stylix.colors.base0D}";
+      #       # colormix_col3 = "0x00${config.lib.stylix.colors.base00}";
+      #       # bg = "0x00${config.lib.stylix.colors.base00}";
+      #       auth_fails = 3;
+      #       hide_version_string = true;
+      #       initial_info_text = "Still Alive Huh?";
+      #     };
+      #   };
+      # generic.execCmd = lib.mkForce ''
+      #   exec ${pkgs.kmscon}/bin/kmscon --term=linux --font-engine unifont --vt=tty1 --login -- /run/current-system/sw/bin/ly --use-kmscon-vt
+      # '';
     };
 
     # desktopManager.plasma6.enable = false;
@@ -191,13 +188,16 @@
       # packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
     };
 
-    pulseaudio.enable = false;
+    # pulseaudio.enable = false;
 
     pipewire = {
       enable = true;
       audio.enable = true;
       alsa.enable = true;
+      alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.enable = true;
+      jack.enable = true;
     };
 
     libinput.enable = true;

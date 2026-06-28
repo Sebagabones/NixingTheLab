@@ -1,5 +1,52 @@
 ;;; default.el --- config -*- lexical-binding: t; no-byte-compile: t; -*-
 
+
+
+(defun ar/show-welcome-buffer ()
+  "Show *Welcome* buffer."
+  (with-current-buffer (get-buffer-create "*Welcome*")
+    (setq truncate-lines t)
+    (let* ((buffer-read-only nil)
+           (image-path "~/NixingTheLab/assests/emacs.svg")
+           (image (create-image image-path))
+           (size (image-size image))
+           (height (cdr size))
+           (width (car size))
+           (top-margin (floor (/ (- (window-height) height) 2)))
+           (left-margin (floor (/ (- (window-width) width) 2))))
+      ;; --- body starts here ---
+      (erase-buffer)
+      (setq mode-line-format nil)
+      (goto-char (point-min))
+      (insert (make-string top-margin ?\n))
+      (insert (make-string left-margin ?\s))
+      (insert-image image)
+      (insert "\n\n\n")
+      (setq cursor-type nil)
+      (read-only-mode +1)
+      (switch-to-buffer (current-buffer))
+      (redisplay t)
+      (local-set-key (kbd "q") (lambda () (interactive) (kill-buffer (current-buffer)))))))
+
+
+
+(when (< (length command-line-args) 2)
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (when (display-graphic-p)
+                (ar/show-welcome-buffer)))
+            ))
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 1.0)
+(setq load-prefer-newer t)
+(setq jka-compr-verbose nil)
+(setq byte-compile-warnings nil
+      byte-compile-verbose nil)
+
+(setq initial-scratch-message nil)
+(setq inhibit-startup-screen t)
+
+
 (setq initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
 
@@ -508,26 +555,6 @@
 (setq kept-old-versions 5)
 
 
-;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 2 1024 1024))  ; 1024kb
-
-(setq process-adaptive-read-buffering nil)
-
-;; Don't ping things that look like domain names.
-(setq ffap-machine-p-known 'reject)
-
-(setq warning-minimum-level :error)
-(setq warning-suppress-types '((lexical-binding)))
-
-
-;; In PGTK, this timeout introduces latency. Reducing it from the default 0.1
-;; improves responsiveness of childframes and related packages.
-(when (boundp 'pgtk-wait-for-event-timeout)
-  (setq pgtk-wait-for-event-timeout 0.001))
-
-;; Disable warnings from the legacy advice API. They aren't useful.
-(setq ad-redefinition-action 'accept)
-
 (setq default-input-method "Tex")
 ;; Ensure adding the following compile-angel code at the very beginning
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
@@ -609,7 +636,7 @@
   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
   ;; for treemacs users
-  (doom-themes-treemacs-theme "doom-tokyo-night")
+  ;;(doom-themes-treemacs-theme "doom-tokyo-night")
 
   :config
   (add-to-list 'default-frame-alist '(alpha-background . 95))
@@ -1323,11 +1350,11 @@
   :ensure t
   :bind ("C-c C-x s" . org-attach-screenshot)
   :config (setq org-attach-screenshot-dirfunction
-		(lambda ()
-		  (progn (cl-assert (buffer-file-name))
-			 (concat (file-name-sans-extension (buffer-file-name))
-				 "-att")))
-		org-attach-screenshot-command-line "spectacle -o %f"))
+		        (lambda ()
+		          (progn (cl-assert (buffer-file-name))
+			             (concat (file-name-sans-extension (buffer-file-name))
+				                 "-att")))
+		        org-attach-screenshot-command-line "spectacle -o %f"))
 
 ;; (use-package org-sidebar
 ;;   :vc (:url "https://github.com/alphapapa/org-sidebar"   :rev :newest)
@@ -1456,8 +1483,8 @@
             (or (file-name-extension source) "")
             (base64-encode-string
              (with-temp-buffer
-	       (insert-file-contents-literally source)
-	       (buffer-string)))
+	           (insert-file-contents-literally source)
+	           (buffer-string)))
             (file-name-nondirectory source)))
   :custom
   (org-preview-latex-default-process 'luasvg)
@@ -2826,12 +2853,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   )
 
 
-;; (setf use-default-font-for-symbols nil)
+(setf use-default-font-for-symbols nil)
 ;; (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
-(set-fontset-font t 'unicode "Berkeley Mono" nil 'prepend)
+;; (set-fontset-font t 'unicode "Berkeley Mono" nil 'prepend)
 ;; (setq inhibit-compacting-font-caches t)
-;; (set-fontset-font t 'unicode (font-spec :family "Berkeley Mono") nil 'prepend)
-;; (set-fontset-font t nil  (font-spec :family "Berkeley Mono") nil )
+(set-fontset-font t 'unicode (font-spec :family "Berkeley Mono") nil 'prepend)
+(set-fontset-font t nil  (font-spec :family "Berkeley Mono") nil )
 
 (use-package ement   :ensure t)
 
@@ -2868,7 +2895,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   ;; Python
   (indent-bars-no-descend-lists t)
   (indent-bars-treesit-scope '((python function_definition class_definition for_statement
-				       if_statement with_statement while_statement)))
+				                       if_statement with_statement while_statement)))
   (indent-bars-treesit-ignore-blank-lines-types '("module"))
 
   ;; C
@@ -2914,6 +2941,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;   :ensure t)
 
 (use-package uniline
-  :ensure t
+  ;; :ensure t
   :bind ("C-*" . uniline-mode)
   )

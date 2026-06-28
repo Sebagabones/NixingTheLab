@@ -21,6 +21,7 @@
 
   catppuccin = {
     enable = true;
+    autoEnable = true;
     flavor = "mocha";
     accent = "mauve";
     grub.enable = false;
@@ -96,6 +97,9 @@
       home = "/home/bones";
       description = "Seb Gazey";
       extraGroups = [
+        "i2c"
+        "seat"
+        "audio"
         "qemu-libvirtd"
         "libvirtd"
         "kvm"
@@ -123,6 +127,7 @@
       home = "/home/lauren";
       description = "Lauren Pudney";
       extraGroups = [
+        "seat"
         "qemu-libvirtd"
         "libvirtd"
         "kvm"
@@ -177,6 +182,7 @@
       gnat
       lshw
       pciutils
+      i2c-tools
     ];
   };
   programs.zsh.enable = true;
@@ -220,7 +226,11 @@
 
   # System
   time.timeZone = "Australia/Perth";
-  hardware.enableAllFirmware = true;
+  hardware = {
+    enableRedistributableFirmware = true;
+    enableAllFirmware = true;
+    i2c.enable = true;
+  };
   # SSH
   services.openssh = {
     enable = true;
@@ -261,7 +271,7 @@
     fira-code
   ];
 
-  stylix.enable = true;
+  # stylix.enable = true;
 
   # Services
 

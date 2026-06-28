@@ -182,7 +182,7 @@
       window-theme = "ghostty";
     };
   };
-
+  home.file.".face".source = ../../assests/Parrot.png; # https://www.pexels.com/photo/red-blue-and-green-bird-on-tree-1331819/
   home.sessionVariables.MOZ_USE_XINPUT2 = "1";
 
   # NOTE: Remember, when configuring your extensions, you have a webserver running in background that will send a page to 127.0.0.1:8231 as your newtab

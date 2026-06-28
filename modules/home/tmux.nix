@@ -213,6 +213,7 @@ in
       set -g status-left-length 20
       set-window-option -g xterm-keys on
       set -g default-terminal "xterm-256color"
+      set -ag terminal-overrides ",xterm-256color:RGB"
 
       set -g history-limit 20000
       # Settings
