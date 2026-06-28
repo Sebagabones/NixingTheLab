@@ -9,13 +9,16 @@
 let
   terminal = lib.getExe config.programs.foot.package;
   firefox = lib.getExe config.programs.firefox.package;
+  bemenu = "bemenu-run -w -i -l 10 --counter always -w --scrollbar always -P '|>' --prompt 'launch:' --fb '#2F3549' --ff '#CBCCD1' --nb '#1a1b2a' --nf '#CBCCD1' --tb '#1a1b2a' --hb '#11121d' --tf '#7DCFFF' --hf '#BB9AF7' --af '#CBCCD1' --ab '#2F3549' --scb '#1a1b2a' --scf '#7199EE'";
 in
 {
   imports = [
     inputs.noctalia.homeModules.default
+    inputs.dms.homeModules.dank-material-shell
+    inputs.danksearch.homeModules.default
     inputs.mangowm.hmModules.mango
   ];
-  programs.bemenu.enable = true;
+  # programs.bemenu.enable = true;
 
   wayland.windowManager.mango =
     let
@@ -62,7 +65,7 @@ in
       );
       enable = true;
       autostart_sh = ''
-        env QT_QPA_PLATFORMTHEME=qt6ct noctalia-shell &
+        # env QT_QPA_PLATFORMTHEME=qt6ct noctalia-shell &
         wlr-randr --output eDP-1 --scale 1.25 &
         # echo "Xft.dpi: 140" | xrdb -merge &
         # gsettings set org.gnome.desktop.interface text-scaling-factor 1.4 &
@@ -71,11 +74,19 @@ in
       # extraConfig = "exec-once=${pkgs.swaybg}/bin/swaybg -c 11111b ";
       extraConfig = ''
         exec-once=${pkgs.swaybg}/bin/swaybg -c ${config.lib.stylix.colors.base00}
-        exec-once=veilad'';
+        source=~/.config/mango/dms/colors.conf
+        source=~/.config/mango/dms/layout.conf
+        source=~/.config/mango/dms/outputs.conf
+        exec-once=dms run
+        exec-once=wl-paste --type text --watch cliphist store
+      '';
 
       settings = {
         env = [
           "BEMENU_SCALE,2.5"
+          "QT_QPA_PLATFORM,wayland"
+          "ELECTRON_OZONE_PLATFORM_HINT,auto"
+          "QT_QPA_PLATFORMTHEME,gtk3"
           #   "QT_AUTO_SCREEN_SCALE_FACTOR,1"
           #   "QT_WAYLAND_FORCE_DPI,125"
         ];
@@ -127,14 +138,19 @@ in
 
         switchbind = [
           # "HandleLidSwitch=ignore"
-          "fold,spawn,${lock-screen}"
+          # "fold,spawn,${lock-screen}"
           # "unfold,spawn,${unlock-screen}"
         ];
 
         # circle_layout = "dwindle,monocle,floating";
 
         bind = [
-          "SUPER,d,spawn,bemenu-run -w -i -l 10 --counter always -w  --scrollbar always -P '|>' --prompt 'launch:' --fb '#2F3549' --ff '#CBCCD1' --nb '#1a1b2a' --nf '#CBCCD1' --tb '#1a1b2a' --hb '#11121d' --tf '#7DCFFF' --hf '#BB9AF7' --af '#CBCCD1' --ab '#2F3549' --scb '#1a1b2a' --scf '#7199EE' "
+          # "SUPER,d,spawn,${bemenu} "
+          "SUPER,d,spawn,dms ipc call spotlight toggle"
+          "SUPER,v,spawn,dms ipc call clipboard toggle"
+          "SUPER,m,spawn,dms ipc call processlist focusOrToggle"
+          "SUPER,comma,spawn,dms ipc call settings focusOrToggle"
+          "SUPER,n,spawn,dms ipc call notifications toggle"
           "SUPER,Return,spawn,${terminal}"
           "SUPER,w,spawn,${firefox}"
 
@@ -145,7 +161,14 @@ in
           "SUPER,tab,focusstack"
           "SUPER,q,killclient"
           "SUPER+SHIFT,r,reload_config"
-          "SUPER,l,spawn,${lock-screen}"
+          # "SUPER,l,spawn,${lock-screen}"
+          "SUPER,l,spawn,dms ipc call lock lock"
+          "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 3"
+          "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 3"
+          "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
+
+          "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5 backlight:intel_backlight "
+          "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5 backlight:intel_backlight "
           "SUPER+SHIFT,l,quit"
 
           "SUPER,Left,focusdir,left"
@@ -180,20 +203,23 @@ in
           "SUPER+SHIFT,9,tag,9"
           "SUPER+SHIFT,0,tag,10"
 
-          # noctalia
-          "SUPER+SHIFT,e,spawn,noctalia-shell ipc call sessionMenu toggle"
-          "SUPER,space,spawn,noctalia-shell ipc call launcher toggle"
-          "SUPER,s,spawn,noctalia-shell ipc call controlCenter toggle"
-          "SUPER,comma,spawn,noctalia-shell ipc call settings toggle"
+          #
+          "SUPER+SHIFT,e,spawn,dms ipc call powermenu toggle"
 
-          # Media keys
-          "NONE,XF86AudioRaiseVolume,spawn,noctalia-shell ipc call volume increase"
-          "NONE,XF86AudioLowerVolume,spawn,noctalia-shell ipc call volume decrease"
-          "NONE,XF86AudioMute,spawn,noctalia-shell ipc call volume muteOutput"
-          "NONE,XF86MonBrightnessUp,spawn,noctalia-shell ipc call brightness increase"
-          "NONE,XF86MonBrightnessDown,spawn,noctalia-shell ipc call brightness decrease"
-          "NONE,Print,spawn,noctalia-shell ipc call plugin:screen-toolkit annotate"
-          "SUPER,Print,spawn,noctalia-shell ipc call plugin:screen-toolkit toggle"
+          # # noctalia
+          # "SUPER+SHIFT,e,spawn,noctalia-shell ipc call sessionMenu toggle"
+          # "SUPER,space,spawn,noctalia-shell ipc call launcher toggle"
+          # "SUPER,s,spawn,noctalia-shell ipc call controlCenter toggle"
+          # "SUPER,comma,spawn,noctalia-shell ipc call settings toggle"
+
+          #          # Media keys
+          # "NONE,XF86AudioRaiseVolume,spawn,noctalia-shell ipc call volume increase"
+          # "NONE,XF86AudioLowerVolume,spawn,noctalia-shell ipc call volume decrease"
+          # "NONE,XF86AudioMute,spawn,noctalia-shell ipc call volume muteOutput"
+          # "NONE,XF86MonBrightnessUp,spawn,noctalia-shell ipc call brightness increase"
+          # "NONE,XF86MonBrightnessDown,spawn,noctalia-shell ipc call brightness decrease"
+          # "NONE,Print,spawn,noctalia-shell ipc call plugin:screen-toolkit annotate"
+          # "SUPER,Print,spawn,noctalia-shell ipc call plugin:screen-toolkit toggle"
 
         ];
 
@@ -213,8 +239,669 @@ in
         };
       };
     };
-  programs.noctalia-shell = {
+  programs.dank-material-shell = {
     enable = true;
+    enableSystemMonitoring = true;
+
+    # systemd = {
+    #   enable = true; # Systemd service for auto-start
+    #   restartIfChanged = true; # Auto-restart dms.service when dank-material-shell changes
+    # };
+    enableVPN = true; # VPN management widget
+    enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+    enableAudioWavelength = true; # Audio visualizer (cava)
+    enableCalendarEvents = true; # Calendar integration (khal)
+    enableClipboardPaste = true; # Pasting items from the clipboard (wtype)x
+    settings = {
+      currentThemeName = "custom";
+      currentThemeCategory = "generic";
+      registryThemeVariants = {
+      };
+      matugenScheme = "scheme-tonal-spot";
+      runUserMatugenTemplates = true;
+      matugenTargetMonitor = "";
+      popupTransparency = 1.0;
+      dockTransparency = 1.0;
+      widgetBackgroundColor = "sch";
+      widgetColorMode = "default";
+      controlCenterTileColorMode = "primary";
+      buttonColorMode = "primary";
+      cornerRadius = 12;
+      niriLayoutGapsOverride = -1;
+      niriLayoutRadiusOverride = -1;
+      niriLayoutBorderSize = -1;
+      hyprlandLayoutGapsOverride = -1;
+      hyprlandLayoutRadiusOverride = -1;
+      hyprlandLayoutBorderSize = -1;
+      mangoLayoutGapsOverride = -1;
+      mangoLayoutRadiusOverride = -1;
+      mangoLayoutBorderSize = -1;
+      use24HourClock = true;
+      showSeconds = false;
+      padHours12Hour = false;
+      useFahrenheit = false;
+      windSpeedUnit = "ms";
+      nightModeEnabled = false;
+      animationSpeed = 1;
+      customAnimationDuration = 500;
+      syncComponentAnimationSpeeds = true;
+      popoutAnimationSpeed = 1;
+      popoutCustomAnimationDuration = 150;
+      modalAnimationSpeed = 1;
+      modalCustomAnimationDuration = 150;
+      enableRippleEffects = true;
+      blurEnabled = false;
+      blurForegroundLayers = true;
+      blurLayerOutlineOpacity = 0.12;
+      blurBorderColor = "outline";
+      blurBorderCustomColor = "#ffffff";
+      blurBorderOpacity = 0.35;
+      wallpaperFillMode = "Fill";
+      blurredWallpaperLayer = false;
+      blurWallpaperOnOverview = false;
+      showLauncherButton = true;
+      showWorkspaceSwitcher = true;
+      showFocusedWindow = true;
+      showWeather = true;
+      showMusic = true;
+      showClipboard = true;
+      showCpuUsage = true;
+      showMemUsage = true;
+      showCpuTemp = true;
+      showGpuTemp = true;
+      selectedGpuIndex = 0;
+      enabledGpuPciIds = [
+
+      ];
+      showSystemTray = true;
+      systemTrayIconTintMode = "none";
+      systemTrayIconTintSaturation = 50;
+      systemTrayIconTintStrength = 135;
+      showClock = true;
+      showNotificationButton = true;
+      showBattery = true;
+      showControlCenterButton = true;
+      showCapsLockIndicator = true;
+      controlCenterShowNetworkIcon = true;
+      controlCenterShowBluetoothIcon = true;
+      controlCenterShowAudioIcon = true;
+      controlCenterShowAudioPercent = false;
+      controlCenterShowVpnIcon = true;
+      controlCenterShowBrightnessIcon = false;
+      controlCenterShowBrightnessPercent = false;
+      controlCenterShowMicIcon = false;
+      controlCenterShowMicPercent = false;
+      controlCenterShowBatteryIcon = false;
+      controlCenterShowPrinterIcon = false;
+      controlCenterShowScreenSharingIcon = true;
+      showPrivacyButton = true;
+      privacyShowMicIcon = false;
+      privacyShowCameraIcon = false;
+      privacyShowScreenShareIcon = false;
+      controlCenterWidgets = [
+        {
+          enabled = true;
+          id = "volumeSlider";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "brightnessSlider";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "wifi";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "bluetooth";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "audioOutput";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "audioInput";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "nightMode";
+          width = 50;
+        }
+        {
+          enabled = true;
+          id = "darkMode";
+          width = 50;
+        }
+      ];
+      showWorkspaceIndex = true;
+      showWorkspaceName = true;
+      showWorkspacePadding = false;
+      workspaceScrolling = false;
+      showWorkspaceApps = false;
+      workspaceDragReorder = true;
+      maxWorkspaceIcons = 3;
+      workspaceAppIconSizeOffset = 0;
+      groupWorkspaceApps = true;
+      workspaceFollowFocus = true;
+      showOccupiedWorkspacesOnly = false;
+      reverseScrolling = false;
+      dwlShowAllTags = true;
+      workspaceColorMode = "default";
+      workspaceOccupiedColorMode = "schh";
+      workspaceUnfocusedColorMode = "s";
+      workspaceUrgentColorMode = "default";
+      workspaceFocusedBorderEnabled = false;
+      workspaceFocusedBorderColor = "primary";
+      workspaceFocusedBorderThickness = 2;
+      workspaceNameIcons = {
+      };
+      waveProgressEnabled = true;
+      scrollTitleEnabled = true;
+      audioVisualizerEnabled = true;
+      audioScrollMode = "volume";
+      audioWheelScrollAmount = 5;
+      clockCompactMode = false;
+      focusedWindowCompactMode = false;
+      runningAppsCompactMode = true;
+      barMaxVisibleApps = 0;
+      barMaxVisibleRunningApps = 0;
+      barShowOverflowBadge = true;
+      appsDockHideIndicators = false;
+      appsDockColorizeActive = false;
+      appsDockActiveColorMode = "primary";
+      appsDockEnlargeOnHover = false;
+      appsDockEnlargePercentage = 125;
+      appsDockIconSizePercentage = 100;
+      keyboardLayoutNameCompactMode = false;
+      runningAppsCurrentWorkspace = true;
+      runningAppsGroupByApp = false;
+      runningAppsCurrentMonitor = false;
+      appIdSubstitutions = [
+        {
+          pattern = "Spotify";
+          replacement = "spotify";
+          type = "exact";
+        }
+        {
+          pattern = "beepertexts";
+          replacement = "beeper";
+          type = "exact";
+        }
+        {
+          pattern = "home assistant desktop";
+          replacement = "homeassistant-desktop";
+          type = "exact";
+        }
+        {
+          pattern = "com.transmissionbt.transmission";
+          replacement = "transmission-gtk";
+          type = "contains";
+        }
+        {
+          pattern = "^steam_app_(\\d+)$";
+          replacement = "steam_icon_$1";
+          type = "regex";
+        }
+      ];
+      centeringMode = "index";
+      clockDateFormat = "yyyy-MM-dd";
+      lockDateFormat = "yyyy-MM-dd";
+      greeterRememberLastSession = true;
+      greeterRememberLastUser = true;
+      greeterEnableFprint = false;
+      greeterEnableU2f = false;
+      greeterWallpaperPath = "";
+      mediaSize = 1;
+      appLauncherViewMode = "list";
+      spotlightModalViewMode = "list";
+      browserPickerViewMode = "grid";
+      browserUsageHistory = {
+      };
+      appPickerViewMode = "grid";
+      filePickerUsageHistory = {
+      };
+      sortAppsAlphabetically = false;
+      appLauncherGridColumns = 4;
+      spotlightCloseNiriOverview = true;
+      spotlightSectionViewModes = {
+      };
+      appDrawerSectionViewModes = {
+      };
+      niriOverviewOverlayEnabled = true;
+      dankLauncherV2Size = "compact";
+      dankLauncherV2BorderEnabled = false;
+      dankLauncherV2BorderThickness = 2;
+      dankLauncherV2BorderColor = "primary";
+      dankLauncherV2ShowFooter = false;
+      dankLauncherV2UnloadOnClose = false;
+      useAutoLocation = false;
+      weatherEnabled = true;
+      networkPreference = "auto";
+      iconTheme = "System Default";
+      cursorSettings = {
+        dwl = {
+          cursorHideTimeout = 0;
+        };
+        hyprland = {
+          hideOnKeyPress = false;
+          hideOnTouch = false;
+          inactiveTimeout = 0;
+        };
+        niri = {
+          hideAfterInactiveMs = 0;
+          hideWhenTyping = false;
+        };
+        size = 24;
+        theme = "System Default";
+      };
+      launcherLogoMode = "os";
+      launcherLogoCustomPath = "";
+      launcherLogoColorOverride = "primary";
+      launcherLogoColorInvertOnMode = false;
+      launcherLogoBrightness = 0.5;
+      launcherLogoContrast = 1;
+      launcherLogoSizeOffset = 0;
+      fontFamily = "Berkeley Mono";
+      monoFontFamily = "Berkeley Mono";
+      fontWeight = 400;
+      fontScale = 1;
+      notepadUseMonospace = true;
+      notepadFontFamily = "";
+      notepadFontSize = 14;
+      notepadShowLineNumbers = false;
+      notepadTransparencyOverride = -1;
+      notepadLastCustomTransparency = 0.7;
+      soundsEnabled = true;
+      useSystemSoundTheme = false;
+      soundNewNotification = true;
+      soundVolumeChanged = true;
+      soundPluggedIn = true;
+      acMonitorTimeout = 0;
+      acLockTimeout = 300;
+      acSuspendTimeout = 0;
+      acSuspendBehavior = 0;
+      acProfileName = "";
+      batteryMonitorTimeout = 180;
+      batteryLockTimeout = 180;
+      batterySuspendTimeout = 1800;
+      batterySuspendBehavior = 2;
+      batteryProfileName = "";
+      batteryChargeLimit = 100;
+      lockBeforeSuspend = true;
+      loginctlLockIntegration = true;
+      fadeToLockEnabled = true;
+      fadeToLockGracePeriod = 5;
+      fadeToDpmsEnabled = true;
+      fadeToDpmsGracePeriod = 5;
+      launchPrefix = "";
+      brightnessDevicePins = {
+      };
+      wifiNetworkPins = {
+      };
+      bluetoothDevicePins = {
+      };
+      audioInputDevicePins = {
+      };
+      audioOutputDevicePins = {
+      };
+      gtkThemingEnabled = false;
+      qtThemingEnabled = false;
+      syncModeWithPortal = true;
+      terminalsAlwaysDark = false;
+      muxType = "tmux";
+      muxUseCustomCommand = false;
+      muxCustomCommand = "";
+      muxSessionFilter = "";
+      runDmsMatugenTemplates = true;
+      matugenTemplateGtk = true;
+      matugenTemplateNiri = true;
+      matugenTemplateHyprland = true;
+      matugenTemplateMangowc = true;
+      matugenTemplateQt5ct = true;
+      matugenTemplateQt6ct = true;
+      matugenTemplateFirefox = true;
+      matugenTemplatePywalfox = true;
+      matugenTemplateZenBrowser = true;
+      matugenTemplateVesktop = true;
+      matugenTemplateEquibop = true;
+      matugenTemplateGhostty = true;
+      matugenTemplateKitty = true;
+      matugenTemplateFoot = true;
+      matugenTemplateAlacritty = true;
+      matugenTemplateNeovim = false;
+      matugenTemplateWezterm = true;
+      matugenTemplateDgop = true;
+      matugenTemplateKcolorscheme = true;
+      matugenTemplateVscode = true;
+      matugenTemplateEmacs = true;
+      matugenTemplateZed = true;
+      showDock = false;
+      dockAutoHide = false;
+      dockSmartAutoHide = false;
+      dockGroupByApp = false;
+      dockOpenOnOverview = false;
+      dockPosition = 1;
+      dockSpacing = 4;
+      dockBottomGap = 0;
+      dockMargin = 0;
+      dockIconSize = 40;
+      dockIndicatorStyle = "circle";
+      dockBorderEnabled = false;
+      dockBorderColor = "surfaceText";
+      dockBorderOpacity = 1;
+      dockBorderThickness = 1;
+      dockIsolateDisplays = false;
+      dockLauncherEnabled = false;
+      dockLauncherLogoMode = "apps";
+      dockLauncherLogoCustomPath = "";
+      dockLauncherLogoColorOverride = "";
+      dockLauncherLogoSizeOffset = 0;
+      dockLauncherLogoBrightness = 0.5;
+      dockLauncherLogoContrast = 1;
+      dockMaxVisibleApps = 0;
+      dockMaxVisibleRunningApps = 0;
+      dockShowOverflowBadge = true;
+      notificationOverlayEnabled = false;
+      notificationPopupShadowEnabled = true;
+      notificationPopupPrivacyMode = false;
+      modalDarkenBackground = true;
+      lockScreenShowPowerActions = true;
+      lockScreenShowSystemIcons = true;
+      lockScreenShowTime = true;
+      lockScreenShowDate = true;
+      lockScreenShowProfileImage = true;
+      lockScreenShowPasswordField = true;
+      lockScreenShowMediaPlayer = true;
+      lockScreenPowerOffMonitorsOnLock = false;
+      lockAtStartup = false;
+      enableFprint = false;
+      maxFprintTries = 15;
+      enableU2f = false;
+      u2fMode = "or";
+      lockScreenActiveMonitor = "all";
+      lockScreenInactiveColor = "#000000";
+      lockScreenNotificationMode = 0;
+      hideBrightnessSlider = false;
+      notificationTimeoutLow = 5000;
+      notificationTimeoutNormal = 5000;
+      notificationTimeoutCritical = 0;
+      notificationCompactMode = false;
+      notificationPopupPosition = 0;
+      notificationAnimationSpeed = 1;
+      notificationCustomAnimationDuration = 400;
+      notificationHistoryEnabled = true;
+      notificationHistoryMaxCount = 50;
+      notificationHistoryMaxAgeDays = 7;
+      notificationHistorySaveLow = true;
+      notificationHistorySaveNormal = true;
+      notificationHistorySaveCritical = true;
+      notificationRules = [
+
+      ];
+      osdAlwaysShowValue = false;
+      osdPosition = 5;
+      osdVolumeEnabled = true;
+      osdMediaVolumeEnabled = true;
+      osdMediaPlaybackEnabled = false;
+      osdBrightnessEnabled = true;
+      osdIdleInhibitorEnabled = true;
+      osdMicMuteEnabled = true;
+      osdCapsLockEnabled = true;
+      osdPowerProfileEnabled = false;
+      osdAudioOutputEnabled = true;
+      powerActionConfirm = true;
+      powerActionHoldDuration = 0.5;
+      powerMenuActions = [
+        "reboot"
+        "logout"
+        "poweroff"
+        "lock"
+        "suspend"
+        "restart"
+        "hibernate"
+      ];
+      powerMenuDefaultAction = "logout";
+      powerMenuGridLayout = true;
+      customPowerActionLock = "";
+      customPowerActionLogout = "mmsg dispatch quit";
+      customPowerActionSuspend = "";
+      customPowerActionHibernate = "";
+      customPowerActionReboot = "";
+      customPowerActionPowerOff = "";
+      updaterHideWidget = false;
+      updaterUseCustomCommand = false;
+      updaterCustomCommand = "";
+      updaterTerminalAdditionalParams = "";
+      displayNameMode = "system";
+      screenPreferences = {
+        wallpaper = [
+          "all"
+        ];
+      };
+      showOnLastDisplay = {
+      };
+      niriOutputSettings = {
+      };
+      hyprlandOutputSettings = {
+      };
+      displayProfiles = {
+      };
+      activeDisplayProfile = {
+      };
+      displayProfileAutoSelect = false;
+      displayShowDisconnected = false;
+      displaySnapToEdge = true;
+      barConfigs = [
+        {
+          autoHide = false;
+          autoHideDelay = 250;
+          borderColor = "secondary";
+          borderEnabled = false;
+          borderOpacity = 1;
+          borderThickness = 1;
+          bottomGap = 0;
+          centerWidgets = [
+            "music"
+            "clock"
+            "weather"
+          ];
+          enabled = true;
+          fontScale = 1;
+          gothCornerRadiusOverride = true;
+          gothCornerRadiusValue = 12;
+          gothCornersEnabled = false;
+          id = "default";
+          innerPadding = 4;
+          leftWidgets = [
+            "launcherButton"
+            "workspaceSwitcher"
+            "focusedWindow"
+          ];
+          name = "Main Bar";
+          noBackground = true;
+          openOnOverview = false;
+          popupGapsAuto = true;
+          popupGapsManual = 4;
+          position = 0;
+          removeWidgetPadding = false;
+          rightWidgets = [
+            "systemTray"
+            "clipboard"
+            "cpuUsage"
+            "memUsage"
+            "notificationButton"
+            "battery"
+            "controlCenterButton"
+          ];
+          screenPreferences = [
+            "all"
+          ];
+          showOnLastDisplay = true;
+          spacing = 4;
+          squareCorners = false;
+          transparency = 0;
+          visible = true;
+          widgetOutlineColor = "primary";
+          widgetOutlineEnabled = false;
+          widgetOutlineOpacity = 1;
+          widgetTransparency = 0;
+        }
+      ];
+      desktopClockEnabled = false;
+      desktopClockStyle = "analog";
+      desktopClockTransparency = 0.8;
+      desktopClockColorMode = "primary";
+      desktopClockCustomColor = {
+        r = 1;
+        g = 1;
+        b = 1;
+        a = 1;
+        hsvHue = -1;
+        hsvSaturation = 0;
+        hsvValue = 1;
+        hslHue = -1;
+        hslSaturation = 0;
+        hslLightness = 1;
+        valid = true;
+      };
+      desktopClockShowDate = true;
+      desktopClockShowAnalogNumbers = false;
+      desktopClockShowAnalogSeconds = true;
+      desktopClockX = -1;
+      desktopClockY = -1;
+      desktopClockWidth = 280;
+      desktopClockHeight = 180;
+      desktopClockDisplayPreferences = [
+        "all"
+      ];
+      systemMonitorEnabled = false;
+      systemMonitorShowHeader = true;
+      systemMonitorTransparency = 0.8;
+      systemMonitorColorMode = "primary";
+      systemMonitorCustomColor = {
+        r = 1;
+        g = 1;
+        b = 1;
+        a = 1;
+        hsvHue = -1;
+        hsvSaturation = 0;
+        hsvValue = 1;
+        hslHue = -1;
+        hslSaturation = 0;
+        hslLightness = 1;
+        valid = true;
+      };
+      systemMonitorShowCpu = true;
+      systemMonitorShowCpuGraph = true;
+      systemMonitorShowCpuTemp = true;
+      systemMonitorShowGpuTemp = false;
+      systemMonitorGpuPciId = "";
+      systemMonitorShowMemory = true;
+      systemMonitorShowMemoryGraph = true;
+      systemMonitorShowNetwork = true;
+      systemMonitorShowNetworkGraph = true;
+      systemMonitorShowDisk = true;
+      systemMonitorShowTopProcesses = false;
+      systemMonitorTopProcessCount = 3;
+      systemMonitorTopProcessSortBy = "cpu";
+      systemMonitorGraphInterval = 60;
+      systemMonitorLayoutMode = "auto";
+      systemMonitorX = -1;
+      systemMonitorY = -1;
+      systemMonitorWidth = 320;
+      systemMonitorHeight = 480;
+      systemMonitorDisplayPreferences = [
+        "all"
+      ];
+      systemMonitorVariants = [
+
+      ];
+      desktopWidgetPositions = {
+      };
+      desktopWidgetGridSettings = {
+      };
+      desktopWidgetInstances = [
+
+      ];
+      desktopWidgetGroups = [
+
+      ];
+      builtInPluginSettings = {
+        dms_settings_search = {
+          trigger = "?";
+        };
+      };
+      clipboardEnterToPaste = false;
+      launcherPluginVisibility = {
+      };
+      launcherPluginOrder = [
+
+      ];
+      configVersion = 5;
+    };
+    #     settings = {
+    #   theme = "dark";
+    #   dynamicTheming = true;
+    #   # Add any other settings here
+    # };
+    #
+    # session = {
+    #   isLightMode = false;
+    #   # Add any other session state settings here
+    # };
+    #
+    # clipboardSettings = {
+    #   maxHistory = 25;
+    #   maxEntrySize = 5242880;
+    #   autoClearDays = 1;
+    #   clearAtStartup = true;
+    #   disabled = false;
+    #   disableHistory = false;
+    #   disablePersist = true;
+    # };
+  };
+  programs.dsearch = {
+    enable = true;
+
+    # Use a custom package (optional)
+    package = pkgs.dsearch;
+    # config = {
+    #   listen_addr = ":43654";
+    #   max_file_bytes = 5242880;  # 5MB
+    #   worker_count = 8;
+    #
+    #   index_paths = [
+    #     {
+    #       path = "~/Documents";
+    #       max_depth = 0;  # No limit
+    #       exclude_hidden = false;
+    #       exclude_dirs = [ ];
+    #     }
+    #     {
+    #       path = "~/Projects";
+    #       max_depth = 8;
+    #       exclude_hidden = true;
+    #       exclude_dirs = [ "node_modules" "venv" "target" ".git" "dist" "build" ];
+    #     }
+    #     {
+    #       path = "/mnt/shared";
+    #       max_depth = 5;
+    #       watch = false;  # Disable watchers for network mount
+    #       exclude_dirs = [ ".cache" ];
+    #     }
+    #   ];
+    # };
+  };
+
+  programs.noctalia-shell = {
+    enable = false;
     # TODO: Look into hooks for screen lid for locking - also go and setup idle screen turn off lol
     # Plugin management (sources and states)
     plugins = {
@@ -904,7 +1591,7 @@ in
         tooltipsEnabled = true;
         translucentWidgets = false;
       };
-      home.file.".face".source = ../../assests/Parrot.png; # https://www.pexels.com/photo/red-blue-and-green-bird-on-tree-1331819/
+
       home.file.".cache/noctalia/wallpapers.json" = {
         text = builtins.toJSON {
           # defaultWallpaper = ../../assests/background.png;
