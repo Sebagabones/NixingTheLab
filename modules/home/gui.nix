@@ -49,6 +49,14 @@
       };
       foot = {
         enable = true;
+        opacity.enable = true;
+        colors = {
+          enable = false;
+          override = {
+            base08 = config.lib.stylix.colors.base0F;
+          };
+        };
+        fonts.enable = true;
       };
       emacs.enable = false;
       firefox = {
@@ -61,47 +69,86 @@
     };
   };
 
-  programs.bemenu = {
-    enable = true;
-    settings = {
-      ignorecase = true;
-      wrap = true;
-      list = "10";
-      counter = "always";
-      prompt = "launch:";
-      scrollbar = "always";
-      prefix = "'|>'";
-      fb = "${config.lib.stylix.colors.withHashtag.base02}";
-      ff = "${config.lib.stylix.colors.withHashtag.base06}";
-      nb = "${config.lib.stylix.colors.withHashtag.base01}";
-      nf = "${config.lib.stylix.colors.withHashtag.base06}";
-      tb = "${config.lib.stylix.colors.withHashtag.base01}";
-      hb = "${config.lib.stylix.colors.withHashtag.base00}";
-      tf = "${config.lib.stylix.colors.withHashtag.base0C}";
-      hf = "${config.lib.stylix.colors.withHashtag.base0E}";
-      af = "${config.lib.stylix.colors.withHashtag.base06}";
-      ab = "${config.lib.stylix.colors.withHashtag.base02}";
-      scb = "${config.lib.stylix.colors.withHashtag.base01}";
-      scf = "${config.lib.stylix.colors.withHashtag.base0D}";
-    };
-  };
+  # programs.bemenu = {
+  #   enable = true;
+  #   settings = {
+  #     ignorecase = true;
+  #     wrap = true;
+  #     list = "10";
+  #     counter = "always";
+  #     prompt = "launch:";
+  #     scrollbar = "always";
+  #     prefix = "'|>'";
+  #     fb = "${config.lib.stylix.colors.withHashtag.base02}";
+  #     ff = "${config.lib.stylix.colors.withHashtag.base06}";
+  #     nb = "${config.lib.stylix.colors.withHashtag.base01}";
+  #     nf = "${config.lib.stylix.colors.withHashtag.base06}";
+  #     tb = "${config.lib.stylix.colors.withHashtag.base01}";
+  #     hb = "${config.lib.stylix.colors.withHashtag.base00}";
+  #     tf = "${config.lib.stylix.colors.withHashtag.base0C}";
+  #     hf = "${config.lib.stylix.colors.withHashtag.base0E}";
+  #     af = "${config.lib.stylix.colors.withHashtag.base06}";
+  #     ab = "${config.lib.stylix.colors.withHashtag.base02}";
+  #     scb = "${config.lib.stylix.colors.withHashtag.base01}";
+  #     scf = "${config.lib.stylix.colors.withHashtag.base0D}";
+  #   };
+  # };
 
   programs.foot = {
     enable = true;
     # theme = "tokyonight-night";
-    settings = {
-      main = {
-        # font = "Berkeley Mono:size=12";
-        bold-text-in-bright = "no";
-        # dpi-aware = lib.mkForce "yes";
-        box-drawings-uses-font-glyphs = "no"; # Maybe enable this? idk
+    settings =
+      let
+        rgb-hue-editor = import ./../../packages/rgb-hue-editor/rgb-hue-editor.nix { inherit lib config; };
+        hueEditFunc = rgb-hue-editor {
+          hue_change = 0;
+          saturation_change = 75;
+          light_change = 2;
+        };
+      in
+      {
+        main = {
+          # font = "Berkeley Mono:size=12";
+          bold-text-in-bright = "no";
+          # dpi-aware = lib.mkForce "yes";
+          box-drawings-uses-font-glyphs = "yes"; # Maybe enable this? idk
+          initial-color-theme = "dark";
+        };
+        colors-dark = {
+          alpha = config.stylix.opacity.terminal;
+          foreground = config.lib.stylix.colors.base05;
+          background = config.lib.stylix.colors.base00;
+          regular0 = config.lib.stylix.colors.base00;
+          regular1 = config.lib.stylix.colors.base0F;
+          regular2 = config.lib.stylix.colors.base0B;
+          regular3 = config.lib.stylix.colors.base0A;
+          regular4 = config.lib.stylix.colors.base0D;
+          regular5 = config.lib.stylix.colors.base0E;
+          regular6 = config.lib.stylix.colors.base0C;
+          regular7 = config.lib.stylix.colors.base05;
+          bright0 = config.lib.stylix.colors.base03;
+          bright1 = hueEditFunc "base0F";
+          bright2 = hueEditFunc "base0B";
+          bright3 = hueEditFunc "base0A";
+          bright4 = hueEditFunc "base0D";
+          bright5 = hueEditFunc "base0E";
+          bright6 = hueEditFunc "base0C";
+          bright7 = config.lib.stylix.colors.base07;
+          "16" = config.lib.stylix.colors.base09;
+          "17" = config.lib.stylix.colors.base0F;
+          "18" = config.lib.stylix.colors.base01;
+          "19" = config.lib.stylix.colors.base02;
+          "20" = config.lib.stylix.colors.base04;
+          "21" = config.lib.stylix.colors.base06;
+        };
+
+        scrollback = {
+          lines = 100000;
+        };
+        mouse.hide-when-typing = "yes";
+
+        # colors.alpha = "0.99";
       };
-      scrollback = {
-        lines = 100000;
-      };
-      mouse.hide-when-typing = "yes";
-      # colors.alpha = "0.99";
-    };
   };
 
   programs.ghostty = {
@@ -761,7 +808,7 @@
       configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
       force = true;
     };
-    gtk4.theme = config.gtk.theme;
+    # gtk4.theme = config.gtk.theme;
     cursorTheme = {
       name = "Banana";
       size = 32;
