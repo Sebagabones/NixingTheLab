@@ -604,7 +604,6 @@
         "/* ^ do not touch this line ^ */"
         ""
         "* {"
-        "  font-family: \"JetBrainsMono Nerd Font\" !important;"
         "  background: unset;"
         "}"
         ""
@@ -771,7 +770,7 @@
     povray
     openscad-unstable
     prusa-slicer
-    bitwarden-desktop
+    # bitwarden-desktop
     impression
     localsend
   ];

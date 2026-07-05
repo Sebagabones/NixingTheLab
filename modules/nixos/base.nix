@@ -244,8 +244,14 @@
   # Nix Settings
   nix.settings = {
     download-buffer-size = 671088640;
-    substituters = [ "http://cache.mahoosively.gay" ];
-    trusted-public-keys = [ "cache.mahoosively.gay:VEmKWBBlwZmKaPeVvsfjZAdKPJkDh9Zqi2fdWl1gZQg=" ];
+    substituters = [
+      "http://cache.mahoosively.gay"
+      "https://noctalia.cachix.org"
+    ];
+    trusted-public-keys = [
+      "cache.mahoosively.gay:VEmKWBBlwZmKaPeVvsfjZAdKPJkDh9Zqi2fdWl1gZQg="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
   };
 
   # Lollypops
@@ -260,15 +266,18 @@
       };
     };
   };
+
   home-manager = {
     backupFileExtension = "backup";
   };
+
   fonts.packages = with pkgs; [
     xauth
     nerd-fonts.symbols-only
     nerd-fonts.jetbrains-mono
     fira-code-symbols
     fira-code
+    julia-mono
   ];
 
   # stylix.enable = true;

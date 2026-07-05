@@ -1,7 +1,6 @@
 ;;; default.el --- config -*- lexical-binding: t; no-byte-compile: t; -*-
 
 
-
 (defun ar/show-welcome-buffer ()
   "Show *Welcome* buffer."
   (with-current-buffer (get-buffer-create "*Welcome*")
@@ -1285,42 +1284,43 @@
   (setq org-bullets-bullet-list '("◉"))
   :hook org-mode)
 
-;; (use-package org-modern
-;;                  :ensure t
-;;                  :custom
-;;                  (org-modern-hide-stars nil)		; adds extra indentation
-;;                  (org-modern-table nil)
-;;                  (org-modern-list
-;;                   '(;; (?- . "-")
-;;                     (?* . "•")
-;;                     (?+ . "‣")))
-;;                  :config
-;;                  (setq
-;;                   org-auto-align-tags t
-;;                   org-tags-column 0
-;;                   org-fold-catch-invisible-edits 'show-and-error
-;;                   org-special-ctrl-a/e t
-;;                   org-insert-heading-respect-content t
-;;
-;;                   ;; ;; Don't style the following
-;;                   ;; org-modern-tag nil
-;;                   ;; org-modern-priority nil
-;;                   ;; org-modern-todo nil
-;;                   ;; org-modern-table nil
-;;
-;;                   ;; Agenda styling
-;;                   org-agenda-tags-column 0
-;;                   org-agenda-block-separator ?─
-;;                   org-agenda-time-grid
-;;                   '((daily today require-timed)
-;; 	                (800 1000 1200 1400 1600 1800 2000)
-;; 	                " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-;;                   org-agenda-current-time-string
-;;                   "⭠ now ─────────────────────────────────────────────────")
-;;                  :hook
-;;                  (org-mode . org-modern-mode)
-;;                  (org-agenda-finalize . org-modern-agenda)
-;;                  (org-mode . global-org-modern-mode))
+
+(use-package org-modern
+  :ensure t
+  :custom
+  (org-modern-hide-stars nil)		; adds extra indentation
+  (org-modern-table nil)
+  (org-modern-list
+   '( (?- . "-")
+      (?* . "•")
+      (?+ . "‣")))
+  :config
+  (setq
+   org-auto-align-tags t
+   org-tags-column 0
+   org-fold-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t
+
+   ;; ;; Don't style the following
+   ;; org-modern-tag nil
+   ;; org-modern-priority nil
+   ;; org-modern-todo nil
+   ;; org-modern-table nil
+
+   ;; Agenda styling
+   org-agenda-tags-column 0
+   org-agenda-block-separator "?─"
+   org-agenda-time-grid
+   '((daily today require-timed)
+	 (800 1000 1200 1400 1600 1800 2000)
+	 " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+   org-agenda-current-time-string
+   "⭠ now ─────────────────────────────────────────────────")
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda)
+  (org-mode . global-org-modern-mode))
 
 (use-package org-appear
   :ensure t
@@ -1376,7 +1376,7 @@
   (org-mode . visual-line-mode)
   ;; (org-mode . olivetti-mode)
   (org-mode . org-indent-mode)
-  ;; (org-mode . org-modern-indent-mode)
+  (org-mode . org-modern-indent-mode)
 
   :config
   (setopt org-directory "~/Org/")
@@ -1809,6 +1809,16 @@
 ;;   :hook (prog-mode org-mode))                                         ; mode to enable fira-code-mode in
 
 (set-face-attribute 'default nil :font "Berkeley Mono 12")
+;; (set-face-attribute 'unicode nil :font "JuliaMono 12")
+;; (setq use-default-font-for-symbols nil)
+
+;; (set-fontset-font t 'unicode "JuliaMono" nil 'prepend)
+(set-fontset-font t 'unicode (font-spec :family "Berkeley Mono") nil 'prepend)
+
+
+(set-fontset-font t nil  (font-spec :family "Berkeley Mono") nil )
+(set-fontset-font t nil "JuliaMono" nil 'prepend) ;fallback
+
 
 
 (use-package ligature
@@ -2370,7 +2380,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (fsharp-ts-eglot-pipeline-hints t))
 
 (use-package ob-fsharp
-  :ensure t
+  :ensure t :after org-mode
   ;; :straight t
   :config
   (add-to-list 'org-babel-load-languages '(fsharp . t)))
@@ -2853,13 +2863,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   )
 
 
-(setf use-default-font-for-symbols nil)
-;; (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
-;; (set-fontset-font t 'unicode "Berkeley Mono" nil 'prepend)
-;; (setq inhibit-compacting-font-caches t)
-(set-fontset-font t 'unicode (font-spec :family "Berkeley Mono") nil 'prepend)
-(set-fontset-font t nil  (font-spec :family "Berkeley Mono") nil )
-
 (use-package ement   :ensure t)
 
 ;; (define-derived-mode irc-log-mode fundamental-mode "IRC Log"
@@ -2935,12 +2938,15 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   ;; :straight (math-at-point :type git :host github :repo "shankar2k/math-at-point")
   ;;:vc (:url "https://github.com/shankar2k/math-at-point"   :rev :newest)
   :bind ("C-=" . math-at-point)
-  :hook org-mode)
+  )
 
 ;; (use-package ascii-art-to-unicode
 ;;   :ensure t)
 
+;; (use-package uniline
+;;   :ensure t
+;;   :bind ("C-*" . uniline-mode)
+;;   )
 (use-package uniline
-  ;; :ensure t
-  :bind ("C-*" . uniline-mode)
-  )
+  :ensure t
+  :bind ("C-*" . uniline-mode))

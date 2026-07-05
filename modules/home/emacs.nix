@@ -75,9 +75,29 @@ let
             inherit (epkgs) melpaBuild;
           };
 
+          # uniline
+          # uniline = pkgs.ignoreCompilationError pkgs.callPackage ./emacsPkgs/uniline.nix {
+          #   inherit (pkgs) fetchFromGitHub;
+          #   inherit (epkgs) melpaBuild;
+          #   inherit (epkgs) hydra;
+          #   inherit (epkgs) transient;
+          # };
+
+          uniline = epkgs.melpaPackages.uniline.overrideAttrs {
+            ignoreCompilationError = true;
+          };
+
+          projectile = epkgs.melpaPackages.projectile.overrideAttrs (
+            finalAttrs: previousAttrs: {
+              # NOTE: You should be able to remove this next time you update
+              packageRequires = previousAttrs.packageRequires ++ [ epkgs.consult ];
+            }
+          );
+
         };
       extraEmacsPackages = epkgs: [
         epkgs.comment-dwim-2
+        epkgs.org
       ];
     }
   );
@@ -147,6 +167,7 @@ in
           biblatex
           fancyhdr
           tocbibind
+          juliamono
           ;
 
         nicematrix = {
