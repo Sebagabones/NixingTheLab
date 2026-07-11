@@ -2088,6 +2088,11 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                                      (unpackaged/smerge-hydra/body)))))
 
 
+(use-package magit-pre-commit
+  :ensure t
+  :after magit
+  :config (setq magit-pre-commit-executable "prek"))
+
 (use-package hl-todo
   :ensure t
   :hook (prog-mode . global-hl-todo-mode)
@@ -2142,47 +2147,48 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :bind (("C-c r" . rg)))
 
 
-;; (use-package flycheck
-;;   :preface
-;;
-;;   (defun mp-flycheck-eldoc (callback &rest _ignored)
-;;     "Print flycheck messages at point by calling CALLBACK."
-;;     (when-let ((flycheck-errors (and flycheck-mode (flycheck-overlay-errors-at (point)))))
-;;       (mapc
-;;        (lambda (err)
-;;          (funcall callback
-;;                   (format "%s: %s"
-;;                           (let ((level (flycheck-error-level err)))
-;;                             (pcase level
-;;                               ('info (propertize "I" 'face 'flycheck-error-list-info))
-;;                               ('error (propertize "E" 'face 'flycheck-error-list-error))
-;;                               ('warning (propertize "W" 'face 'flycheck-error-list-warning))
-;;                               (_ level)))
-;;                           (flycheck-error-message err))
-;;                   :thing (or (flycheck-error-id err)
-;;                              (flycheck-error-group err))
-;;                   :face 'font-lock-doc-face))
-;;        flycheck-errors)))
-;;
-;;   (defun mp-flycheck-prefer-eldoc ()
-;;     (add-hook 'eldoc-documentation-functions #'mp-flycheck-eldoc nil t)
-;;     (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-;;     (setq flycheck-display-errors-function nil)
-;;     (setq flycheck-help-echo-function nil))
-;;
-;;   :hook ((flycheck-mode . mp-flycheck-prefer-eldoc))
-;;   :defer t
-;;   :hook (after-init . global-flycheck-mode)
-;;
-;;   :config
-;;   (setq flycheck-highlighting-mode "lines")
-;;   (setq lsp-diagnostics-provider :none)
-;;   )
-;;
-;;
-;; (use-package flycheck-inline
-;;   :after flycheck
-;;   :hook (flycheck-mode . flycheck-inline-mode))
+(use-package flycheck
+  ;; :preface
+  ;;
+  ;; (defun mp-flycheck-eldoc (callback &rest _ignored)
+  ;;   "Print flycheck messages at point by calling CALLBACK."
+  ;;   (when-let ((flycheck-errors (and flycheck-mode (flycheck-overlay-errors-at (point)))))
+  ;;     (mapc
+  ;;      (lambda (err)
+  ;;        (funcall callback
+  ;;                 (format "%s: %s"
+  ;;                         (let ((level (flycheck-error-level err)))
+  ;;                           (pcase level
+  ;;                             ('info (propertize "I" 'face 'flycheck-error-list-info))
+  ;;                             ('error (propertize "E" 'face 'flycheck-error-list-error))
+  ;;                             ('warning (propertize "W" 'face 'flycheck-error-list-warning))
+  ;;                             (_ level)))
+  ;;                         (flycheck-error-message err))
+  ;;                 :thing (or (flycheck-error-id err)
+  ;;                            (flycheck-error-group err))
+  ;;                 :face 'font-lock-doc-face))
+  ;;      flycheck-errors)))
+  ;;
+  ;; (defun mp-flycheck-prefer-eldoc ()
+  ;;   (add-hook 'eldoc-documentation-functions #'mp-flycheck-eldoc nil t)
+  ;;   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  ;;   (setq flycheck-display-errors-function nil)
+  ;;   (setq flycheck-help-echo-function nil))
+  :ensure t
+  :defer t
+  :hook (after-init . global-flycheck-mode)
+
+  :config
+  ;; (setq flycheck-highlighting-mode "sexps")
+  ;; (setq lsp-diagnostics-provider :none)
+  )
+
+(use-package flycheck-inline
+  :ensure t
+  :config
+  )
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
 
 (use-package flymake
   :ensure t
@@ -2950,3 +2956,69 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package uniline
   :ensure t
   :bind ("C-*" . uniline-mode))
+
+;; (use-package flyover
+;;   :ensure t
+;;   :hook ((flycheck-mode . flyover-mode)
+;;          (flymake-mode . flyover-mode))
+;;   :custom
+;;   ;; Checker settings
+;;   (flyover-checkers '(flycheck flymake))
+;;   (flyover-levels '(error warning info))
+;;
+;;   ;; Appearance
+;;   (flyover-use-theme-colors t)
+;;   (flyover-background-lightness 45)
+;;
+;;   ;; Text tinting
+;;   (flyover-text-tint 'lighter)
+;;   (flyover-text-tint-percent 50)
+;;
+;;   ;; Icon tinting (foreground and background)
+;;   (flyover-icon-tint 'lighter)
+;;   (flyover-icon-tint-percent 50)
+;;   (flyover-icon-background-tint 'darker)
+;;   (flyover-icon-background-tint-percent 50)
+;;
+;;   ;; Icons
+;;   (flyover-info-icon "")
+;;   (flyover-warning-icon "")
+;;   (flyover-error-icon "")
+;;
+;;   ;; Border styles: none, pill, arrow, slant, slant-inv, flames, pixels
+;;   ;; (flyover-border-style 'arrow)
+;;
+;;   (add-to-list 'flyover-border-chars '(brackets . ("[" . "]")))
+;;   (flyover-border-style 'brackets)
+;;   ;; (flyover-border-match-icon t)
+;;
+;;   ;; Display settings
+;;   ;; Hide checker name for a cleaner UI
+;;   (flyover-hide-checker-name t)
+;;
+;;   ;; show at end of the line instead.
+;;   (flyover-show-at-eol t)
+;;
+;;   ;; Show an arrow (or icon of your choice) before the error to highlight the error a bit more.
+;;   (flyover-show-virtual-line 'nil)
+;;
+;;   ;; Show error ID/code in the overlay (default: nil)
+;;   ;; When enabled, displays the error identifier in brackets, e.g., "Missing semicolon [E001]"
+;;   ;; Useful for looking up error codes or adding suppression comments
+;;   (flyover-show-error-id t)
+;;
+;;   (flyover-line-position-offset 0)
+;;
+;;   ;; Message wrapping
+;;   (flyover-wrap-messages t)
+;;   (flyover-max-line-length 110)
+;;
+;;   ;; Performance
+;;   (flyover-debounce-interval 0.2)
+;;   (flyover-cursor-debounce-interval 0.3)
+;;
+;;   ;; Display mode (controls cursor-based visibility)
+;;   (flyover-display-mode 'always)
+;;
+;;   ;; Completion integration
+;;   (flyover-hide-during-completion t))

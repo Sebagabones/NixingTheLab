@@ -94,6 +94,16 @@ let
             }
           );
 
+          magit-pre-commit = epkgs.melpaPackages.magit-pre-commit.overrideAttrs (old: {
+            patches = [
+              (pkgs.fetchpatch {
+                url = "https://patch-diff.githubusercontent.com/raw/DamianB-BitFlipper/magit-pre-commit.el/pull/8.patch";
+                sha256 = "sha256-4Z+ZPE67D2C0zcHA9Lr+OXy+InlTG3Ea5KFWiohPBzM=";
+              })
+              # ./emacsPkgs/magit-pre-commit.patch
+            ];
+          });
+
         };
       extraEmacsPackages = epkgs: [
         epkgs.comment-dwim-2
