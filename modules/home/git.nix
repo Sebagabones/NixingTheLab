@@ -74,4 +74,9 @@
       enableGitIntegration = true;
     };
   };
+  home.file.".authinfo.gpg" = {
+    source = ./../../secrets/authinfo.gpg;
+    force = true;
+  };
+
 }

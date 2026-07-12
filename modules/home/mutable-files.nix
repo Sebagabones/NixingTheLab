@@ -1,262 +1,352 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-# gratefully borrowed from https://www.foodogsquared.one/posts/2023-03-24-managing-mutable-files-in-nixos/#a-better-way-to-manage-traditional-dotfiles-in-home-manager
-# (code from https://github.com/foo-dogsquared/nixos-config/blob/30f23d969620da60dff7f98aa91f798e36df48f5/modules/home-manager/files/mutable-files.nix)
-
+# Borrowed from https://gist.github.com/piousdeer/b29c272eaeba398b864da6abf6cb5daa
+# This module extends home.file, xdg.configFile and xdg.dataFile with the `mutable` option.
+{ config, lib, ... }:
 let
-  cfg = config.home.mutableFile;
-
-  runtimeInputs = lib.makeBinPath (
-    with pkgs;
+  fileOptionAttrPaths = [
     [
-      coreutils
-      # archiver
-      curl
-      git
-      gopass
+      "home"
+      "file"
     ]
-  );
-
-  # An attribute set to be used to get the fetching script.
-  fetchScript =
-    _: value:
-    let
-      url = lib.escapeShellArg value.url;
-      path = lib.escapeShellArg value.path;
-      extraArgs = lib.escapeShellArgs value.extraArgs;
-    in
-    {
-      git = ''
-        [ -d ${path} ] || git clone ${extraArgs} ${url} ${path}
-      '';
-      fetch = ''
-        [ -e ${path} ] || curl ${extraArgs} ${url} --output ${path}"
-      '';
-      # archive = let
-      #   extractScript = if (value.extractPath == null) then
-      #     ''arc unarchive "/tmp/$filename" ${path}''
-      #   else
-      #     ''
-      #       arc extract "/tmp/$filename" ${
-      #         lib.escapeShellArg value.extractPath
-      #       } ${path}'';
-      # in ''
-      #   [ -e ${path} ] || {
-      #     filename=$(curl ${extraArgs} --output-dir /tmp --silent --show-error --write-out '%{filename_effective}' --remote-name --remote-header-name --location ${url})
-      #     ${extractScript}
-      #   }
-      # '';
-      gopass = ''
-        [ -e ${path} ] || gopass clone ${extraArgs} ${url} --path ${path}
-      '';
-      custom = ''
-        [ -e ${path} ] || ${value.executable} ${url} ${path} ${extraArgs}
-      '';
-    };
-
-  # The file submodule. Take note the values here are sanitized to only
-  # represent relative paths starting with the given base directory as the root
-  # (such as the home directory).
-  #
-  # Playing with absolute paths is basically like playing with fire, some use
-  # cases are nice for it, some are bad especially that this is only used for
-  # home-manager where it is expected to be limited to its associated home
-  # directory. But that's for the user to know how their user interact with the
-  # rest of the system.
-  fileType =
-    baseDir:
-    {
-      name,
-      ...
-    }:
-    {
-      options = {
-        url = lib.mkOption {
-          type = lib.types.str;
-          description = ''
-            The URL of the file to be fetched.
-          '';
-          example = "https://github.com/foo-dogsquared/dotfiles.git";
-        };
-
-        path = lib.mkOption {
-          type = lib.types.str;
-          description = ''
-            The path of the mutable file. By default, it will be relative to the
-            home directory.
-          '';
-          example = lib.literalExpression "\${config.xdg.userDirs.documents}/top-secret";
-          default = name;
-          apply = p: if lib.hasPrefix "/" p then p else "${baseDir}/${p}";
-        };
-
-        extractPath = lib.mkOption {
-          type = with lib.types; nullOr str;
-          description = ''
-            The path within the archive to be extracted. This is only used if the
-            type is `archive`. If the value is `null` then it will extract the
-            whole archive into the directory.
-          '';
-          default = null;
-          example = "path/inside/of/the/archive";
-        };
-
-        type = lib.mkOption {
-          type = lib.types.enum [
-            "git"
-            "fetch"
-            "archive"
-            "gopass"
-            "custom"
-          ];
-          description = ''
-            Type that configures the behavior for fetching the URL.
-
-            This accept only certain keywords.
-
-            - For `fetch`, the file will be fetched with {command}`curl`.
-            - For `git`, it will be fetched with {command}`git clone`.
-            - For `archive`, the file will be fetched with {command}`curl` and
-            extracted before putting the file.
-            - For `gopass`, the file will be cloned with {command}`gopass`.
-            - For `custom`, the file will be passed with a user-given command.
-            The `extraArgs` option is now assumed to be a list of a command and
-            its arguments. To make executing commands possible with custom
-            scripts, the URL and the path is stored in shell variables `$url` and
-            `$path` respectively.
-
-            The default type is `fetch`.
-          '';
-          default = "fetch";
-          example = "git";
-        };
-
-        executable = lib.mkOption {
-          type = with lib.types; nullOr nonEmptyStr;
-          description = ''
-            The path of the executable for the fetch job. This is automatically
-            configured if {option}`type` is set other than `custom` which is
-            left alone intended for the user to set.
-          '';
-          default = null;
-          example = lib.literalExpression ''
-            lib.getExe pkgs.hello
-          '';
-        };
-
-        extraArgs = lib.mkOption {
-          type = with lib.types; listOf str;
-          description = ''
-            A list of extra arguments to be included with the fetch command. Take
-            note of the commands used for each type as documented from
-            {option}`config.home.mutableFile.<name>.type`.
-          '';
-          default = [ ];
-          example = [
-            "--depth"
-            "1"
-          ];
-        };
-
-        postScript = lib.mkOption {
-          type = lib.types.lines;
-          description = ''
-            A shell script fragment to be executed after the download.
-          '';
-          default = "";
-          example = lib.literalExpression ''
-            ''${config.xdg.configHome}/emacs/bin/doom install --no-config --no-fonts --install --force
-          '';
-        };
-      };
-    };
+    [
+      "xdg"
+      "configFile"
+    ]
+    [
+      "xdg"
+      "dataFile"
+    ]
+  ];
 in
 {
-  options.home.mutableFile = lib.mkOption {
-    type = with lib.types; attrsOf (submodule (fileType config.home.homeDirectory));
-    description = ''
-      An attribute set of mutable files and directories to be declaratively put
-      into the home directory. Take note this is not exactly pure (or
-      idempotent) as it will only do its fetching when the designated file is
-      missing.
-    '';
-    default = { };
-    example = {
-      "library/dotfiles" = {
-        url = "https://github.com/foo-dogsquared/dotfiles.git";
-        type = "git";
-      };
+  options =
+    let
 
-      # "library/projects/keys" = {
-      #   url = "https://example.com/file.zip";
-      #   type = "archive";
-      # };
-    };
-  };
+      mergeAttrsList = builtins.foldl' (lib.mergeAttrs) { };
 
-  config = lib.mkIf (cfg != { }) {
-    systemd.user.services.fetch-mutable-files = {
-      Unit = {
-        Description = "Fetch mutable home-manager-managed files";
-        After = [
-          "default.target"
-          "network-online.target"
-        ];
-        Wants = [ "network-online.target" ];
-      };
+      fileAttrsType = lib.types.attrsOf (
+        lib.types.submodule (
+          { config, ... }: {
+            options.mutable = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = ''
+                Whether to copy the file without the read-only attribute instead of
+                symlinking. If you set this to `true`, you must also set `force` to
+                `true`. Mutable files are not removed when you remove them from your
+                configuration.
+                This option is useful for programs that don't have a very good
+                support for read-only configurations.
+              '';
+            };
+          }
+        )
+      );
 
-      Service = {
-        # We'll assume this service will have lots of things to download so it
-        # is best to make the temp directory to only last with the service.
-        PrivateUsers = true;
-        PrivateTmp = true;
+    in
+    mergeAttrsList (
+      map (
+        attrPath: lib.setAttrByPath attrPath (lib.mkOption { type = fileAttrsType; })
+      ) fileOptionAttrPaths
+    );
 
-        Type = "oneshot";
-        RemainAfterExit = true;
+  config = {
+    home.activation.mutableFileGeneration =
+      let
 
-        ExecStart =
+        allFiles = (
+          builtins.concatLists (
+            map (attrPath: builtins.attrValues (lib.getAttrFromPath attrPath config)) fileOptionAttrPaths
+          )
+        );
+
+        filterMutableFiles = builtins.filter (
+          file:
+          (file.mutable or false)
+          && lib.assertMsg file.force "if you specify `mutable` to `true` on a file, you must also set `force` to `true`"
+        );
+
+        mutableFiles = filterMutableFiles allFiles;
+
+        toCommand = (
+          file:
           let
-            mutableFilesCmds = lib.mapAttrsToList (
-              _path: value:
-              let
-                url = lib.escapeShellArg value.url;
-                path = lib.escapeShellArg value.path;
-              in
-              ''
-                (
-                  URL=${lib.escapeShellArg url}
-                  FILEPATH=${lib.escapeShellArg path}
-                  DIRNAME=$(dirname ${lib.escapeShellArg path})
-                  mkdir -p "$DIRNAME"
-                  ${(fetchScript path value).${value.type}}
-                )
-              ''
-            ) cfg;
-
-            shellScript = pkgs.writeShellScriptBin "fetch-mutable-files" ''
-              export PATH=${runtimeInputs}''${PATH:-:$PATH}
-              ${lib.concatStringsSep "\n" mutableFilesCmds}
-            '';
+            source = lib.escapeShellArg file.source;
+            target = lib.escapeShellArg file.target;
           in
-          lib.getExe shellScript;
+          ''
+            $VERBOSE_ECHO "${source} -> ${target}"
+            $DRY_RUN_CMD cp --remove-destination --no-preserve=mode ${source} ${target}
+          ''
+        );
 
-        ExecStartPost =
-          let
-            mutableFilesCmds = lib.mapAttrsToList (_path: value: value.postScript) cfg;
+        command = ''
+          echo "Copying mutable home files for $HOME"
+        ''
+        + lib.concatLines (map toCommand mutableFiles);
 
-            shellScript = pkgs.writeShellScriptBin "fetch-mutable-files-post-script" ''
-              export PATH=${runtimeInputs}''${PATH:-:$PATH}
-              ${lib.concatStringsSep "\n" mutableFilesCmds}
-            '';
-          in
-          lib.getExe shellScript;
-      };
-
-      Install.WantedBy = [ "default.target" ];
-    };
+      in
+      (lib.hm.dag.entryAfter [ "linkGeneration" ] command);
   };
 }
+# {
+#   config,
+#   lib,
+#   pkgs,
+#   ...
+# }:
+# # gratefully borrowed from https://www.foodogsquared.one/posts/2023-03-24-managing-mutable-files-in-nixos/#a-better-way-to-manage-traditional-dotfiles-in-home-manager
+# # (code from https://github.com/foo-dogsquared/nixos-config/blob/30f23d969620da60dff7f98aa91f798e36df48f5/modules/home-manager/files/mutable-files.nix)
+#
+# let
+#   cfg = config.home.mutableFile;
+#
+#   runtimeInputs = lib.makeBinPath (
+#     with pkgs;
+#     [
+#       coreutils
+#       # archiver
+#       curl
+#       git
+#       gopass
+#     ]
+#   );
+#
+#   # An attribute set to be used to get the fetching script.
+#   fetchScript =
+#     _: value:
+#     let
+#       url = lib.escapeShellArg value.url;
+#       path = lib.escapeShellArg value.path;
+#       extraArgs = lib.escapeShellArgs value.extraArgs;
+#     in
+#     {
+#       git = ''
+#         [ -d ${path} ] || git clone ${extraArgs} ${url} ${path}
+#       '';
+#       fetch = ''
+#         [ -e ${path} ] || curl ${extraArgs} ${url} --output ${path}"
+#       '';
+#       # archive = let
+#       #   extractScript = if (value.extractPath == null) then
+#       #     ''arc unarchive "/tmp/$filename" ${path}''
+#       #   else
+#       #     ''
+#       #       arc extract "/tmp/$filename" ${
+#       #         lib.escapeShellArg value.extractPath
+#       #       } ${path}'';
+#       # in ''
+#       #   [ -e ${path} ] || {
+#       #     filename=$(curl ${extraArgs} --output-dir /tmp --silent --show-error --write-out '%{filename_effective}' --remote-name --remote-header-name --location ${url})
+#       #     ${extractScript}
+#       #   }
+#       # '';
+#       gopass = ''
+#         [ -e ${path} ] || gopass clone ${extraArgs} ${url} --path ${path}
+#       '';
+#       custom = ''
+#         [ -e ${path} ] || ${value.executable} ${url} ${path} ${extraArgs}
+#       '';
+#     };
+#
+#   # The file submodule. Take note the values here are sanitized to only
+#   # represent relative paths starting with the given base directory as the root
+#   # (such as the home directory).
+#   #
+#   # Playing with absolute paths is basically like playing with fire, some use
+#   # cases are nice for it, some are bad especially that this is only used for
+#   # home-manager where it is expected to be limited to its associated home
+#   # directory. But that's for the user to know how their user interact with the
+#   # rest of the system.
+#   fileType =
+#     baseDir:
+#     {
+#       name,
+#       ...
+#     }:
+#     {
+#       options = {
+#         url = lib.mkOption {
+#           type = lib.types.str;
+#           description = ''
+#             The URL of the file to be fetched.
+#           '';
+#           example = "https://github.com/foo-dogsquared/dotfiles.git";
+#         };
+#
+#         path = lib.mkOption {
+#           type = lib.types.str;
+#           description = ''
+#             The path of the mutable file. By default, it will be relative to the
+#             home directory.
+#           '';
+#           example = lib.literalExpression "\${config.xdg.userDirs.documents}/top-secret";
+#           default = name;
+#           apply = p: if lib.hasPrefix "/" p then p else "${baseDir}/${p}";
+#         };
+#
+#         extractPath = lib.mkOption {
+#           type = with lib.types; nullOr str;
+#           description = ''
+#             The path within the archive to be extracted. This is only used if the
+#             type is `archive`. If the value is `null` then it will extract the
+#             whole archive into the directory.
+#           '';
+#           default = null;
+#           example = "path/inside/of/the/archive";
+#         };
+#
+#         type = lib.mkOption {
+#           type = lib.types.enum [
+#             "git"
+#             "fetch"
+#             "archive"
+#             "gopass"
+#             "custom"
+#           ];
+#           description = ''
+#             Type that configures the behavior for fetching the URL.
+#
+#             This accept only certain keywords.
+#
+#             - For `fetch`, the file will be fetched with {command}`curl`.
+#             - For `git`, it will be fetched with {command}`git clone`.
+#             - For `archive`, the file will be fetched with {command}`curl` and
+#             extracted before putting the file.
+#             - For `gopass`, the file will be cloned with {command}`gopass`.
+#             - For `custom`, the file will be passed with a user-given command.
+#             The `extraArgs` option is now assumed to be a list of a command and
+#             its arguments. To make executing commands possible with custom
+#             scripts, the URL and the path is stored in shell variables `$url` and
+#             `$path` respectively.
+#
+#             The default type is `fetch`.
+#           '';
+#           default = "fetch";
+#           example = "git";
+#         };
+#
+#         executable = lib.mkOption {
+#           type = with lib.types; nullOr nonEmptyStr;
+#           description = ''
+#             The path of the executable for the fetch job. This is automatically
+#             configured if {option}`type` is set other than `custom` which is
+#             left alone intended for the user to set.
+#           '';
+#           default = null;
+#           example = lib.literalExpression ''
+#             lib.getExe pkgs.hello
+#           '';
+#         };
+#
+#         extraArgs = lib.mkOption {
+#           type = with lib.types; listOf str;
+#           description = ''
+#             A list of extra arguments to be included with the fetch command. Take
+#             note of the commands used for each type as documented from
+#             {option}`config.home.mutableFile.<name>.type`.
+#           '';
+#           default = [ ];
+#           example = [
+#             "--depth"
+#             "1"
+#           ];
+#         };
+#
+#         postScript = lib.mkOption {
+#           type = lib.types.lines;
+#           description = ''
+#             A shell script fragment to be executed after the download.
+#           '';
+#           default = "";
+#           example = lib.literalExpression ''
+#             ''${config.xdg.configHome}/emacs/bin/doom install --no-config --no-fonts --install --force
+#           '';
+#         };
+#       };
+#     };
+# in
+# {
+#   options.home.mutableFile = lib.mkOption {
+#     type = with lib.types; attrsOf (submodule (fileType config.home.homeDirectory));
+#     description = ''
+#       An attribute set of mutable files and directories to be declaratively put
+#       into the home directory. Take note this is not exactly pure (or
+#       idempotent) as it will only do its fetching when the designated file is
+#       missing.
+#     '';
+#     default = { };
+#     example = {
+#       "library/dotfiles" = {
+#         url = "https://github.com/foo-dogsquared/dotfiles.git";
+#         type = "git";
+#       };
+#
+#       # "library/projects/keys" = {
+#       #   url = "https://example.com/file.zip";
+#       #   type = "archive";
+#       # };
+#     };
+#   };
+#
+#   config = lib.mkIf (cfg != { }) {
+#     systemd.user.services.fetch-mutable-files = {
+#       Unit = {
+#         Description = "Fetch mutable home-manager-managed files";
+#         After = [
+#           "default.target"
+#           "network-online.target"
+#         ];
+#         Wants = [ "network-online.target" ];
+#       };
+#
+#       Service = {
+#         # We'll assume this service will have lots of things to download so it
+#         # is best to make the temp directory to only last with the service.
+#         PrivateUsers = true;
+#         PrivateTmp = true;
+#
+#         Type = "oneshot";
+#         RemainAfterExit = true;
+#
+#         ExecStart =
+#           let
+#             mutableFilesCmds = lib.mapAttrsToList (
+#               _path: value:
+#               let
+#                 url = lib.escapeShellArg value.url;
+#                 path = lib.escapeShellArg value.path;
+#               in
+#               ''
+#                 (
+#                   URL=${lib.escapeShellArg url}
+#                   FILEPATH=${lib.escapeShellArg path}
+#                   DIRNAME=$(dirname ${lib.escapeShellArg path})
+#                   mkdir -p "$DIRNAME"
+#                   ${(fetchScript path value).${value.type}}
+#                 )
+#               ''
+#             ) cfg;
+#
+#             shellScript = pkgs.writeShellScriptBin "fetch-mutable-files" ''
+#               export PATH=${runtimeInputs}''${PATH:-:$PATH}
+#               ${lib.concatStringsSep "\n" mutableFilesCmds}
+#             '';
+#           in
+#           lib.getExe shellScript;
+#
+#         ExecStartPost =
+#           let
+#             mutableFilesCmds = lib.mapAttrsToList (_path: value: value.postScript) cfg;
+#
+#             shellScript = pkgs.writeShellScriptBin "fetch-mutable-files-post-script" ''
+#               export PATH=${runtimeInputs}''${PATH:-:$PATH}
+#               ${lib.concatStringsSep "\n" mutableFilesCmds}
+#             '';
+#           in
+#           lib.getExe shellScript;
+#       };
+#
+#       Install.WantedBy = [ "default.target" ];
+#     };
+#   };
+# }
