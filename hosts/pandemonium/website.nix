@@ -32,16 +32,22 @@ in
         hostName = "eu.nixbuild.net";
         system = "aarch64-linux";
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
       }
       {
         hostName = "eu.nixbuild.net";
         system = "armv7l-linux";
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
       }
     ];
-};
+  };
   programs.ssh.extraConfig = ''
     Host eu.nixbuild.net
     PubkeyAcceptedKeyTypes ssh-ed25519
@@ -51,8 +57,7 @@ in
   programs.ssh.knownHosts = {
     nixbuild = {
       hostNames = [ "eu.nixbuild.net" ];
-      publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
     };
   };
 
@@ -147,7 +152,7 @@ in
         };
 
         "thymis-testing.${domain}" = {
-          serverName = "thymis-testing.${domain}";	
+          serverName = "thymis-testing.${domain}";
           enableACME = true; # Enable ACME for automatic SSL certificate management
           forceSSL = true; # Force SSL for the virtual host
         };
