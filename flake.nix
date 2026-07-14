@@ -15,7 +15,7 @@
     nixos-hardware = {
       url = "github:nixos/nixos-hardware/master";
     };
-    agenix.url = "github:ryantm/agenix";
+    agenix.url = "github:yaxitech/ragenix";
     lollypops = {
       url = "github:pinpox/lollypops";
       inputs.nixpkgs.follows = "nixpkgs";
