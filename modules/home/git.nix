@@ -55,6 +55,12 @@
         github = {
           user = "Sebagabones";
         };
+        gitlab = {
+          "gitlab.ucc.asn.au" = {
+            user = "bones";
+            email = "bones@ucc.asn.au";
+          };
+        };
       };
       enable = true;
       # delta = {

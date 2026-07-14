@@ -2004,7 +2004,12 @@
 
 (use-package forge
   :after magit
-  :ensure t)
+  :ensure t
+  :config
+  (add-to-list 'forge-alist '("gitlab.ucc.asn.au"
+                              "gitlab.ucc.asn.au/api/v4"
+                              "ssh.gitlab.ucc.asn.au"
+                              forge-gitlab-repository)))
 ;; :straight (:host github :repo "magit/forge" :branch "main" ))
 
 
