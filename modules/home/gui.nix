@@ -748,6 +748,7 @@
   }; # for VS-Code
 
   home.packages = with pkgs; [
+    perSystem.self.easyeda-pro
     # brightnessctl
     swaybg
     overskride
