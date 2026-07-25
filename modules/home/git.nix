@@ -69,7 +69,7 @@
     };
     difftastic = {
       enable = true;
-      git.diffToolMode = true;
+      git.mode = "both";
       options = {
         color = "auto";
         display = "side-by-side";

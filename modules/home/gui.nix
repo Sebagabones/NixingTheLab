@@ -774,6 +774,10 @@
     # bitwarden-desktop
     impression
     localsend
+    kicad
+    kicadAddons.kikit
+    interactive-html-bom
+    easyeda2kicad # https://github.com/uPesy/easyeda2kicad.py#-usage
   ];
 
   # pointerCursor = {
