@@ -1,0 +1,3 @@
+Python dev shell template
+Things named TODO: need to be changed
+Also note to build use ~hatchling build~ (not ~hatch build~) in dev shell
