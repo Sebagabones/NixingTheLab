@@ -61,15 +61,14 @@
         in
         {
           default = pkgs.mkShell rec {
+
+            inputsFrom = [
+              self.packages.${system}.default
+            ];
             nativeBuildInputs = with pkgs; [
               uv
-              (python314.withPackages (
-                ps: with ps; [
-                  hatch
-                  hatch-mypyc
-                  hatchling
-                ]
-              ))
+              ruff
+              ty
               self.packages.${system}.default
             ];
 
