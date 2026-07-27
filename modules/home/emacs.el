@@ -2183,8 +2183,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :ensure t
   :hook (python-ts-mode . flymake-ruff-load))
 
-(use-package scad-mode
-  :ensure t)
+;; (use-package scad-mode
+;;   :ensure t)
 
 ;; (use-package scad-preview
 ;;   :after scad-mode

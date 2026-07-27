@@ -190,7 +190,7 @@ in
       basedpyright
       multimarkdown
       nixfmt
-      openscad-lsp
+      # openscad-lsp
       lemminx
       gopls
       go

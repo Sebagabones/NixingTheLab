@@ -217,23 +217,23 @@ in
     systemd.enable = true;
     settings = {
       # This may also be a string or path to a .toml file.
-      theme = {
-        mode = "dark";
-        source = "builtin";
-        builtin = "Catppuccin";
-      };
+      # theme = {
+      #   mode = "dark";
+      #   source = "builtin";
+      #   builtin = "Catppuccin";
+      # };
 
-      wallpaper = {
-        enabled = true;
-        # default.path = "/path/to/wallpapers/wallpaper.png";
-        default.path = ../../assests/CatsWithNix.png;
-        #     home.file.".cache/noctalia/wallpapers.json" = {
-        #       text = builtins.toJSON {
-        #         # defaultWallpaper = ../../assests/background.png;
-        #         defaultWallpaper = ../../assests/CatsWithNix.png;
-        #       };
-        #     };
-      };
+      # wallpaper = {
+      #   enabled = true;
+      #   # default.path = "/path/to/wallpapers/wallpaper.png";
+      #   default.path = ../../assests/CatsWithNix.png;
+      #   #     home.file.".cache/noctalia/wallpapers.json" = {
+      #   #       text = builtins.toJSON {
+      #   #         # defaultWallpaper = ../../assests/background.png;
+      #   #         defaultWallpaper = ../../assests/CatsWithNix.png;
+      #   #       };
+      #   #     };
+      # };
     };
   };
   # programs.noctalia-shell = {

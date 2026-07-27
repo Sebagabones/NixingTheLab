@@ -769,9 +769,8 @@
     # kdePackages.dolphin
     freecad
     povray
-    openscad-unstable
+    # openscad-unstable
     prusa-slicer
-    bitwarden-desktop
     impression
     localsend
   ];
