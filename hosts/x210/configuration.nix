@@ -40,6 +40,18 @@
           authProtocols = [ "WPA-PSK" ];
           pskRaw = "ext:definitelyNotRunningAServerHere";
         };
+        "NetComm 6349" = {
+          # Upstaires lauren (usually Aussie broadband)
+          priority = 50;
+          authProtocols = [ "WPA-PSK" ];
+          pskRaw = "ext:'NetComm 6349'";
+        };
+        "dlink-8A08" = {
+          # Downstairs lauren
+          priority = 20;
+          authProtocols = [ "WPA-PSK" ];
+          pskRaw = "ext:dlink-8A08";
+        };
         "UCC-5" = {
           priority = 3;
           authProtocols = [ "WPA-EAP" ];
