@@ -71,10 +71,6 @@
               ty
               self.packages.${system}.default
             ];
-
-            shellHook = ''
-              export PYTHONPATH=$(pwd)
-            '';
           };
         }
       );
