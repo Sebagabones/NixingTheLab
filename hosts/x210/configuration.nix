@@ -201,7 +201,7 @@
       General = {
         ControllerMode = "bredr"; # Fix frequent Bluetooth audio dropouts
         Experimental = true;
-        FastConnectable = true;
+        FastConnectable = false;
         Enable = "Source,Sink,Media,Socket";
       };
       Policy = {

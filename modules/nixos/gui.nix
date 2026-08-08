@@ -13,6 +13,10 @@
   environment.systemPackages = with pkgs; [
     # pinentry-gnome3
     nextdns
+    bluez
+    bluez5
+    bluez-tools
+    mpv
   ];
   nixpkgs.overlays = [ ];
   stylix = {
@@ -57,7 +61,21 @@
       enable = true;
       enable32Bit = true;
     };
-    bluetooth.enable = true;
+    bluetooth = {
+      powerOnBoot = true;
+      enable = true;
+      settings = {
+
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+    # bluetooth.enable = true;
+
+    # Pipewire config
+    pulseaudio.enable = true;
+
   };
 
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
@@ -188,21 +206,88 @@
       # packages = [ pkgs.gcr ]; # allegedly helps with gnome pinentry
     };
 
-    # pulseaudio.enable = false;
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+    };
 
     pipewire = {
-      enable = true;
-      audio.enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-      jack.enable = true;
+      enable = false;
+      #   audio.enable = true;
+      #   alsa.enable = true;
+      #   alsa.support32Bit = true;
+
+      #       pulse.enable = true;
+      #   wireplumber.extraConfig."10-bluez" = {
+      #     "monitor.bluez.properties" = {
+      #       "bluez5.enable-sbc-xq" = true;
+      #       "bluez5.enable-msbc" = true;
+      #       "bluez5.enable-hw-volume" = true;
+      #       "bluez5.roles" = [
+      #         "hsp_hs"
+      #         "hsp_ag"
+      #         "hfp_hf"
+      #         "hfp_ag"
+      #       ];
+      #     };
+      #   };
+      #   #   wireplumber.enable = true;
+      #   #   jack.enable = true;
     };
+
+    # pipewire = {
+    #   enable = true;
+    #   alsa.enable = true;
+    #   alsa.support32Bit = true;
+    #   pulse.enable = true;
+    #   extraConfig = {
+    #     pipewire."99-silent-bell.conf" = {
+    #       "context.properties" = {
+    #         "module.x11.bell" = false;
+    #       };
+    #     };
+    #   };
+    #   wireplumber.extraConfig."10-bluez" = {
+    #     "monitor.bluez.properties" = {
+    #       "bluez5.enable-sbc-xq" = true;
+    #       "bluez5.enable-msbc" = true;
+    #       "bluez5.enable-hw-volume" = true;
+    #       "bluez5.codecs" = [
+    #         "sbc"
+    #         "sbc_xq"
+    #         "aac"
+    #         "ldac"
+    #         "aptx"
+    #         "aptx_hd"
+    #         "aptx_ll"
+    #         "aptx_ll_duplex"
+    #         "faststream"
+    #         "faststream_duplex"
+    #         "lc3plus_h3"
+    #         "opus_05"
+    #         "opus_05_51"
+    #         "opus_05_71"
+    #         "opus_05_duplex"
+    #         "opus_05_pro"
+    #         "lc3"
+    #       ];
+    #       "bluez5.roles" = [
+    #         "a2dp_sink"
+    #         "a2dp_source"
+    #         "hsp_hs"
+    #         "hsp_ag"
+    #         "hfp_hf"
+    #         "hfp_ag"
+    #         "bap_sink"
+    #         "bap_source"
+    #       ];
+    #     };
+    #   };
+    # };
 
     libinput.enable = true;
 
-    # blueman.enable = true;
+    blueman.enable = true;
     # udev.packages = [
     #   pkgs.platformio-core.udev
     #   pkgs.openocd
