@@ -37,6 +37,14 @@ let
             inherit (epkgs) transient;
           };
 
+          lean4-mode = pkgs.callPackage ./emacsPkgs/lean4-mode.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) melpaBuild;
+            inherit (epkgs) dash;
+            inherit (epkgs) lsp-mode;
+            inherit (epkgs) magit-section;
+          };
+
           # simple-comment-markup
           simple-comment-markup = pkgs.callPackage ./emacsPkgs/simple-comment-markup.nix {
             inherit (pkgs) fetchgit;
@@ -147,6 +155,8 @@ in
           biblatex
           fancyhdr
           tocbibind
+          bussproofs
+          logicproof
           ;
 
         nicematrix = {
@@ -215,6 +225,10 @@ in
       fsautocomplete
       fsharp
       tree-sitter-grammars.tree-sitter-fsharp
+      lean4
+      leanPackages.Cli
+      swi-prolog-gui
+      scryer-prolog
       # The following is requried, but is currently in ./bones.nix
       # (python3.withPackages (python-pkgs:
       # with python-pkgs; [

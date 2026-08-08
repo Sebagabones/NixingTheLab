@@ -1386,7 +1386,7 @@
             "\\documentclass[tikz]{standalone}"))
 
   (setopt org-latex-create-formula-image-program 'dvisvgm)
-  (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
+  (org-babel-do-load-languages 'org-babel-load-languages '((latex . t) (prolog . t)))
   (setopt org-babel-latex-pdf-svg-process "pdf2svg %F %O")
 
   (setopt org-latex-pdf-process
@@ -1809,7 +1809,7 @@
 ;;   :hook (prog-mode org-mode))                                         ; mode to enable fira-code-mode in
 
 (set-face-attribute 'default nil :font "Berkeley Mono 12")
-
+(define-key input-decode-map "\C-i" [C-i]) ;Unbind tab from C-i
 
 (use-package ligature
   :ensure t
@@ -2202,66 +2202,67 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;
 ;;   :bind (:map scad-mode-map ("C-c o" . 'hydra-scad-dbus/body)))
 
-;; ;; LSP setup from https://emacs-lsp.github.io/lsp-mode/page/installation/
-;; (use-package lsp-mode
-;;   :init
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   (setq lsp-completion-provider :none)
-;;   :ensure t
-;;   :hook(
-;;         ;; (python-mode . lsp-deferred)
-;;         (python-ts-mode . lsp-deferred)
-;;         (nix-mode . lsp-deferred)
-;;         (c-mode . lsp-deferred)
-;;         (c++-mode . lsp-deferred)
-;;         (scad-mode . lsp-deferred)
-;;         (go-mode . lsp-deferred)
-;;         (go-ts-mode . lsp-deferred)
-;;         (ada-mode . lsp-deferred)
-;;         (ada-ts-mode . lsp-deferred)
-;;
-;;         ;; Add more major modes here
-;;         (lsp-mode . lsp-enable-which-key-integration))
-;;   :config
-;;   ;; python configuration
-;;   (setq lsp-disabled-clients '(pylsp pyright))
-;;
-;;   ;; end python configuration
-;;
-;;   :commands  (lsp lsp-deferred))
-;;
-;; ;; (use-package lsp-pyright
-;; ;;   :ensure t
-;; ;;   :custom (lsp-pyright-langserver-command "basedpyright") ;; or pyright
-;; ;;   :hook ((python-mode python-ts-mode) . (lambda ()
-;; ;;                                           (require 'lsp-pyright)
-;; ;;                                           (lsp-deferred))))  ; or lsp
-;;
-;; (use-package lsp-ui
-;;   :defer t
-;;   :after lsp-mode
-;;   :bind (("C-c c l f" . lsp-ui-doc-focus-frame)
-;;          ("C-c c l u" . lsp-ui-doc-unfocus-frame))
-;;   ;;:commands lsp-ui-mode                 ;
-;;
-;;   :config
-;;   (lsp-ui-peek-mode)
-;;   (setq lsp-ui-doc-enable t
-;;         lsp-ui-doc-header t
-;;         lsp-ui-imenu t
-;;         lsp-ui-doc-include-signature t
-;;         lsp-ui-doc-show-with-cursor t
-;;         lsp-ui-doc-position 'top
-;;         lsp-ui-doc-side 'right
-;;         lsp-ui-doc-delay 0.5
-;;         lsp-ui-sideline-show-code-actions t
-;;         lsp-ui-sideline-show-hover t
-;;         lsp-ui-sideline-show-symbol t
-;;         lsp-ui-peek-always-show t
-;;         lsp-ui-sideline-delay 0.05))
+;; LSP setup from https://emacs-lsp.github.io/lsp-mode/page/installation/
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-completion-provider :none)
 
-;; (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-;; ;;(use-package lsp-treemacs :commands lsp-treemacs-errors-list) ;
+  :ensure t
+  :hook(
+        ;; (python-mode . lsp-deferred)
+        (python-ts-mode . lsp-deferred)
+        (nix-mode . lsp-deferred)
+        (c-mode . lsp-deferred)
+        (c++-mode . lsp-deferred)
+        (scad-mode . lsp-deferred)
+        (go-mode . lsp-deferred)
+        (go-ts-mode . lsp-deferred)
+        (ada-mode . lsp-deferred)
+        (ada-ts-mode . lsp-deferred)
+
+        ;; Add more major modes here
+        (lsp-mode . lsp-enable-which-key-integration))
+  :config
+  ;; python configuration
+  (setq lsp-disabled-clients '(pylsp pyright))
+
+  ;; end python configuration
+
+  :commands  (lsp lsp-deferred))
+
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :custom (lsp-pyright-langserver-command "basedpyright") ;; or pyright
+;;   :hook ((python-mode python-ts-mode) . (lambda ()
+;;                                           (require 'lsp-pyright)
+;;                                           (lsp-deferred))))  ; or lsp
+
+(use-package lsp-ui
+  :defer t
+  :after lsp-mode
+  :bind (("C-c c l f" . lsp-ui-doc-focus-frame)
+         ("C-c c l u" . lsp-ui-doc-unfocus-frame))
+  ;;:commands lsp-ui-mode                 ;
+
+  :config
+  (lsp-ui-peek-mode)
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-header t
+        lsp-ui-imenu t
+        lsp-ui-doc-include-signature t
+        lsp-ui-doc-show-with-cursor t
+        lsp-ui-doc-position 'top
+        lsp-ui-doc-side 'right
+        lsp-ui-doc-delay 0.5
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-show-symbol t
+        lsp-ui-peek-always-show t
+        lsp-ui-sideline-delay 0.05))
+
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+;;(use-package lsp-treemacs :commands lsp-treemacs-errors-list) ;
 
 (use-package jsonrpc
   :ensure t
@@ -2276,7 +2277,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package eglot
   :ensure t
   :hook
-  (fsharp-ts-mode-hook . eglot-ensure))
+  (fsharp-ts-mode-hook . eglot-ensure)
+  (prolog-mode . eglot-ensure)
+  (sweeprolog-mode . eglot-ensure)
+  )
 
 
 (use-package fsharp-ts-mode
@@ -2396,6 +2400,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :config
   (require 'dap-python)
   (require 'dap-ui)
+  (require 'dap-swi-prolog)
   ;; (require 'dap-lldb)
   ;; (require 'dap-cpptools)
   (require 'dap-gdb)
@@ -2787,8 +2792,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :init
   (setq ponylang-banner 2)
   :config
-  :bind-keymap
-  ("C-c p" . ponylang-menu))
+  :bind (:map ponglang-map
+              ("C-c p" . ponylang-menu)))
 
 (use-package flycheck-pony
   :ensure t
@@ -2930,17 +2935,52 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package  haskell-mode
   :ensure t)
 
-(use-package math-at-point
-  :ensure t
-  ;; :straight (math-at-point :type git :host github :repo "shankar2k/math-at-point")
-  ;;:vc (:url "https://github.com/shankar2k/math-at-point"   :rev :newest)
-  :bind ("C-=" . math-at-point)
-  :hook org-mode)
+;; (use-package math-at-point
+;;   :ensure t
+;;   ;; :straight (math-at-point :type git :host github :repo "shankar2k/math-at-point")
+;;   ;;:vc (:url "https://github.com/shankar2k/math-at-point"   :rev :newest)
+;;   :bind ("C-=" . math-at-point)
+;;   :hook org-mode)
 
 ;; (use-package ascii-art-to-unicode
 ;;   :ensure t)
-
+(setopt eglot-server-programs (cons
+                               (cons 'prolog-mode
+                                     (list "swipl"
+                                           "-O"
+                                           "-g" "use_module(library(lsp_server))."
+                                           "-g" "lsp_server:main"
+                                           "-t" "halt"
+                                           "--" "stdio"))
+                               eglot-server-programs))
+(setopt eglot-server-programs (cons
+                               (cons 'sweeprolog-mode
+                                     (list "swipl"
+                                           "-O"
+                                           "-g" "use_module(library(lsp_server))."
+                                           "-g" "lsp_server:main"
+                                           "-t" "halt"
+                                           "--" "stdio"))
+                               eglot-server-programs))
 (use-package uniline
   ;; :ensure t
   :bind ("C-*" . uniline-mode)
   )
+
+(use-package lean4-mode
+  :commands lean4-mode
+  ;; :straight (lean4-mode :type git :host github
+  ;;                       :repo "leanprover-community/lean4-mode"
+  ;;                       :files ("*.el" "data"))
+  :bind (:map lean4-mode-map ("C-c <C-i>" . lean4-toggle-info))
+  :ensure t)
+
+(use-package ob-prolog
+  :ensure t)
+
+(use-package flymake-swi-prolog
+  :ensure t
+  :hook (prolog-mode-hook . flymake-swi-prolog-setup-backend))
+
+(use-package sweeprolog
+  :ensure t)
