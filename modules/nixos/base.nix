@@ -185,6 +185,15 @@
       i2c-tools
     ];
   };
+
+  security.wrappers.btop = {
+    enable = true;
+    owner = "root";
+    group = "root";
+    source = "${pkgs.btop}/bin/btop";
+    capabilities = "cap_perfmon=ep";
+  };
+
   programs.zsh.enable = true;
   programs.ssh = {
     # for remote building
@@ -246,11 +255,9 @@
     download-buffer-size = 671088640;
     substituters = [
       "http://cache.mahoosively.gay"
-      "https://noctalia.cachix.org"
     ];
     trusted-public-keys = [
       "cache.mahoosively.gay:VEmKWBBlwZmKaPeVvsfjZAdKPJkDh9Zqi2fdWl1gZQg="
-      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
 
@@ -270,14 +277,14 @@
   home-manager = {
     backupFileExtension = "backup";
   };
-
+  fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
-    xauth
-    nerd-fonts.symbols-only
-    nerd-fonts.jetbrains-mono
-    fira-code-symbols
-    fira-code
-    julia-mono
+    ioskeley-mono.normal-term-NF
+    # xauth
+    # nerd-fonts.symbols-only
+    # nerd-fonts.jetbrains-mono
+    # fira-code-symbols
+    # fira-code
   ];
 
   # stylix.enable = true;

@@ -1,12 +1,9 @@
 {
   config,
   pkgs,
-  nixpkgs,
-  inputs,
   ...
 }:
 let
-  emacsInstallation = "${config.home.homeDirectory}/.emacs.d";
   myEmacs = (
     pkgs.emacsWithPackagesFromUsePackage {
       config = ./emacs.el;
@@ -35,6 +32,14 @@ let
             inherit (epkgs) melpaBuild;
             inherit (epkgs) tomlparse;
             inherit (epkgs) transient;
+          };
+
+          lean4-mode = pkgs.callPackage ./emacsPkgs/lean4-mode.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) melpaBuild;
+            inherit (epkgs) dash;
+            inherit (epkgs) lsp-mode;
+            inherit (epkgs) magit-section;
           };
 
           # simple-comment-markup
@@ -111,6 +116,85 @@ let
       ];
     }
   );
+
+  tex = pkgs.texliveSmall.withPackages (
+    ps:
+    with ps;
+    let
+      nicematrix = pkgs.stdenvNoCC.mkDerivation {
+        name = "nicematrix";
+        src = pkgs.fetchFromGitHub {
+          owner = "fpantigny";
+          repo = "nicematrix";
+          rev = "1849d986a3498b8f20e97f79c7a1029e753c62c8";
+          sha256 = "sha256-Y/vUvQ5dNJhH0BDoTpITh37hJW33Es/YpKgTqz2JDlo=";
+        };
+        installPhase = "mkdir -p $out/tex; cp -r $src $out/tex";
+        passthru = {
+          pname = "nicematrix";
+          version = "7.11a";
+          tlType = "run";
+        };
+      };
+    in
+    [
+      scheme-basic
+      dvisvgm
+      dvipng # for preview and export as html
+      wrapfig
+      amsmath
+      ulem
+      hyperref
+      capt-of
+      fontspec
+      listings
+      xcolor
+      koma-script
+      multirow
+      lstfiracode
+      fvextra
+      upquote
+      lineno
+      tcolorbox
+      latexmk
+      minted
+      enumitem
+      catppuccinpalette
+      pdfcol
+      caption
+      latex-graphics-dev
+      booktabs
+      framed
+      changepage
+      svg
+      transparent
+      moreverb
+      xkeyval
+      standalone
+      luatex85
+      pdflscape
+      etoc
+      titlesec
+      preview
+      luatex
+      semantex
+      sectsty
+      graphviz
+      leftindex
+      mathtools
+      circuitikz
+      xfrac
+      soulpos
+      microtype
+      setspace
+      biblatex
+      fancyhdr
+      tocbibind
+      bussproofs
+      logicproof
+      nicematrix
+    ]
+  );
 in
 {
   # Automatically install Emacs config from here.
@@ -120,140 +204,61 @@ in
   #   type = "git";
   # };
 
-  home.packages =
-    with pkgs;
-    let
-      tex = pkgs.texlive.combine {
-        inherit (pkgs.texlive)
-          scheme-basic
-          dvisvgm
-          dvipng # for preview and export as html
-          wrapfig
-          amsmath
-          ulem
-          hyperref
-          capt-of
-          fontspec
-          listings
-          xcolor
-          koma-script
-          multirow
-          lstfiracode
-          fvextra
-          upquote
-          lineno
-          tcolorbox
-          latexmk
-          minted
-          enumitem
-          catppuccinpalette
-          pdfcol
-          caption
-          latex-graphics-dev
-          booktabs
-          framed
-          changepage
-          svg
-          transparent
-          moreverb
-          xkeyval
-          standalone
-          luatex85
-          pdflscape
-          etoc
-          titlesec
-          preview
-          luatex
-          semantex
-          sectsty
-          graphviz
-          leftindex
-          mathtools
-          circuitikz
-          xfrac
-          soulpos
-          microtype
-          setspace
-          biblatex
-          fancyhdr
-          tocbibind
-          juliamono
-          ;
-
-        nicematrix = {
-          pkgs = [
-            (pkgs.runCommand "nicematrix"
-              {
-                src = pkgs.fetchurl {
-                  url = "https://raw.githubusercontent.com/fpantigny/nicematrix/106b00df06a78228b314d447bbb33dc16da54e89/nicematrix.sty";
-                  sha256 = "sha256-xlZjF/+l52AotGJ/wvfaRGIX6LEeksnFRjTFkT6x5do=";
-                };
-                passthru = {
-                  pname = "nicematrix";
-                  version = "7.9a";
-                  tlType = "run";
-                };
-              }
-              "
-        mkdir -p $out/tex/latex/nicematrix/
-        cp $src $out/tex/latex/nicematrix/nicematrix.sty
-      "
-            )
-          ];
-        };
-      };
-    in
-    [
-      delta
-      aspell
-      aspellDicts.en
-      aspellDicts.en-computers
-      aspellDicts.en-science
-      # (aspellWithDicts (
-      #   dicts: with dicts; [
-      #     en
-      #     en-computers
-      #     en-science
-      #   ]
-      # )) # https://github.com/nixos/nixpkgs/issues/476684
-      hunspellDicts.en-au
-      hunspellDicts.en_GB-large
-      basedpyright
-      multimarkdown
-      nixfmt
-      openscad-lsp
-      lemminx
-      gopls
-      go
-      gotools
-      go-tools
-      ccls
-      ruff
-      ty
-      imagemagick
-      ghostscript_headless
-      gnupg
-      # Remote connection to gui emacs session
-      waypipe
-      prettier
-      inkscape
-      pdf2svg
-      tex
-      mermaid-cli
-      gdb
-      biber
-      dotnet-sdk
-      fsautocomplete
-      fsharp
-      tree-sitter-grammars.tree-sitter-fsharp
-      # The following is requried, but is currently in ./bones.nix
-      # (python3.withPackages (python-pkgs:
-      # with python-pkgs; [
-      #   pygments
-      #   latexminted
-      #   catppuccin
-      # ]))
-    ];
+  home.packages = with pkgs; [
+    tex
+    delta
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
+    # (aspellWithDicts (
+    #   dicts: with dicts; [
+    #     en
+    #     en-computers
+    #     en-science
+    #   ]
+    # )) # https://github.com/nixos/nixpkgs/issues/476684
+    hunspellDicts.en-au
+    hunspellDicts.en_GB-large
+    basedpyright
+    multimarkdown
+    nixfmt
+    # openscad-lsp
+    lemminx
+    gopls
+    go
+    gotools
+    go-tools
+    ccls
+    ruff
+    ty
+    imagemagick
+    ghostscript_headless
+    gnupg
+    # Remote connection to gui emacs session
+    waypipe
+    prettier
+    inkscape
+    pdf2svg
+    mermaid-cli
+    gdb
+    biber
+    dotnet-sdk
+    fsautocomplete
+    fsharp
+    tree-sitter-grammars.tree-sitter-fsharp
+    lean4
+    leanPackages.Cli
+    swi-prolog-gui
+    scryer-prolog
+    # The following is requried, but is currently in ./bones.nix
+    # (python3.withPackages (python-pkgs:
+    # with python-pkgs; [
+    #   pygments
+    #   latexminted
+    #   catppuccin
+    # ]))
+  ];
 
   services.emacs = {
     enable = true;

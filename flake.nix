@@ -60,7 +60,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia = {
-      url = "github:noctalia-dev/noctalia/legacy-v4";
+      url = "github:noctalia-dev/noctalia/cachix";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     thymis = {
@@ -75,12 +75,11 @@
     inputs:
     inputs.blueprint {
       inherit inputs;
-      systems = [ "x86_64-linux" ];
-      nixpkgs.config.allowUnfree = true;
-      nixpkgs.config.permittedInsecurePackages = [
-        "electron-39.8.10"
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
       ];
-      # TODO Remove this
+      nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         inputs.agenix-rekey.overlays.default
         inputs.emacs.overlays.default
@@ -90,11 +89,6 @@
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
         inherit (inputs.self) nixosConfigurations;
-      };
-
-      # Lollypops
-      packages."x86_64-linux".lollypops = inputs.lollypops.packages."x86_64-linux".default.override {
-        configFlake = inputs.self;
       };
     };
 }

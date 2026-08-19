@@ -1,9 +1,6 @@
 {
-  inputs,
-  config,
   lib,
   pkgs,
-  flake,
   ...
 }:
 let
@@ -24,7 +21,6 @@ let
       pluginName,
       rtpFilePath ? (builtins.replaceStrings [ "-" ] [ "_" ] pluginName) + ".tmux",
       namePrefix ? "tmuxplugin-",
-      src,
       unpackPhase ? "",
       configurePhase ? ":",
       buildPhase ? ":",
