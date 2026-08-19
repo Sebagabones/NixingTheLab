@@ -8,7 +8,6 @@
     {
       nix-ros-overlay,
       nixpkgs,
-      self,
     }:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
       system:

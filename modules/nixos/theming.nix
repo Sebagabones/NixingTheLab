@@ -51,10 +51,12 @@ in
         package = BerkeleyMono;
         name = "Berkeley Mono";
       };
+
       emoji = {
         package = pkgs.noto-fonts-color-emoji;
         name = "Noto Emoji";
       };
     };
   };
+
 }

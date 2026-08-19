@@ -1354,7 +1354,7 @@
 		          (progn (cl-assert (buffer-file-name))
 			             (concat (file-name-sans-extension (buffer-file-name))
 				                 "-att")))
-		        org-attach-screenshot-command-line "spectacle -o %f"))
+		        org-attach-screenshot-command-line "wayfreeze  --hide-cursor & PID=$!; sleep 0.1; grim -g \"$(slurp)\" /tmp/shot.png; kill \"$PID\"; swappy -f /tmp/shot.png -o %f"))
 
 ;; (use-package org-sidebar
 ;;   :vc (:url "https://github.com/alphapapa/org-sidebar"   :rev :newest)
@@ -1494,7 +1494,7 @@
   (org-edit-src-content-indentation 0)
   (org-link-search-must-match-exact-headline nil)
   (org-fontify-done-headline t)
-  (org-fontify-todo-headline t)
+  (org-fontify-todo-headline 'nil)
   (org-fontify-whole-heading-line t)
   (org-fontify-quote-and-verse-blocks t)
   (org-startup-truncated t)
@@ -2278,9 +2278,19 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :ensure t
   :hook
   (fsharp-ts-mode-hook . eglot-ensure)
-  (prolog-mode . eglot-ensure)
   (sweeprolog-mode . eglot-ensure)
+  :config
+  (setopt eglot-server-programs (cons
+                                 (cons 'sweeprolog-mode
+                                       (list "swipl"
+                                             "-O"
+                                             "-g" "use_module(library(lsp_server))."
+                                             "-g" "lsp_server:main"
+                                             "-t" "halt"
+                                             "--" "stdio"))
+                                 eglot-server-programs))
   )
+
 
 
 (use-package fsharp-ts-mode
@@ -2857,14 +2867,17 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :ensure t
   )
 
-
-(setf use-default-font-for-symbols nil)
+;; (setf use-default-font-for-symbols nil)
 ;; (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
-;; (set-fontset-font t 'unicode "Berkeley Mono" nil 'prepend)
+;; (set-fontset-font t 'unicode "IoskeleyMonoTerm Nerd Font" nil 'prepend)
+
 ;; (setq inhibit-compacting-font-caches t)
 (set-fontset-font t 'unicode (font-spec :family "Berkeley Mono") nil 'prepend)
-(set-fontset-font t nil  (font-spec :family "Berkeley Mono") nil )
+;; (set-fontset-font t nil  (font-spec :family "Berkeley Mono") nil )
+;; (set-face-attribute 'default nil :font "Berkeley Mono-12")
+;; (setq use-default-font-for-symbols nil)
 
+(set-fontset-font "fontset-default" nil "Berkeley Mono"   nil 'prepend)
 (use-package ement   :ensure t)
 
 ;; (define-derived-mode irc-log-mode fundamental-mode "IRC Log"
@@ -2944,24 +2957,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 ;; (use-package ascii-art-to-unicode
 ;;   :ensure t)
-(setopt eglot-server-programs (cons
-                               (cons 'prolog-mode
-                                     (list "swipl"
-                                           "-O"
-                                           "-g" "use_module(library(lsp_server))."
-                                           "-g" "lsp_server:main"
-                                           "-t" "halt"
-                                           "--" "stdio"))
-                               eglot-server-programs))
-(setopt eglot-server-programs (cons
-                               (cons 'sweeprolog-mode
-                                     (list "swipl"
-                                           "-O"
-                                           "-g" "use_module(library(lsp_server))."
-                                           "-g" "lsp_server:main"
-                                           "-t" "halt"
-                                           "--" "stdio"))
-                               eglot-server-programs))
+
+
 (use-package uniline
   ;; :ensure t
   :bind ("C-*" . uniline-mode)
@@ -2983,4 +2980,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :hook (prolog-mode-hook . flymake-swi-prolog-setup-backend))
 
 (use-package sweeprolog
-  :ensure t)
+  :mode ("\\.pl\\'" . sweeprolog-mode)
+  :ensure t
+  :config
+  (setq sweeprolog-top-level-use-pty 'nil))

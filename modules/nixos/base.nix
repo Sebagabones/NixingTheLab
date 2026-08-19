@@ -185,6 +185,15 @@
       i2c-tools
     ];
   };
+
+  security.wrappers.btop = {
+    enable = true;
+    owner = "root";
+    group = "root";
+    source = "${pkgs.btop}/bin/btop";
+    capabilities = "cap_perfmon=ep";
+  };
+
   programs.zsh.enable = true;
   programs.ssh = {
     # for remote building
@@ -263,12 +272,14 @@
   home-manager = {
     backupFileExtension = "backup";
   };
+  fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
-    xauth
-    nerd-fonts.symbols-only
-    nerd-fonts.jetbrains-mono
-    fira-code-symbols
-    fira-code
+    ioskeley-mono.normal-term-NF
+    # xauth
+    # nerd-fonts.symbols-only
+    # nerd-fonts.jetbrains-mono
+    # fira-code-symbols
+    # fira-code
   ];
 
   # stylix.enable = true;

@@ -99,7 +99,10 @@
     # theme = "tokyonight-night";
     settings =
       let
-        rgb-hue-editor = import ./../../packages/rgb-hue-editor/rgb-hue-editor.nix { inherit lib config; };
+        rgb-hue-editor = import ./../../lib/rgb-hue-editor {
+          inherit lib;
+          colours = config.lib.stylix.colors;
+        };
         hueEditFunc = rgb-hue-editor {
           hue_change = 0;
           saturation_change = 75;
@@ -773,6 +776,7 @@
     prusa-slicer
     impression
     localsend
+    seahorse
   ];
 
   # pointerCursor = {
@@ -818,6 +822,7 @@
   programs.nixcord = {
     enable = true; # Enable Nixcord (It also installs Discord)
     vesktop.enable = true; # Vesktop
+    # vencord.enable = true;
     # dorion.enable = true; # Dorion
     # quickCss = "some CSS"; # quickCSS file
     config = {

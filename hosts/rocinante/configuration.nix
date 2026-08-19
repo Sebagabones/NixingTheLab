@@ -22,18 +22,33 @@ let
   );
 in
 {
+  nixpkgs.hostPlatform = "x86_64-linux";
+
+  nixpkgs.pkgs = import inputs.nixpkgs {
+    inherit (config.nixpkgs.hostPlatform) system;
+    overlays = [
+      inputs.emacs.overlays.default
+      inputs.agenix-rekey.overlays.default
+    ];
+    config = {
+      allowUnfree = true;
+      cudaSupport = true;
+      # cudaCapabilities = [ "8.0" ];
+    };
+  };
   networking = {
     hostName = "rocinante";
     hostId = "52006401";
     domain = "lab.mahoosively.gay";
   };
-  system.stateVersion = "25.05";
-  nixpkgs.hostPlatform = "x86_64-linux";
+
+  system.stateVersion = "26.05";
 
   imports = [
     flake.nixosModules.base
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/broadwell"
+    "${inputs.nixos-hardware}/common/gpu/nvidia/pascal"
     "${inputs.nixos-hardware}/common/pc/ssd"
     # "${inputs.nixos-hardware}/common/pc"
   ];
@@ -82,6 +97,13 @@ in
 
     initrd = {
       systemd.enable = true;
+      kernelModules = [
+        "nvidia"
+        "i915"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+      ];
       availableKernelModules = [
         "ata_piix"
         "xhci_pci"
@@ -91,6 +113,7 @@ in
         "usb_storage"
         "usbhid"
         "sd_mod"
+        "mpt3sas"
       ];
       supportedFilesystems = [
         "zfs"
@@ -109,39 +132,7 @@ in
     ]; # we love the Matrox G200
   };
 
-  fileSystems = {
-    "/storage/main" = {
-      device = "zdata/mainStorage";
-      fsType = "zfs";
-      options = [
-        "zfsutil"
-      ];
-    };
-    "/storage/immich" = {
-      device = "zdata/immich";
-      fsType = "zfs";
-      options = [
-        "zfsutil"
-      ];
-
-    };
-    "/storage/git" = {
-      device = "zdata/git";
-      fsType = "zfs";
-      options = [
-        "zfsutil"
-      ];
-    };
-  };
-
-  fileSystems."/donttrust" = {
-    device = "zdonttrust";
-    fsType = "zfs";
-    options = [
-      "zfsutil"
-    ];
-  };
-
+  services.xserver.videoDrivers = [ "nvidia" ];
   services.zfs = {
     autoScrub = {
       enable = true;
@@ -176,7 +167,10 @@ in
     ];
   };
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    gpu-burn
+    nvtopPackages.nvidia
+  ];
 
   # Networking
   networking.firewall = {
@@ -191,6 +185,11 @@ in
 
   hardware = {
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    nvidia = {
+      modesetting.enable = true;
+      nvidiaSettings = true;
+    };
+
     graphics = {
       enable = true;
       enable32Bit = true;
