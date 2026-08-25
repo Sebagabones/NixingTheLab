@@ -208,6 +208,7 @@ in
           };
         };
       };
+
       zdata = {
         type = "zpool";
         mountpoint = "/storage";
@@ -247,22 +248,22 @@ in
         datasets = {
           mainStorage = {
             type = "zfs_fs";
-            mountpoint = "/storage/main";
             options = {
+              mountpoint = "/storage/main";
               compression = "zstd";
             };
           };
           immich = {
             type = "zfs_fs";
-            mountpoint = "/storage/immich";
             options = {
+              mountpoint = "/storage/immich";
               compression = "zstd";
             };
           };
           git = {
             type = "zfs_fs";
-            mountpoint = "/storage/git";
             options = {
+              mountpoint = "/storage/git";
               compression = "zstd";
             };
           };

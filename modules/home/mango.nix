@@ -18,6 +18,14 @@ in
   programs.bemenu.enable = true;
 
   wayland.windowManager.mango =
+    let
+      lock-screen = pkgs.writeShellScript "lock-screen.sh" ''
+        noctalia-shell ipc call lockScreen lock && systemctl suspend
+      '';
+      unlock-screen = pkgs.writeShellScript "unlock-screen.sh" ''
+        wlr-randr --output eDP-1 --on
+      '';
+    in
     # TODO: Sometime look into Axis Bindings with mouse
     # let
     #   mango_pkg = final: prev: {
@@ -86,9 +94,9 @@ in
 
         # Animations - use underscores for multi-part keys
         animations = 1;
-        animation_type_open = "fade";
-        animation_type_close = "fade";
-        animation_duration_open = 300;
+        animation_type_open = "zoom";
+        animation_type_close = "zoom";
+        animation_duration_open = 350;
         animation_duration_close = 300;
         trackpad_natural_scrolling = 1;
         mouse_accel_profile = 2;
@@ -117,27 +125,14 @@ in
           "id:10,layout_name:scroller"
         ];
 
-        switchbind =
-          let
-            lock-screen = pkgs.writeShellScript "lock-screen.sh" ''
-              noctalia-shell ipc call lockScreen lock && systemctl suspend
-            '';
-            unlock-screen = pkgs.writeShellScript "unlock-screen.sh" ''
-              wlr-randr --output eDP-1 --on
-            '';
-          in
-          [
-            # "HandleLidSwitch=ignore"
-            "fold,spawn,${lock-screen}"
-            # "unfold,spawn,${unlock-screen}"
-          ];
-
-        # Use lists for duplicate keys like bind and tagrule
-        circle_layout = [
-          "dwindle"
-          "monocle"
-          "floating"
+        switchbind = [
+          # "HandleLidSwitch=ignore"
+          "fold,spawn,${lock-screen}"
+          # "unfold,spawn,${unlock-screen}"
         ];
+
+        # circle_layout = "dwindle,monocle,floating";
+
         bind = [
           "SUPER,d,spawn,bemenu-run -w -i -l 10 --counter always -w  --scrollbar always -P '|>' --prompt 'launch:' --fb '#2F3549' --ff '#CBCCD1' --nb '#1a1b2a' --nf '#CBCCD1' --tb '#1a1b2a' --hb '#11121d' --tf '#7DCFFF' --hf '#BB9AF7' --af '#CBCCD1' --ab '#2F3549' --scb '#1a1b2a' --scf '#7199EE' "
           "SUPER,Return,spawn,${terminal}"
@@ -145,11 +140,13 @@ in
 
           "ALT,R,setkeymode,resize" # Enter resize mode
 
-          # "SUPER+SHIFT,f,togglefloating"
-          "SUPER+SHIFT,f,switch_layout" # TODO: Fix this
+          "SUPER+SHIFT,space,togglefloating"
+          "SUPER+SHIFT,f,togglemaximizescreen"
+          "SUPER,tab,focusstack"
           "SUPER,q,killclient"
           "SUPER+SHIFT,r,reload_config"
-          # "SUPER,l,spawn,"
+          "SUPER,l,spawn,${lock-screen}"
+          "SUPER+SHIFT,l,quit"
 
           "SUPER,Left,focusdir,left"
           "SUPER,Down,focusdir,down"
@@ -907,7 +904,7 @@ in
         tooltipsEnabled = true;
         translucentWidgets = false;
       };
-
+      home.file.".face".source = ../../assests/Parrot.png; # https://www.pexels.com/photo/red-blue-and-green-bird-on-tree-1331819/
       home.file.".cache/noctalia/wallpapers.json" = {
         text = builtins.toJSON {
           # defaultWallpaper = ../../assests/background.png;

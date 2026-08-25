@@ -22,6 +22,7 @@
         };
         pull = {
           rebase = false;
+          ff = "only";
         };
         commit = {
           gpgsign = true;
@@ -73,4 +74,9 @@
       enableGitIntegration = true;
     };
   };
+  home.file.".authinfo.gpg" = {
+    source = ./../../secrets/authinfo.gpg;
+    force = true;
+  };
+
 }

@@ -85,7 +85,10 @@
   services.mpd.startWhenNeeded = true;
   services.openssh.startWhenNeeded = true;
   services.system76-scheduler.enable = true;
+
+  # If sleep breaks, this will eb why
   # systemd.sleep.settings.Sleep = {
+  #
   #   AllowSuspend = "yes";
   #   AllowSuspendThenHibernate = "yes";
   #   AllowHibernation = "yes";
@@ -99,15 +102,18 @@
     ./disk.nix
     "${inputs.nixos-hardware}/common/cpu/intel/meteor-lake"
     "${inputs.nixos-hardware}/common/gpu/intel/meteor-lake"
-
   ];
-  nix = {
-    distributedBuilds = false;
-    # optional, useful when the builder has a faster internet connection than yours
-    extraOptions = "  builders-use-substitutes = true\n";
-  };
+  # nix = {
+  #   # distributedBuilds = false;
+  #   # optional, useful when the builder has a faster internet connection than yours
+  #   extraOptions = "  builders-use-substitutes = true\n";
+  # };
   environment.systemPackages = with pkgs; [
+    linux-firmware
     wpa_supplicant_gui
+    iw
+    wirelesstools
+    intel-npu-driver
   ];
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -122,6 +128,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [
     "kvm_intel"
+    "iwlwifi"
+    "iwlmvm"
   ];
   # boot.kernelParams = [ "mem_sleep_default=deep" ];
   zramSwap = {
@@ -129,6 +137,7 @@
     algorithm = "zstd";
   };
   services.displayManager.hiddenUsers = [ "lauren" ];
+  services.fwupd.enable = true;
   # services.tlp = {
   #   enable = true;
   #   settings = {
@@ -149,25 +158,107 @@
   # };
 
   lollypops.deployment.group = "Personal";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.npu.enable = true;
+  hardware.wirelessRegulatoryDatabase = true;
+  hardware.cpu.intel.updateMicrocode = true;
+
+  # options iwlwifi swcrytpo=0 uapsd_disable=0 amsdu_size=3 11n_disable=2
+  boot.extraModprobeConfig = ''
+    options iwlwifi bt_coex_active=1
+
+
+    options iwlwifi swcrypto=0
+
+    # Disable power saving on Wi-Fi module to reduce radio state changes that might disrupt BT
+    options iwlwifi power_save=0
+
+    # Disable Unscheduled Automatic Power Save Delivery (U-APSD) to improve BT audio stability
+    options iwlwifi uapsd_disable=1
+
+    # Disable D0i3 power state to avoid problematic power transitions
+    options iwlwifi d0i3_disable=1
+
+    # Set power scheme for performance (iwlmvm)
+    options iwlmvm power_scheme=1
+  '';
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        ControllerMode = "bredr"; # Fix frequent Bluetooth audio dropouts
+        Experimental = true;
+        FastConnectable = true;
+        Enable = "Source,Sink,Media,Socket";
+      };
+      Policy = {
+        AutoEnable = true;
+      };
+    };
+  };
+
+  services.blueman.enable = true;
+  # Backlight
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+  '';
   stylix.enable = true;
-  # services.nextdns = {
-  #
-  #   enable = true;
-  #   arguments = [
-  #     "-config"
-  #     "c369fa"
-  #     "-cache-size"
-  #     "10MB"
-  #   ];
-  #
-  # };
-  # systemd.services.nextdns-activate = {
-  #   script = ''
-  #     /run/current-system/sw/bin/nextdns activate
-  #   '';
-  #   after = [ "nextdns.service" ];
-  #   wantedBy = [ "multi-user.target" ];
-  # };
+  services.nextdns = {
+
+    enable = true;
+    arguments = [
+      "-config"
+      "c369fa"
+      "-cache-size"
+      "10MB"
+    ];
+
+  };
+  systemd.services.nextdns-activate = {
+    script = ''
+      /run/current-system/sw/bin/nextdns activate
+    '';
+    after = [ "nextdns.service" ];
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  nix = {
+    distributedBuilds = false; # You will probably need to set this to true to use the below:
+    extraOptions = "  builders-use-substitutes = true\n";
+    buildMachines = [
+      {
+        hostName = "eu.nixbuild.net";
+        system = "aarch64-linux";
+        maxJobs = 100;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
+      }
+      {
+        hostName = "eu.nixbuild.net";
+        system = "armv7l-linux";
+        maxJobs = 100;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
+      }
+    ];
+  };
+
+  programs.ssh.extraConfig = ''
+    Host eu.nixbuild.net
+    PubkeyAcceptedKeyTypes ssh-ed25519
+    ServerAliveInterval 60
+  '';
+
+  programs.ssh.knownHosts = {
+    nixbuild = {
+      hostNames = [ "eu.nixbuild.net" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+    };
+  };
 
 }

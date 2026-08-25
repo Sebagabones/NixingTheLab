@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     disko = {
       url = "github:nix-community/disko";
@@ -60,13 +60,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:noctalia-dev/noctalia/legacy-v4";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     thymis = {
       # url = "github:Aquamonix/thymis";
       url = "github:Sebagabones/thymis";
 
+    };
+    emacs = {
+      url = "github:nix-community/emacs-overlay";
     };
   };
 
@@ -76,8 +79,13 @@
       inherit inputs;
       systems = [ "x86_64-linux" ];
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.permittedInsecurePackages = [
+        "electron-39.8.10"
+      ];
+      # TODO Remove this
       nixpkgs.overlays = [
         inputs.agenix-rekey.overlays.default
+        inputs.emacs.overlays.default
       ];
     }
     // {
