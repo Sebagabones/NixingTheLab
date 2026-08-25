@@ -1,5 +1,6 @@
 # a mutation that initiated from https://github.com/nix-community/stylix/blob/e084d011e7ee9302aceaaf6c1fc28a9ace09e16a/modules/glance/rgb-to-hsl.nix#L4
-{ lib, config, ... }:
+{ lib, colours, ... }:
+
 let
 
   roundFloatToNearestInt =
@@ -10,7 +11,7 @@ let
     in
     int_out;
 
-  colors = config.lib.stylix.colors;
+  colors = colours;
   hueToRgb =
     {
       h,

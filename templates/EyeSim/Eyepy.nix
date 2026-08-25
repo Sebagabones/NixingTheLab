@@ -10,7 +10,7 @@ let
   };
 
 in
-pkgs.stdenv.mkDerivation (finalAttrs: {
+pkgs.stdenv.mkDerivation (_finalAttrs: {
   pname = "Eyepy";
   version = "1.0";
 

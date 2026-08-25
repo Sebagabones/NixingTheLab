@@ -55,6 +55,12 @@
         github = {
           user = "Sebagabones";
         };
+        gitlab = {
+          "gitlab.ucc.asn.au" = {
+            user = "bones";
+            email = "bones@ucc.asn.au";
+          };
+        };
       };
       enable = true;
       # delta = {
@@ -63,7 +69,7 @@
     };
     difftastic = {
       enable = true;
-      git.diffToolMode = true;
+      git.mode = "both";
       options = {
         color = "auto";
         display = "side-by-side";

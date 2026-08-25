@@ -99,7 +99,10 @@
     # theme = "tokyonight-night";
     settings =
       let
-        rgb-hue-editor = import ./../../packages/rgb-hue-editor/rgb-hue-editor.nix { inherit lib config; };
+        rgb-hue-editor = import ./../../lib/rgb-hue-editor {
+          inherit lib;
+          colours = config.lib.stylix.colors;
+        };
         hueEditFunc = rgb-hue-editor {
           hue_change = 0;
           saturation_change = 75;
@@ -748,6 +751,7 @@
   }; # for VS-Code
 
   home.packages = with pkgs; [
+    perSystem.self.easyeda-pro
     # brightnessctl
     swaybg
     overskride
@@ -768,11 +772,16 @@
     # kdePackages.dolphin
     freecad
     povray
-    openscad-unstable
+    # openscad-unstable
     prusa-slicer
     # bitwarden-desktop
     impression
     localsend
+    kicad
+    kicadAddons.kikit
+    interactive-html-bom
+    easyeda2kicad # https://github.com/uPesy/easyeda2kicad.py#-usage
+    seahorse
   ];
 
   # pointerCursor = {
@@ -818,6 +827,7 @@
   programs.nixcord = {
     enable = true; # Enable Nixcord (It also installs Discord)
     vesktop.enable = true; # Vesktop
+    # vencord.enable = true;
     # dorion.enable = true; # Dorion
     # quickCss = "some CSS"; # quickCSS file
     config = {
