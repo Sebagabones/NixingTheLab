@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  perSystem,
   ...
 }:
 let
@@ -193,6 +194,9 @@ let
       bussproofs
       logicproof
       nicematrix
+      tikz-qtree
+      tikz-ext
+      forest
     ]
   );
 in
@@ -240,7 +244,7 @@ in
     prettier
     inkscape
     pdf2svg
-    mermaid-cli
+    d2
     gdb
     biber
     dotnet-sdk

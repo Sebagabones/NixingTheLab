@@ -3,6 +3,7 @@
   config,
   pkgs,
   flake,
+  perSystem,
   ...
 }:
 {
@@ -57,6 +58,9 @@
         catppuccin
         mypy
         rich
+        perSystem.self.pyswip
+        perSystem.self.problog
+
       ]
     ))
     cmatrix
