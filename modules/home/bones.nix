@@ -85,6 +85,7 @@
     bitwarden-cli
     nix-fast-build
     expect
+    tio
     agenix-rekey
   ];
   programs.gpg = {
