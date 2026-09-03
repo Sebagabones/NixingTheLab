@@ -1,11 +1,10 @@
 {
   pkgs,
-  lib,
   version,
   hash,
   ...
 }:
-pkgs.stdenv.mkDerivation (finalAttrs: {
+pkgs.stdenv.mkDerivation (_finalAttrs: {
   pname = "EyeSimLib";
   version = "${version}";
 
