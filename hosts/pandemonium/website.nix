@@ -6,7 +6,7 @@
 }:
 
 let
-  domain = "mahoosively.gay";
+  domain = import ./domain.nix;
   website = inputs.mahoosivelyGay.packages.${pkgs.stdenv.hostPlatform.system}.default;
   spotifyBackend = inputs.spotifyBackend.packages.${pkgs.stdenv.hostPlatform.system}.mySpotifyBackend;
   spotifyBackendExecutable = "${spotifyBackend}/bin/mySpotifyBackend";
@@ -56,8 +56,14 @@ in
   #     };
   #   };
 
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "admin+acme@${domain}";
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "admin+acme@${domain}";
+      dnsProvider = "namecheap";
+    };
+  };
+
   services = {
 
     harmonia.cache = {

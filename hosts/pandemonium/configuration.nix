@@ -26,6 +26,7 @@ in
     "${inputs.nixos-hardware}/common/cpu/intel/skylake"
     "${inputs.nixos-hardware}/common/pc/ssd"
     ./website.nix
+    ./kanidm.nix
   ];
 
   age.rekey = {
