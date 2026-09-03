@@ -14,6 +14,24 @@ _:
       # supportedFeatures = [ "big-parallel" ];
       # mandatoryFeatures = [ "big-parallel" ];
     }
+    {
+      hostName = "unicorn";
+      system = "aarch64-linux";
+      protocol = "ssh";
+      maxJobs = 3;
+    }
+    {
+      hostName = "wolf";
+      system = "aarch64-linux";
+      protocol = "ssh";
+      maxJobs = 3;
+    }
+    {
+      hostName = "vampire";
+      system = "aarch64-linux";
+      protocol = "ssh";
+      maxJobs = 3;
+    }
   ];
   # Remote builder keys
   users.users.root = {
@@ -21,6 +39,9 @@ _:
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8jRqCL02AT+TDvYx+8uHp6/RtMM8kn7Yl+wx6V21qO root@deposition"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4xk7qmEk3SZN7JdpgMij3znkkXCfdDWvSjBf3VtZU3 root@insanity"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1f+t3EE9CqHLUQobR32c7m8ReuKPRNZNuK5hD1g0ko root@pandemonium"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICHi1EhJ0BY3ob4+40X7d2AnGWTsQ2i7tH/31G8KW8jp root@vampire"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJzOABT2C1PNyLyqSVv0oWT3XUx9mH8qrmt+0Ow0bp0r root@wolf"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwRysDOnzSFPfE6xNUqAkmY9v1AkJ3JdSIxEwQ7FgYH root@unicorn"
     ];
   };
 

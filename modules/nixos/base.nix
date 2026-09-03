@@ -43,6 +43,7 @@
     "127.0.0.1" = [ "${config.networking.hostName}" ];
   };
   # Users
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.tmp.useTmpfs = true;
   boot.tmp.tmpfsSize = "50%";
 
@@ -87,7 +88,6 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt1AaEyY9HIs6qhdW7IrlpWiCTWdm8gqblW6Hvu1naU bones@insanity"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6+WU+Zq90kEknj/hdU0T/oAX0quQojFxfZHe3tkP5L bones@pandemonium"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0v56VlLL/6BNK8rNW+fIMIYSgTURqi2H9ZumDbudtL bones@x210"
-        # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210" # TODO: may need to remove, testing with remote builders
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd/R+9O+PTJlJFCXD+dzHZl2+Hobu6DkyR1dc3Quvc3 root@x210"
       ];
     };
@@ -198,6 +198,15 @@
   programs.ssh = {
     # for remote building
     extraConfig = "
+     Host wolf
+       hostname 192.168.8.234
+       user root
+    Host unicorn
+       hostname 192.168.8.238
+       user root
+    Host vampire
+       hostname 192.168.8.235
+       user root
      Host deposition
        hostname deposition.lab.mahoosively.gay
        port 5876

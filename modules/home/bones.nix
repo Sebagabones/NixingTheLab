@@ -186,6 +186,18 @@
           ucc = {
             hostname = "ssh.ucc.asn.au";
           };
+          wolf = {
+            hostname = "192.168.8.234";
+            user = "root";
+          };
+          unicorn = {
+            hostname = "192.168.8.238";
+            user = "root";
+          };
+          vampire = {
+            hostname = "192.168.8.235";
+            user = "root";
+          };
         };
     };
 
