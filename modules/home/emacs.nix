@@ -238,7 +238,9 @@ in
     # Remote connection to gui emacs session
     waypipe
     prettier
-    inkscape
+    (inkscape-with-extensions.override {
+      inkscapeExtensions = with inkscape-extensions; [ textext ];
+    })
     pdf2svg
     mermaid-cli
     gdb
