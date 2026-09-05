@@ -26,6 +26,7 @@ in
     "${inputs.nixos-hardware}/common/cpu/intel/skylake"
     "${inputs.nixos-hardware}/common/pc/ssd"
     ./website.nix
+    ./kanidm.nix
   ];
 
   age.rekey = {
@@ -38,6 +39,9 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot = {
+    zfs = {
+      forceImportRoot = false;
+    };
     # swraid = {
     #   enable = true;
     #   mdadmConf = ''

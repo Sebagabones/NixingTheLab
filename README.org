@@ -10,3 +10,6 @@ You will also need to unlock the repo when you clone it (~git-crypt unlock~ - th
 also add a ssh key to known/authorised hosts ect ect
 
 (and you may note the =Berkeley_Mono.zip= file in =assests= - don’t worry, its encrypted)
+
+
+To add a new user to kanidm, once they have been added to nix, run ~kanidm person credential create-reset-token <username> --name idm_admin~  (you may need to log in as ~idm_admin~ first)

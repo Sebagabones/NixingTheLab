@@ -93,12 +93,26 @@ let
             ignoreCompilationError = true;
           };
 
+          d2-ts-mode = pkgs.callPackage ./emacsPkgs/d2-ts-mode.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) melpaBuild;
+          };
+
           projectile = epkgs.melpaPackages.projectile.overrideAttrs (
             finalAttrs: previousAttrs: {
-              # NOTE: You should be able to remove this next time you update
+              # TODO: NOTE: You should be able to remove this next time you update
               packageRequires = previousAttrs.packageRequires ++ [ epkgs.consult ];
             }
           );
+
+          # d2-ts-mode = epkgs.melpaPackages.d2-ts-mode.src.overrideAttrs (
+          #   finalAttrs: previousAttrs: {
+          #     # gitRepoUrl = "https://github.com/emacsattic/d2-ts-mode.git";
+          #     urls = [
+          #       "https://github.com/emacsattic/d2-ts-mode/archive/70891b8d49bbc25cc19ad9b21e3b88bda8fd705d.tar.gz"
+          #     ];
+          #   }
+          # );
 
           magit-pre-commit = epkgs.melpaPackages.magit-pre-commit.overrideAttrs (old: {
             patches = [
@@ -114,7 +128,24 @@ let
       extraEmacsPackages = epkgs: [
         epkgs.comment-dwim-2
         epkgs.org
+        epkgs.d2-ts-mode
       ];
+    }
+  );
+
+  tree-sit-grammars = pkgs.tree-sitter-grammars.overrideScope (
+    final: prev: {
+      tree-sitter-d2 = pkgs.tree-sitter.buildGrammar {
+        language = "d2";
+        version = "0.7.2";
+        src = pkgs.fetchFromGitHub {
+          owner = "ravsii";
+          repo = "tree-sitter-d2";
+          rev = "v0.7.2";
+          hash = "sha256-zx6ud3uh+0Z+cYdP2KkFA27Kb6fW/CSGpC1C4YmCIo0=";
+        };
+      };
+
     }
   );
 
@@ -252,7 +283,18 @@ in
     dotnet-sdk
     fsautocomplete
     fsharp
-    tree-sitter-grammars.tree-sitter-fsharp
+    (tree-sit-grammars.withPlugins (
+      grammars: with grammars; [
+        tree-sitter-fsharp
+        tree-sitter-d2
+      ]
+    ))
+
+    # tree-sit-grammars.withPlugins
+    # (p: [
+    #   p.tree-sitter-d2
+    # ])
+
     lean4
     leanPackages.Cli
     swi-prolog-gui

@@ -6,7 +6,7 @@
 }:
 
 let
-  domain = "mahoosively.gay";
+  domain = import ./domain.nix;
   website = inputs.mahoosivelyGay.packages.${pkgs.stdenv.hostPlatform.system}.default;
   spotifyBackend = inputs.spotifyBackend.packages.${pkgs.stdenv.hostPlatform.system}.mySpotifyBackend;
   spotifyBackendExecutable = "${spotifyBackend}/bin/mySpotifyBackend";
@@ -56,8 +56,23 @@ in
   #     };
   #   };
 
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "admin+acme@${domain}";
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "admin+acme@${domain}";
+      # dnsProvider = "namecheap";
+      webroot = "/var/lib/acme/acme-challenge/";
+    };
+    certs = {
+      domain = {
+        extraDomainNames = [
+          "cache.${domain}"
+          "thymis-testing.${domain}"
+        ];
+      };
+    };
+  };
+
   services = {
 
     harmonia.cache = {
@@ -76,7 +91,7 @@ in
         "mahoosively.gay"
         "api.mahoosively.gay"
         "cache.mahoosively.gay"
-        "thymis-testing.mahoosively.gay" # remove once youve tested this out lol
+        "thymis-testing.mahoosively.gay" # TODO: remove once youve tested this out lol
         "lab.mahoosively.gay"
         "www.mahoosively.gay"
       ];
@@ -101,6 +116,27 @@ in
       nginx-vhost-name = "thymis-testing.${domain}"; # Name of the Nginx virtual host
     };
 
+    # caddy = {
+    #   enable = true;
+    #   virtualHosts.domain.extraConfig = ''
+    #     :443 {
+    #         root *
+    #         encode gzip
+    #         file_server {
+    #             hide .git
+    #         }
+
+    #             log {
+    #             output file /var/log/caddy/my-static-site.log
+    #         }
+
+    #             header {
+    #             ?Cache-Control "max-age=1800"
+    #         }
+    #     }
+    #   '';
+    # };
+
     nginx = {
       enable = true;
       recommendedGzipSettings = true;
@@ -108,11 +144,15 @@ in
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       virtualHosts = {
-        ${domain} = {
+        "${domain}" = {
           enableACME = true;
           forceSSL = true;
-          locations."/" = {
-            root = "${website}";
+
+          locations = {
+            "/" = {
+              root = "${website}";
+            };
+            "/.well-known/".root = "/var/lib/acme/acme-challenge/";
           };
         };
         "api.${domain}" = {
@@ -134,6 +174,7 @@ in
         "cache.${domain}" = {
           enableACME = true;
           forceSSL = true;
+          # useACMEHost = domain;
 
           locations."/".extraConfig = ''
             proxy_pass http://127.0.0.1:5000;
@@ -148,7 +189,7 @@ in
 
         "thymis-testing.${domain}" = {
           serverName = "thymis-testing.${domain}";
-          enableACME = true; # Enable ACME for automatic SSL certificate management
+          useACMEHost = domain; # Enable ACME for automatic SSL certificate management
           forceSSL = true; # Force SSL for the virtual host
         };
       };

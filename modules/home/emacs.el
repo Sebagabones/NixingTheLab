@@ -2999,3 +2999,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :ensure t
   :config
   (setq sweeprolog-top-level-use-pty 'nil))
+
+(use-package d2-ts-mode
+  :defer t
+  :ensure t)
