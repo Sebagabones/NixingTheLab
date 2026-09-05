@@ -19,7 +19,7 @@ in
   wayland.windowManager.mango =
     let
       lock-screen = pkgs.writeShellScript "lock-screen.sh" ''
-        noctalia-shell ipc call lockScreen lock && systemctl suspend
+        systemctl suspend
       '';
     in
     # TODO: Sometime look into Axis Bindings with mouse
@@ -35,7 +35,7 @@ in
       # extraConfig = "exec-once=${pkgs.swaybg}/bin/swaybg -c 11111b ";
       extraConfig = ''
         exec-once=${pkgs.swaybg}/bin/swaybg -c ${config.lib.stylix.colors.base00}
-        # exec-once=noctalia
+        exec-once=noctalia
       '';
 
       settings = {
@@ -166,7 +166,8 @@ in
           "NONE,XF86AudioMute,spawn,noctalia msg volume-mute"
           "NONE,XF86MonBrightnessUp,spawn,noctalia msg brightness-up"
           "NONE,XF86MonBrightnessDown,spawn,noctalia msg brightness-down"
-          ''NONE,Print,spawn,wayfreeze  --hide-cursor & PID=$!; sleep 0.1; grim -g "$(slurp)" /tmp/shot.png; kill "$PID"; swappy -f /tmp/shot.png''
+          "NONE,Print,spawn_shell,wayfreeze --hide-cursor & PID=$!; sleep 0.1; grim -g \"$(slurp)\" /tmp/shot.png; kill \"$PID\"; swappy -f /tmp/shot.png"
+
           "SUPER,Print,spawn,noctalia msg plugin alexander/screen-toolkit:service all toggle"
           # "NONE,Print,spawn,noctalia-shell ipc call plugin:screen-toolkit annotate"
           # "SUPER,Print,spawn,noctalia-shell ipc call plugin:screen-toolkit toggle"
@@ -191,7 +192,7 @@ in
     };
   programs.noctalia = {
     enable = true;
-    systemd.enable = true;
+    systemd.enable = false;
     settings = {
       accessibility = {
         high_contrast = false;
@@ -748,7 +749,7 @@ in
         external_ip_enabled = true;
         font_family = "Berkeley Mono";
         input_borders = true;
-        launch_apps_as_systemd_services = true;
+        launch_apps_as_systemd_services = false;
         launch_apps_custom_command = "";
         niri_overview_type_to_launch_enabled = false;
         offline_mode = false;
