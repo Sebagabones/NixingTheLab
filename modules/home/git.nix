@@ -9,7 +9,7 @@
     git = {
       settings = {
         user.name = "Sebgabones";
-        user.email = "133339614+Sebagabones@users.noreply.github.com";
+        user.email = "sebagabones@noreply.codeberg.org";
 
         init = {
           defaultBranch = "main";
