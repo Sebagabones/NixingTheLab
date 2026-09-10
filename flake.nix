@@ -64,8 +64,8 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     thymis = {
-      # url = "github:Aquamonix/thymis";
-      url = "github:Sebagabones/thymis";
+      url = "github:Aquamonix/thymis";
+      # url = "github:Sebagabones/thymis";
 
     };
     emacs = {

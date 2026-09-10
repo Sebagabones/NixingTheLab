@@ -103,7 +103,7 @@ in
       system-binfmt-aarch64-enable = true; # Enables emulation of aarch64 binaries
       system-binfmt-x86_64-enable = false; # Enables emulation of x86_64 binaries
       # recommended-nix-gc-settings-enable = true; # Enables recommended Nix garbage collection settings
-      project-path = "/var/lib/thymis"; # Directory for the project
+      project-path = "/var/lib/thymisfr"; # Directory for the project
       base-url = "https://thymis-testing.mahoosively.gay/"; # Base URL of the controller
       agent-access-url = "https://thymis-testing.mahoosively.gay/"; # URL for agents to access the controller
       auth-basic = true; # Enable basic authentication
