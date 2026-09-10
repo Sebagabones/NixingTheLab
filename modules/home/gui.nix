@@ -762,7 +762,7 @@
     wlr-randr
     wl-clipboard
     brightnessctl
-    libreoffice-qt6-fresh
+    libreoffice-qt-stable
     kdePackages.spectacle # for emacs
     # For ELEC3020:
     jre8 # For RETRO
