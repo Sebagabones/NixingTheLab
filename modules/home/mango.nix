@@ -159,6 +159,7 @@ in
           "SUPER,d,spawn,noctalia msg panel-toggle launcher"
           "SUPER,s,spawn,noctalia msg panel-toggle control-center"
           "SUPER,comma,spawn,noctalia msg settings-toggle"
+          "SUPER+SHIFT,e,spawn,noctalia msg panel-toggle session"
 
           # Media keys
           "NONE,XF86AudioRaiseVolume,spawn,noctalia msg volume-up"
@@ -193,6 +194,7 @@ in
   programs.noctalia = {
     enable = true;
     systemd.enable = false;
+
     settings = {
       accessibility = {
         high_contrast = false;
@@ -243,6 +245,7 @@ in
             "session"
           ];
           font_family = "Berkeley Mono";
+          font_scale = 1;
           font_weight = 500;
           hover_highlight = true;
           layer = "top";
@@ -329,6 +332,8 @@ in
       };
       calendar = {
         enabled = true;
+        event_date_format = "%A %e %B";
+        event_time_format = "%H:%M";
         refresh_minutes = 15;
       };
       control_center = {
@@ -361,8 +366,6 @@ in
           }
         ];
         calendar = {
-          event_date_format = "%A %e %B";
-          event_time_format = "%H:%M";
           show_events_card = true;
           show_week_numbers = true;
         };
@@ -591,6 +594,7 @@ in
         enabled = true;
         schema_version = 2;
         widget_order = [
+          "lockscreen-login-box@HDMI-A-1"
           "lockscreen-login-box@eDP-1"
           "lockscreen-widget-0000000000000001"
           "lockscreen-widget-0000000000000002"
@@ -601,13 +605,43 @@ in
           visible = true;
         };
         widget = {
+          "lockscreen-login-box@HDMI-A-1" = {
+            box_height = 196;
+            box_width = 810;
+            cx = 960;
+            cy = 1018;
+            enabled = true;
+            output = "HDMI-A-1";
+            placement_height = 1200;
+            placement_width = 1920;
+            rotation = 0;
+            type = "login_box";
+            settings = {
+              background_color = "surface_variant";
+              background_opacity = 0.88;
+              background_radius = 12;
+              center_password_text = false;
+              input_opacity = 1;
+              input_radius = 6;
+              layout = "regular";
+              show_caps_lock = true;
+              show_keyboard_layout = true;
+              show_login_button = true;
+              show_media = true;
+              show_session_buttons = true;
+              show_unlock_hint = true;
+              show_weather = true;
+            };
+          };
           "lockscreen-login-box@eDP-1" = {
             box_height = 196;
             box_width = 720;
-            cx = 1024;
-            cy = 1161;
+            cx = 819.2000122070312;
+            cy = 928.7999877929688;
             enabled = true;
             output = "eDP-1";
+            placement_height = 1280;
+            placement_width = 2048;
             rotation = 0;
             type = "login_box";
             settings = {
@@ -630,10 +664,12 @@ in
           lockscreen-widget-0000000000000001 = {
             box_height = 64;
             box_width = 192;
-            cx = 1376;
-            cy = 166;
+            cx = 1100.800048828125;
+            cy = 132.8000030517578;
             enabled = true;
             output = "eDP-1";
+            placement_height = 1280;
+            placement_width = 2048;
             rotation = 0;
             type = "weather";
             settings = {
@@ -642,10 +678,12 @@ in
           lockscreen-widget-0000000000000002 = {
             box_height = 64;
             box_width = 192;
-            cx = 672;
-            cy = 166;
+            cx = 537.6000366210938;
+            cy = 132.8000030517578;
             enabled = true;
             output = "eDP-1";
+            placement_height = 1280;
+            placement_width = 2048;
             rotation = 0;
             type = "clock";
             settings = {
@@ -713,9 +751,7 @@ in
       plugins = {
         auto_update = "all";
         enabled = [
-          # "noctalia/bitwarden"
           "noctalia/screen_recorder"
-          # "alexander/screen-toolkit"
         ];
         source = [
           {
@@ -785,6 +821,7 @@ in
           ];
           provider_prefix = "/";
           show_app_actions = false;
+          show_app_origin_indicator = true;
           show_icons = false;
           sort_by_usage = true;
           dmenu = {
@@ -904,6 +941,9 @@ in
           alpha = 0.550000011920929;
           direction = "down";
         };
+        window_switcher = {
+          mru = false;
+        };
       };
       storage = {
         key_file = "";
@@ -954,6 +994,7 @@ in
         custom_palette = "stylix";
         mode = "dark";
         pure_black_dark = false;
+        shell_mode = "follow";
         source = "custom";
         wallpaper_scheme = "m3-content";
         templates = {

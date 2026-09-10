@@ -257,7 +257,8 @@ in
             type = "zfs_fs";
             options = {
               mountpoint = "/storage/immich";
-              compression = "zstd";
+              compression = "zstd-15";
+              compressratio = "2.0";
             };
           };
           git = {
@@ -296,7 +297,7 @@ in
         };
         rootFsOptions = {
           acltype = "posixacl";
-          compression = "zstd";
+          compression = "zstd-10";
           mountpoint = "/donttrust";
           relatime = "on";
           xattr = "sa";

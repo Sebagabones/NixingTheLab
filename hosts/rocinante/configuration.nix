@@ -81,7 +81,6 @@ in
       enable = true;
       mdadmConf = ''
         HOMEHOST ${config.networking.hostName}
-        MAILADDR=TODO@SetThisUp
       '';
     };
 
