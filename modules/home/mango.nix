@@ -1154,8 +1154,8 @@ in
     python3Packages.pygobject3
     xdg-desktop-portal
     evtest
-    gcr
     wayland-logout
+    gcr_4
     swappy # For screenshot
     wayfreeze
 
