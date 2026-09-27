@@ -56,6 +56,13 @@ let
             inherit (epkgs) posframe;
           };
 
+          # screenshot
+          ox-chameleon = pkgs.callPackage ./emacsPkgs/ox-chameleon.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) melpaBuild;
+            inherit (epkgs) engrave-faces;
+          };
+
           # doxymacs
           doxymacs = pkgs.callPackage ./emacsPkgs/doxymacs.nix {
             inherit (pkgs) fetchFromGitHub;

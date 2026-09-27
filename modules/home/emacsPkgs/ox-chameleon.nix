@@ -10,7 +10,7 @@ melpaBuild {
     owner = "tecosaur";
     repo = "ox-chameleon";
     rev = "d52696836cee30eb911a57a640aee16d8fd4c015";
-    sha256 = "";
+    sha256 = "sha256-I4tvI1vJLqngoPP2wNVmg8hY7VG9Pxp8AUAyAUYQcKU=";
   };
 
   # elisp dependencies

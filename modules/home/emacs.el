@@ -1345,7 +1345,9 @@
   (setq org-latex-src-block-backend 'engraved
         ;; org-latex-engraved-theme 'doom-tokyo-night))
         ))
-
+(use-package ox-chameleon
+  :ensure t
+  :after ox)
 (use-package org-attach-screenshot
   :ensure t
   :bind ("C-c C-x s" . org-attach-screenshot)
@@ -2991,3 +2993,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package d2-ts-mode
   :defer t
   :ensure t)
+
+(use-package sparql-mode
+  :defer t
+  :ensure t
+  :config
+  (autoload 'sparql-mode "sparql-mode.el"
+    "Major mode for editing SPARQL files" t)
+  (add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
+  (add-to-list 'auto-mode-alist '("\\.rq$" . sparql-mode)))
