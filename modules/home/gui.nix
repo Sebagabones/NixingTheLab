@@ -782,6 +782,7 @@
     interactive-html-bom
     easyeda2kicad # https://github.com/uPesy/easyeda2kicad.py#-usage
     seahorse
+    protege-distribution
   ];
 
   # pointerCursor = {

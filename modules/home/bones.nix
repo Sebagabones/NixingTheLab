@@ -17,6 +17,7 @@
     flake.homeModules.git
     flake.homeModules.theming
     inputs.catppuccin.homeModules.catppuccin
+
     # flake.homeModules.gui
   ];
   catppuccin = {
@@ -46,7 +47,9 @@
     playerctl
     antlr4_11
     (python3.withPackages (
-      python-pkgs: with python-pkgs; [
+      python-pkgs:
+      with python-pkgs;
+      [
         pygments
 
         sympy
@@ -58,10 +61,11 @@
         catppuccin
         mypy
         rich
-        perSystem.self.pyswip
-        perSystem.self.problog
+        # perSystem.self.pyswip # - moved to CITS3005 nix flake.
+        # perSystem.self.problog
 
       ]
+      ++ inputs.cits3005.packages."${pkgs.stdenv.hostPlatform.system}".all_python
     ))
     cmatrix
     clang

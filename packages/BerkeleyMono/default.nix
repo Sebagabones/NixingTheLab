@@ -21,7 +21,7 @@ pkgs.stdenv.mkDerivation {
   nativeBuildInputs = [
     fontmerge
     pkgs.pkg-config
-    pkgs.ioskeley-mono.normal-term-NF
+    pkgs.ioskeley-mono.term-nf
   ];
 
   unpackPhase = ''
@@ -37,7 +37,7 @@ pkgs.stdenv.mkDerivation {
     runHook preInstall
     mkdir -p $out/share/fonts/truetype/
     mkdir -p $TMPDIR/fonts/custom/Berkeley_Mono
-    fontmerge $TMPDIR/fonts/berkeley/Berkeley_Mono ${pkgs.ioskeley-mono.normal-term-NF}/share/fonts/truetype/ $TMPDIR/fonts/custom/Berkeley_Mono/BerkeleyMono
+    fontmerge $TMPDIR/fonts/berkeley/Berkeley_Mono ${pkgs.ioskeley-mono.term-nf}/share/fonts/truetype/ $TMPDIR/fonts/custom/Berkeley_Mono/BerkeleyMono
     cp -R $TMPDIR/fonts/custom $out/share/fonts/truetype/berkeley_mono
 
 

@@ -279,7 +279,7 @@
   };
   fonts.fontconfig.enable = true;
   fonts.packages = with pkgs; [
-    ioskeley-mono.normal-term-NF
+    # ioskeley-mono.term-nf
     # xauth
     # nerd-fonts.symbols-only
     # nerd-fonts.jetbrains-mono

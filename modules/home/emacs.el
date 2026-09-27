@@ -1895,16 +1895,8 @@
   (which-key-add-column-padding 1)
   (which-key-max-description-length 40))
 
-(unless (and (eq window-system 'mac)
-             (bound-and-true-p mac-carbon-version-string))
-  ;; Enables `pixel-scroll-precision-mode' on all operating systems and Emacs
-  ;; versions, except for emacs-mac.
-  ;;
-  ;; Enabling `pixel-scroll-precision-mode' is unnecessary with emacs-mac, as
-  ;; this version of Emacs natively supports smooth scrolling.
-  ;; https://bitbucket.org/mituharu/emacs-mac/commits/65c6c96f27afa446df6f9d8eff63f9cc012cc738
-  (setq pixel-scroll-precision-use-momentum nil) ; Precise/smoother scrolling
-  (pixel-scroll-precision-mode 1))
+(setq pixel-scroll-precision-use-momentum nil) ; Precise/smoother scrolling
+(pixel-scroll-precision-mode 1)
 
 ;; Display the time in the modeline
 (add-hook 'after-init-hook #'display-time-mode)
@@ -1914,7 +1906,7 @@
 
 ;; Track changes in the window configuration, allowing undoing actions such as
 ;; closing windows.
-(add-hook 'after-init-hook #'winner-mode)
+;; (add-hook 'after-init-hook #'winner-mode)
 
 ;; Replace selected text with typed text
 ;; (delete-selection-mode 1)
@@ -2687,18 +2679,14 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   ;; :vc (:url "https://github.com/johannes-mueller/uv.el"   :rev :newest)
   :bind ("C-c C-U" . uv))
 
-;; ELEC3020
-(use-package platformio-mode
-  :ensure t
-  :hook (
-         (c++-mode . (lambda ()
-                       (lsp-deferred)
-                       )
-                   )))
-;; (use-package ccls
-;;   :hook ((c-mode c++-mode objc-mode cuda-mode) .
-;;          (lambda () (require 'ccls) (lsp))))
-;;
+;; ;; ELEC3020
+;; (use-package platformio-mode
+;;   :ensure t
+;;   :hook (
+;;          (c++-mode . (lambda ()
+;;                        (lsp-deferred)
+;;                        )
+;;                    )))
 
 (use-package vterm-toggle
   :ensure t
@@ -2728,23 +2716,23 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                  (window-height . 0.4)))
   )
 
-(use-package tabspaces
-  :ensure t
-  ;; use this next line only if you also use straight, otherwise ignore it.
-  ;; :straight (:type git :host github :repo "mclear-tools/tabspaces")
-  :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
-  :commands (tabspaces-switch-or-create-workspace
-             tabspaces-open-or-create-project-and-workspace)
-  :custom
-  (tabspaces-use-filtered-buffers-as-default t)
-  (tabspaces-default-tab "Default")
-  (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
-  (tabspaces-initialize-project-with-todo nil)
-  ;; sessions
-  (tabspaces-session t)
-  (tabspaces-session-auto-restore nil)
-  (tab-bar-new-tab-choice "*scratch*"))
+;; (use-package tabspaces
+;;   :ensure t
+;;   ;; use this next line only if you also use straight, otherwise ignore it.
+;;   ;; :straight (:type git :host github :repo "mclear-tools/tabspaces")
+;;   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
+;;   :commands (tabspaces-switch-or-create-workspace
+;;              tabspaces-open-or-create-project-and-workspace)
+;;   :custom
+;;   (tabspaces-use-filtered-buffers-as-default t)
+;;   (tabspaces-default-tab "Default")
+;;   (tabspaces-remove-to-default t)
+;;   (tabspaces-include-buffers '("*scratch*"))
+;;   (tabspaces-initialize-project-with-todo nil)
+;;   ;; sessions
+;;   (tabspaces-session t)
+;;   (tabspaces-session-auto-restore nil)
+;;   (tab-bar-new-tab-choice "*scratch*"))
 ;; Filter Buffers for Consult-Buffer
 ;; Define a helper for clarity
 
@@ -2950,12 +2938,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (indent-bars-treesit-wrap '((yaml
                                block_mapping_pair comment)))
   )
-(use-package gpr-ts-mode
-  :ensure t
-  )
-(use-package ada-ts-mode
-  :ensure t
-  )
+;; (use-package gpr-ts-mode
+;;   :ensure t
+;;   )
+;; (use-package ada-ts-mode
+;;   :ensure t
+;;   )
 (use-package  haskell-mode
   :ensure t)
 

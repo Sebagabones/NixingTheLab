@@ -25,7 +25,7 @@ def combine_font(path_i, end_location, b_type, new_name="Berkeley_Mono"):
             type = old_type
     else:
         return
-    i_type = str(path_i) + f"/IoskeleyMonoTermNerdFont-{type}.ttf"
+    i_type = str(path_i) + f"/IoskeleyMonoTermNerdFontMono-{type}.ttf"
     amb = fontforge.open(f"{b_type}")
     amb.mergeFonts(f"{i_type}")
     # amb.fontname = f"{new_name}"

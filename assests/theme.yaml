@@ -1,3 +1,4 @@
+
 system: "base16"
 name: "Custom Tokyodark Terminal"
 author: "Sebagabones (https://github.com/Sebagabones/)"
@@ -19,6 +20,8 @@ palette:
   base0D: "#7199EE"
   base0E: "#BB9AF7"
   base0F: "#F7768E"
+
+
 
 
 

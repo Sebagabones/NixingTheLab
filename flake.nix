@@ -66,10 +66,12 @@
     thymis = {
       url = "github:Aquamonix/thymis";
       # url = "github:Sebagabones/thymis";
-
     };
     emacs = {
       url = "github:nix-community/emacs-overlay";
+    };
+    cits3005 = {
+      url = "git+https://codeberg.org/Sebagabones/CITS3005.nix";
     };
   };
 
