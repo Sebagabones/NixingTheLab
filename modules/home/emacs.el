@@ -49,79 +49,59 @@
 (setq initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
 
-;; Set-language-environment sets default-input-method, which is unwanted.
 (setq default-input-method nil)
 
-;; Ask the user whether to terminate asynchronous compilations on exit.
-;; This prevents native compilation from leaving temporary files in /tmp.
+
 (setq native-comp-async-query-on-exit t)
 
 (setq enable-recursive-minibuffers t) ; Allow nested minibuffers
 
-;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
       '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-;;; Display and user interface
 
-;; By default, Emacs "updates" its ui more often than it needs to
 (setq which-func-update-delay 1.0)
-(setq idle-update-delay which-func-update-delay)  ;; Obsolete in >= 30.1
+(setq idle-update-delay which-func-update-delay)
 
-(defalias #'view-hello-file #'ignore)  ; Never show the hello file
+(defalias #'view-hello-file #'ignore)
 
-;; No beeping or blinking
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
-;; Position underlines at the descent line instead of the baseline.
 (setq x-underline-at-descent-line t)
 
 (setq truncate-string-ellipsis "…")
 
-(setq display-time-default-load-average nil) ; Omit load average
+(setq display-time-default-load-average nil)
 
-;;; Show-paren
 
 (setq show-paren-delay 0.1
       show-paren-highlight-openparen t
       show-paren-when-point-inside-paren t
       show-paren-when-point-in-periphery t)
 
-;;; Buffer management
 
 (setq custom-buffer-done-kill t)
 
-;; Disable auto-adding a new line at the bottom when scrolling.
 (setq next-line-add-newlines nil)
 
-;; This setting forces Emacs to save bookmarks immediately after each change.
-;; Benefit: you never lose bookmarks if Emacs crashes.
-(setq bookmark-save-flag 1)
+;; (setq bookmark-save-flag 1)
 
 (setq uniquify-buffer-name-style 'forward)
 
 (setq remote-file-name-inhibit-cache 50)
 
-;; Disable fontification during user input to reduce lag in large buffers.
-;; Also helps marginally with scrolling performance.
-;;(setq redisplay-skip-fontification-on-input t)
 
-;;; Misc
+(setq redisplay-skip-fontification-on-input t)
 
 (setq whitespace-line-column nil)  ; Use the value of `fill-column'.
 
-;; Disable ellipsis when printing s-expressions in the message buffer
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
-;; This directs gpg-agent to use the minibuffer for passphrase entry
 (setq epg-pinentry-mode 'loopback)
 
-;; By default, Emacs stores sensitive authinfo credentials as unencrypted text
-;; in your home directory. Use GPG to encrypt the authinfo file for enhanced
-;; security.
 (setq auth-sources (list "~/.authinfo.gpg"))
 
 ;;; `display-line-numbers-mode'
@@ -131,89 +111,57 @@
 
 ;;; imenu
 
-;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
-;; This ensures the index reflects recent edits.
+
 (setq imenu-auto-rescan t)
 
-;; Prevent truncation of long function names in `imenu' listings
 (setq imenu-max-item-length 160)
-
-;;; Tramp
 
 (setq tramp-verbose 1)
 
-;;; Files
 
-;; Delete by moving to trash in interactive mode
 (setq delete-by-moving-to-trash (not noninteractive))
 (setq remote-file-name-inhibit-delete-by-moving-to-trash t)
 
-;; Ignoring this is acceptable since it will redirect to the buffer regardless.
 (setq find-file-suppress-same-file-warnings t)
 
-;; Resolve symlinks to avoid duplicate buffers
 (setq find-file-visit-truename t
-      ;; Automatically follow a symlink to its source if that source is managed
-      ;; by a version control system, rather than asking for permission.
       vc-follow-symlinks t)
 
 ;; Prefer vertical splits over horizontal ones
 (setq split-width-threshold 170
       split-height-threshold nil)
 
-;;; comint (general command interpreter in a window)
-
 (setq ansi-color-for-comint-mode t
       comint-prompt-read-only t
       comint-buffer-maximum-size 4096)
-
-;;; Compilation
 
 (setq compilation-ask-about-save nil
       compilation-always-kill t
       compilation-scroll-output 'first-error)
 
-;; Skip confirmation prompts when creating a new file or buffer
 (setq confirm-nonexistent-file-or-buffer nil)
 
-;;; Backup files
 
-;; Disable the creation of lockfiles (e.g., .#filename).
-;; Modern workflows rely on `global-auto-revert-mode' to handle external file
-;; changes gracefully, making the restrictive nature of lockfiles unnecessary.
 (setq create-lockfiles nil)
 
-;; Disable backup files (e.g., filename~). Note that `auto-save-default'
-;; remains enabled by default. Even with `make-backup-files' backups disabled,
-;; Emacs will still generate temporary recovery files (e.g., #filename#) for
-;; unsaved buffers. This protects your active work from sudden crashes while
-;; ensuring the file system is cleaned up immediately upon a successful save.
 (setq make-backup-files nil)
 
 (setq backup-directory-alist
       `(("." . ,(expand-file-name "backup" user-emacs-directory))))
 (setq tramp-backup-directory-alist backup-directory-alist)
 (setq backup-by-copying-when-linked t)
-(setq backup-by-copying t)  ; Backup by copying rather renaming
-(setq delete-old-versions t)  ; Delete excess backup versions silently
-(setq version-control t)  ; Use version numbers for backup files
+(setq backup-by-copying t)
+(setq delete-old-versions t)
+(setq version-control t)
 (setq kept-new-versions 5)
 (setq kept-old-versions 5)
 
-;;; VC
-
 (setq vc-git-print-log-follow t)
-(setq vc-git-diff-switches '("--histogram"))  ; Faster algorithm for diffing.
+(setq vc-git-diff-switches '("--histogram"))
 
-;;; Auto save
-
-;; Enable auto-save to safeguard against crashes or data loss. The
-;; `recover-file' or `recover-session' functions can be used to restore
-;; auto-saved data.
 (setq auto-save-no-message t)
 
 (when noninteractive
-  ;; The command line interface
   (setq enable-dir-local-variables nil)
   (setq case-fold-search nil))
 
@@ -232,263 +180,166 @@
         ("\\`/\\([^/]+/\\)*\\([^/]+\\)\\'"
          ,(file-name-concat auto-save-list-file-prefix "\\2-") sha1)))
 
-;; Ensure the directory for auto-save session logs exists with restricted
-;; permissions.
+
 (when auto-save-default
   (let ((auto-save-dir (file-name-directory auto-save-list-file-prefix)))
     (unless (file-exists-p auto-save-dir)
       (with-file-modes #o700
         (make-directory auto-save-dir t)))))
 
-;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
 
-;; Remove duplicates from the kill ring to reduce clutter
 (setq kill-do-not-save-duplicates t)
 
-;;; Auto revert
-;; Auto-revert in Emacs is a feature that automatically updates the contents of
-;; a buffer to reflect changes made to the underlying file.
-
-;; Revert other buffers (e.g, Dired)
 (setq global-auto-revert-non-file-buffers t)
-(setq global-auto-revert-ignore-modes '(Buffer-menu-mode))  ; Resolve issue #29
+(setq global-auto-revert-ignore-modes '(Buffer-menu-mode))
 
-;;; recentf
 
-;; `recentf' is an that maintains a list of recently accessed files.
-(setq recentf-max-saved-items 300) ; default is 20
+(setq recentf-max-saved-items 300)
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup 'mode)
 
-;;; saveplace
 
-;; Enables Emacs to remember the last location within a file upon reopening.
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
 
-;;; savehist
 
-;; `savehist-mode' is an Emacs feature that preserves the minibuffer history
-;; between sessions.
 (setq history-length 300)
 (setq savehist-additional-variables
       '(register-alist                   ; macros
         mark-ring global-mark-ring       ; marks
         search-ring regexp-search-ring)) ; searches
 
-;;; Frames and windows
-
 (setq resize-mini-windows 'grow-only)
 
-;; The native border "uses" a pixel of the fringe on the rightmost
-;; splits, whereas `window-divider-mode' does not.
 (setq window-divider-default-bottom-width 1
       window-divider-default-places t
       window-divider-default-right-width 1)
 
-;;; Scrolling
-
-;; Enables faster scrolling. This may result in brief periods of inaccurate
-;; syntax highlighting, which should quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
 
-;; Move point to top/bottom of buffer before signaling a scrolling error.
 (setq scroll-error-top-bottom t)
 
-;; Keep screen position if scroll command moved it vertically out of the window.
 (setq scroll-preserve-screen-position t)
 
-;; Emacs recenters the window when the cursor moves past `scroll-conservatively'
-;; lines beyond the window edge. A value over 101 disables recentering; the
-;; default (0) is too eager. Here it is set to 20 for a balanced behavior.
+
 (setq scroll-conservatively 20)
 
-;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
-;; 2. Resolving the issue of random half-screen jumps during scrolling.
+
 (setq auto-window-vscroll nil)
 
-;; Horizontal scrolling
 (setq hscroll-margin 2
       hscroll-step 1)
-;;; Cursor
 
-;; The blinking cursor is distracting and interferes with cursor settings in
-;; some minor modes that try to change it buffer-locally (e.g., Treemacs).
 (when (bound-and-true-p blink-cursor-mode)
   (blink-cursor-mode -1))
 
-;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
 
-;; Reduce rendering/line scan work by not rendering cursors or regions in
-;; non-focused windows.
+
 (setq highlight-nonselected-windows nil)
 
-;;; Text editing, indent, font, and formatting
 
-;; Avoid automatic frame resizing when adjusting settings.
-                                        ;(setq global-text-scale-adjust-resizes-frames nil)
-
-;; A longer delay can be annoying as it causes a noticeable pause after each
-;; deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
 
-;; Continue wrapped lines at whitespace rather than breaking in the
-;; middle of a word.
+
 (setq-default word-wrap t)
 
-;; Disable wrapping by default due to its performance cost.
 (setq-default truncate-lines t)
 
-;; If enabled and `truncate-lines' is disabled, soft wrapping will not occur
-;; when the window is narrower than `truncate-partial-width-windows' characters.
+
 (setq truncate-partial-width-windows nil)
 
-;; Configure automatic indentation to be triggered exclusively by newline and
-;; DEL (backspace) characters.
+
 (setq-default electric-indent-chars '(?\n ?\^?))
 
-;; Prefer spaces over tabs. Spaces offer a more consistent default compared to
-;; 8-space tabs. This setting can be adjusted on a per-mode basis as needed.
+
 (setq-default indent-tabs-mode nil
               tab-width 4)
 
-;; Enable indentation and completion using the TAB key
+
 (setq tab-always-indent 'complete)
 (setq tab-first-completion 'word-or-paren-or-punct)
 
-;; Perf: Reduce command completion overhead.
 (setq read-extended-command-predicate #'command-completion-default-include-p)
 
-;; Enable multi-line commenting which ensures that `comment-indent-new-line'
-;; properly continues comments onto new lines.
 (setq comment-multi-line t)
 
-;; Ensures that empty lines within the commented region are also commented out.
-;; This prevents unintended visual gaps and maintains a consistent appearance.
 (setq comment-empty-lines t)
 
-;; We often split terminals and editor windows or place them side-by-side,
-;; making use of the additional horizontal space.
 (setq-default fill-column 80)
 
-;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
 (setq sentence-end-double-space nil)
 
-;; According to the POSIX, a line is defined as "a sequence of zero or more
-;; non-newline characters followed by a terminating newline".
 (setq require-final-newline t)
 
-;; Eliminate delay before highlighting search matches
 (setq lazy-highlight-initial-delay 0)
 
-;;; Filetype
-
-;; Do not notify the user each time Python tries to guess the indentation offset
-(setq python-indent-guess-indent-offset-verbose nil)
+;; (setq python-indent-guess-indent-offset-verbose nil)
 
 (setq sh-indent-after-continuation 'always)
 
-;;; Dired and ls-lisp
-
 (setq dired-free-space nil
-      dired-dwim-target t  ; Propose a target for intelligent moving/copying
+      dired-dwim-target t
       dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
       dired-recursive-deletes 'top
       dired-recursive-copies 'always
       dired-vc-rename-file t
       dired-create-destination-dirs 'ask
-      ;; Suppress Dired buffer kill prompt for deleted dirs
       dired-clean-confirm-killing-deleted-buffers nil)
 
-;; This is a higher-level predicate that wraps `dired-directory-changed-p'
-;; with additional logic. This `dired-buffer-stale-p' predicate handles remote
-;; files, wdired, unreadable dirs, and delegates to dired-directory-changed-p
-;; for modification checks.
 (setq auto-revert-remote-files nil)
 (setq dired-auto-revert-buffer 'dired-buffer-stale-p)
 
-;; dired-omit-mode
 (setq dired-omit-verbose nil
       dired-omit-files (concat "\\`[.]\\'"))
 
 (setq ls-lisp-verbosity nil)
 (setq ls-lisp-dirs-first t)
 
-;;; Ediff
-
-;; Configure Ediff to use a single frame and split windows horizontally
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
       ediff-split-window-function 'split-window-horizontally)
 
-;;; Help
 
-;; Enhance `apropos' and related functions to perform more extensive searches
 (setq apropos-do-all t)
 
-;; Fixes #11: Prevents help command completion from triggering autoload.
-;; Loading additional files for completion can slow down help commands and may
-;; unintentionally execute initialization code from some libraries.
+
 (setq help-enable-completion-autoload nil)
 (setq help-enable-autoload nil)
 (setq help-enable-symbol-autoload nil)
-(setq help-window-select t)  ;; Focus new help windows when opened
+(setq help-window-select t)
 
-;;; Eglot
+(setq eglot-report-progress nil)
+(setq eglot-autoshutdown t)
 
-(setq eglot-report-progress nil)  ; Prevent minibuffer spam
-(setq eglot-autoshutdown t)  ; Shut down after killing last managed buffer
-
-;; A setting of nil or 0 means Eglot will not block the UI at all, allowing
-;; Emacs to remain fully responsive, although LSP features will only become
-;; available once the connection is established in the background.
 (setq eglot-sync-connect 0)
 
-;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
 
 ;; Eglot optimization
 ;; This reduces log clutter to improves performance.
-(setq jsonrpc-event-hook nil)
-;; Reduce memory usage and avoid cluttering *EGLOT events* buffer
-(setq eglot-events-buffer-size 0)  ; Deprecated
-(setq eglot-events-buffer-config '(:size 0 :format short))
+;; (setq jsonrpc-event-hook nil)
 
-;;; Flymake
+;; (setq eglot-events-buffer-size 0)  ; Deprecated
+;; (setq eglot-events-buffer-config '(:size 0 :format short))
 
 (setq flymake-show-diagnostics-at-end-of-line nil)
 (setq flymake-wrap-around nil)
 
-;;; hl-line-mode
 
-;; Highlighting the current window, reducing clutter and improving performance
 (setq hl-line-sticky-flag nil)
 (setq global-hl-line-sticky-flag nil)
 
-;;; icomplete
-
-;; Do not delay displaying completion candidates in `fido-mode' or
-;; `fido-vertical-mode'
 (setq icomplete-compute-delay 0.01)
 
-;;; flyspell
-
-;; Improves flyspell performance by preventing messages from being displayed for
-;; each word when checking the entire buffer.
 (setq flyspell-issue-message-flag nil)
 (setq flyspell-issue-welcome-flag nil)
 
-;;; ispell
 
-;; In Emacs 30 and newer, disable Ispell completion to avoid annotation errors
-;; when no `ispell' dictionary is set.
 (setq text-mode-ispell-word-completion nil)
 
 (setq ispell-silently-savep t)
-
-;;; ibuffer
 
 (setq ibuffer-formats
       '((mark modified read-only locked
@@ -497,22 +348,12 @@
               " " (mode 18 18 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
 
-;;; xref
-
-;; Enable completion in the minibuffer instead of the definitions buffer
 (setq xref-show-definitions-function 'xref-show-definitions-completing-read
       xref-show-xrefs-function 'xref-show-definitions-completing-read)
 
-;;; abbrev
-
-;; Ensure the abbrev_defs file is stored in the correct location when
-;; `user-emacs-directory' is modified, as it defaults to ~/.emacs.d/abbrev_defs
-;; regardless of the change.
 (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
 
 (setq save-abbrevs 'silently)
-
-;;; dabbrev
 
 (setq dabbrev-upcase-means-case-search t)
 
@@ -527,7 +368,6 @@
         ;; including versions with numeric extensions like <123>
         "\\(?:\\(?:[EG]?\\|GR\\)TAGS\\|e?tags\\|GPATH\\)\\(<[0-9]+>\\)?"))
 
-;;; Remove warnings from narrow-to-region, upcase-region...
 
 (dolist (cmd '(list-timers narrow-to-region narrow-to-page
                            upcase-region downcase-region
@@ -535,97 +375,28 @@
                            dired-find-alternate-file set-goal-column))
   (put cmd 'disabled nil))
 
-;;; Load post init
 
-;; Allow for shorter responses: "y" for yes and "n" for no.
 (setq read-answer-short t)
 (if (boundp 'use-short-answers)
     (setq use-short-answers t)
   (advice-add 'yes-or-no-p :override #'y-or-n-p))
 
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backup" user-emacs-directory))))
-(setq tramp-backup-directory-alist backup-directory-alist)
-(setq backup-by-copying-when-linked t)
-(setq backup-by-copying t)  ; Backup by copying rather renaming
-(setq delete-old-versions t)  ; Delete excess backup versions silently
-(setq version-control t)  ; Use version numbers for backup files
-(setq kept-new-versions 5)
-(setq kept-old-versions 5)
-
 
 (setq default-input-method "Tex")
-;; Ensure adding the following compile-angel code at the very beginning
-;; of your `~/.emacs.d/post-init.el` file, before all other packages.
+
 (use-package compile-angel
   :ensure t
   :demand t
   :custom
-  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
-  ;; Drawback: The minibuffer will not display compile-angel's actions.
   (compile-angel-verbose t)
 
   :config
-  ;; The following directive prevents compile-angel from compiling your init
-  ;; files. If you choose to remove this push to `compile-angel-excluded-files'
-  ;; and compile your pre/post-init files, ensure you understand the
-  ;; implications and thoroughly test your code. For example, if you're using
-  ;; `use-package', you'll need to explicitly add `(require 'use-package)` at
-  ;; the top of your init file.
-  ;; (push "/init.el" compile-angel-excluded-path-suffixes)
-  ;; (push "/default.el" compile-angel-excluded-path-suffixes)
-  ;; (push "/early-init.el" compile-angel-excluded-path-suffixes)
-                                        ;  (push "/pre-init.el" compile-angel-excluded-files)
-                                        ; (push "/post-init.el" compile-angel-excluded-files)
-                                        ;(push "/pre-early-init.el" compile-angel-excluded-files)
-                                        ;(push "/post-early-init.el" compile-angel-excluded-files)
-
-  ;; A local mode that compiles .el files whenever the user saves them.
-  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
-
-  ;; A global mode that compiles .el files before they are loaded.
   (compile-angel-on-load-mode))
 
 ;;My themeing
 (mapc #'disable-theme custom-enabled-themes)  ; Disable all active themes
 
 
-(setq default-input-method "Tex")
-;; Ensure adding the following compile-angel code at the very beginning
-;; of your `~/.emacs.d/post-init.el` file, before all other packages.
-(use-package compile-angel
-  :ensure t
-  :demand t
-  :custom
-  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
-  ;; Drawback: The minibuffer will not display compile-angel's actions.
-  (compile-angel-verbose t)
-
-  :config
-  ;; The following directive prevents compile-angel from compiling your init
-  ;; files. If you choose to remove this push to `compile-angel-excluded-files'
-  ;; and compile your pre/post-init files, ensure you understand the
-  ;; implications and thoroughly test your code. For example, if you're using
-  ;; `use-package', you'll need to explicitly add `(require 'use-package)` at
-  ;; the top of your init file.
-  (push "/init.el" compile-angel-excluded-files)
-  (push "/early-init.el" compile-angel-excluded-files)
-  (push "/pre-init.el" compile-angel-excluded-files)
-  (push "/post-init.el" compile-angel-excluded-files)
-  (push "/pre-early-init.el" compile-angel-excluded-files)
-  (push "/post-early-init.el" compile-angel-excluded-files)
-
-  ;; A local mode that compiles .el files whenever the user saves them.
-  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
-
-  ;; A global mode that compiles .el files before they are loaded.
-  (compile-angel-on-load-mode))
-
-;;My themeing
-(mapc #'disable-theme custom-enabled-themes)  ; Disable all active themes
-
-;; (use-package neotree
-;;   :bind ("C-c C-t" . neotree-toggle))
 
 
 (use-package doom-themes
@@ -665,7 +436,7 @@
     :type '(choice integer boolean))
 
   (def-doom-theme doom-tokyo-dark
-      "A clean, dark theme that celebrates the lights of downtown Tokyo at night, combined with Base16-Stylix backgrounds."
+      "Custom tokyo night."
 
     ;; name         default   256       16
     ((bg         '("#11121d" nil       nil            ))
@@ -924,14 +695,10 @@
   :custom
   (solaire-global-mode +1)
   )
-;; Auto-revert in Emacs is a feature that automatically updates the
-;; contents of a buffer to reflect changes made to the underlying file
-;; on disk.
+
 (add-hook 'after-init-hook #'global-auto-revert-mode)
 
-;; recentf is an Emacs package that maintains a list of recently
-;; accessed files, making it easier to reopen files you have worked on
-;; recently.
+
 (add-hook 'after-init-hook #'(lambda()
                                (let ((inhibit-message t))
                                  (recentf-mode 1))))
@@ -939,27 +706,11 @@
 (with-eval-after-load "recentf"
   (add-hook 'kill-emacs-hook #'recentf-cleanup))
 
-;; savehist is an Emacs feature that preserves the minibuffer history between
-;; sessions. It saves the history of inputs in the minibuffer, such as commands,
-;; search strings, and other prompts, to a file. This allows users to retain
-;; their minibuffer history across Emacs restarts.
 (add-hook 'after-init-hook #'savehist-mode)
 
-;; save-place-mode enables Emacs to remember the last location within a file
-;; upon reopening. This feature is particularly beneficial for resuming work at
-;; the precise point where you previously left off.
 (add-hook 'after-init-hook #'save-place-mode)
 
-;; When auto-save-visited-mode is enabled, Emacs will auto-save file-visiting
-;; buffers after a certain amount of idle time if the user forgets to save it
-;; with save-buffer or C-x s for example.
-;;
-;; This is different from auto-save-mode: auto-save-mode periodically saves
-;; all modified buffers, creating backup files, including those not associated
-;; with a file, while auto-save-visited-mode only saves file-visiting buffers
-;; after a period of idle time, directly saving to the file itself without
-;; creating backup files.
-(setq auto-save-visited-interval 5)   ; Save after 5 seconds if inactivity
+(setq auto-save-visited-interval 10)
 (auto-save-visited-mode 1)
 
 
@@ -976,9 +727,6 @@
   :hook (eldoc-mode . eldoc-box-hover-at-point-mode)
   )
 
-;; Corfu enhances in-buffer completion by displaying a compact popup with
-;; current candidates, positioned either below or above the point. Candidates
-;; can be selected by navigating up or down.
 (use-package corfu
   :custom
   (corfu-auto t)               ;; Enable auto completion
@@ -991,17 +739,13 @@
          (shell-mode . corfu-mode)
          (eshell-mode . corfu-mode))
   :custom
-  ;; Hide commands in M-x which do not apply to the current mode.
   (read-extended-command-predicate #'command-completion-default-include-p)
-  ;; Disable Ispell completion function. As an alternative try `cape-dict'.
   (text-mode-ispell-word-completion nil)
   (tab-always-indent 'complete)
 
   (corfu-popupinfo-delay '(0.5 . 0.25))
   (corfu-popupinfo-max-height 30)
-  ;; Enable Corfu
   :config
-  ;; Free the RET key for less intrusive behavior.
   (keymap-unset corfu-map "RET")
   (global-corfu-mode)
   (corfu-popupinfo-mode)
@@ -1010,22 +754,17 @@
   (corfu-history-mode)
   )
 
-;; Cape, or Completion At Point Extensions, extends the capabilities of
-;; in-buffer completion. It integrates with Corfu or the default completion UI,
-;; by providing additional backends through completion-at-point-functions.
 (use-package cape
   :ensure t
   :commands (cape-file cape-elisp-block)
   :bind ("C-c p" . cape-prefix-map)
   :init
-  ;; Add to the global default value of `completion-at-point-functions' which is
-  ;; used by `completion-at-point'.
+
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
-;; Vertico provides a vertical completion interface, making it easier to
-;; navigate and select from completion candidates (e.g., when `M-x` is pressed).
+
 (use-package vertico
   ;; (Note: It is recommended to also enable the savehist package.)
   :ensure t
@@ -1033,9 +772,7 @@
   (vertico-mode))
 
 
-;; Vertico leverages Orderless' flexible matching capabilities, allowing users
-;; to input multiple patterns separated by spaces, which Orderless then
-;; matches in any order against the candidates.
+
 (use-package orderless
   :ensure t
   :custom
@@ -1046,10 +783,9 @@
 
 
 
-;; Marginalia allows Embark to offer you preconfigured actions in more contexts.
-;; In addition to that, Marginalia also enhances Vertico by adding rich
-;; annotations to the completion candidates displayed in Vertico's interface.
+
 (use-package marginalia
+  :defer t
   :ensure t
   :commands (marginalia-mode marginalia-cycle)
   ;; :init
@@ -1057,14 +793,8 @@
   ;; (marginalia-mode))
   :hook (after-init . marginalia-mode))
 
-;; Embark integrates with Consult and Vertico to provide context-sensitive
-;; actions and quick access to commands based on the current selection, further
-;; improving user efficiency and workflow within Emacs. Together, they create a
-;; cohesive and powerful environment for managing completions and interactions.
+
 (use-package embark
-  ;; Embark is an Emacs package that acts like a context menu, allowing
-  ;; users to perform context-sensitive actions on selected items
-  ;; directly from the completion interface.
   :ensure t
   :commands (embark-act
              embark-dwim
@@ -1081,19 +811,17 @@
   (setq prefix-help-command #'embark-prefix-help-command)
 
   :config
-  ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
+  :defer t
   :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;; Consult offers a suite of commands for efficient searching, previewing, and
-;; interacting with buffers, file contents, and more, improving various tasks.
 (use-package consult
   :ensure t
   :bind (;; C-c bindings in x`mode-specific-map'
@@ -1149,27 +877,18 @@
          ("M-s" . consult-history)
          ("M-r" . consult-history))
 
-  ;; Enable automatic preview at point in the *Completions* buffer.
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
   :init
-  ;; Optionally configure the register formatting. This improves the register
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
 
-  ;; Optionally tweak the register preview window.
   (advice-add #'register-preview :override #'consult-register-window)
 
-  ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
-  ;; Aggressive asynchronous that yield instantaneous results. (suitable for
-  ;; high-performance systems.) Note: Minad, the author of Consult, does not
-  ;; recommend aggressive values.
-  ;; Read: https://github.com/minad/consult/discussions/951
-  ;;
-  ;; immediate feedback from Consult.
+
   (setq consult-async-input-debounce 0.02
         consult-async-input-throttle 0.05
         consult-async-refresh-delay 0.02)
@@ -1185,11 +904,8 @@
    :preview-key '(:debounce 0.4 any))
   (setq consult-narrow-key "<"))
 
-;; The built-in outline-minor-mode provides structured code folding in modes
-;; such as Emacs Lisp and Python, allowing users to collapse and expand sections
-;; based on headings or indentation levels. This feature enhances navigation and
-;; improves the management of large files with hierarchical structures.
 (use-package outline-indent
+  :defer t
   :ensure t
   :commands outline-indent-minor-mode
 
@@ -1205,10 +921,9 @@
   (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
 
 
-;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
-;; that automatically removes trailing whitespace and blank lines at the end of
-;; the buffer when saving.
+
 (use-package stripspace
+  :defer t
   :ensure t
   :commands stripspace-local-mode
 
@@ -2672,9 +2387,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :after python
   :bind ("C-c C-n" . numpydoc-generate))
 
-(use-package pyvenv
-  :ensure t
-  :after python)
+;; (use-package pyvenv
+;;   :ensure t
+;;   :after python)
 
 (use-package uv
   :ensure t
