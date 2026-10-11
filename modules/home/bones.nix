@@ -46,6 +46,7 @@
     ttl
     playerctl
     antlr4_11
+    forgejo-cli
     (python3.withPackages (
       python-pkgs:
       with python-pkgs;
@@ -61,6 +62,7 @@
         catppuccin
         mypy
         rich
+        rdflib
         # perSystem.self.pyswip # - moved to CITS3005 nix flake.
         # perSystem.self.problog
 
@@ -91,6 +93,7 @@
     expect
     tio
     agenix-rekey
+    cargo
   ];
   programs.gpg = {
     enable = true;
@@ -433,6 +436,9 @@
       };
     };
     gh-dash = {
+      enable = true;
+    };
+    nix-init = {
       enable = true;
     };
   };

@@ -316,7 +316,7 @@ in
   ];
 
   services.emacs = {
-    enable = true;
+    enable = false;
     defaultEditor = true;
     package = myEmacs;
   };
