@@ -2717,3 +2717,13 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     "Major mode for editing SPARQL files" t)
   (add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
   (add-to-list 'auto-mode-alist '("\\.rq$" . sparql-mode)))
+
+(use-package ttl-mode
+  :ensure t
+  :config
+  (autoload 'ttl-mode "ttl-mode" "Major mode for OWL or Turtle files" t)
+  (add-hook 'ttl-mode-hook    ; Turn on font lock when in ttl mode
+            'turn-on-font-lock)
+  (add-to-list 'auto-mode-alist '("\\.ttl" . ttl-mode))
+  (add-to-list 'auto-mode-alist '("\\.n3" . ttl-mode))
+  )

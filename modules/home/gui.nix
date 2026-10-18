@@ -770,7 +770,7 @@
     esptool
     # End ELEC3020
     # kdePackages.dolphin
-    freecad
+    # freecad
     povray
     # openscad-unstable
     prusa-slicer

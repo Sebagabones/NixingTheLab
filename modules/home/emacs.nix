@@ -88,6 +88,12 @@ let
             inherit (epkgs) melpaBuild;
           };
 
+          # ttl-mode
+          ttl-mode = pkgs.callPackage ./emacsPkgs/ttl-mode.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) melpaBuild;
+          };
+
           # uniline
           # uniline = pkgs.ignoreCompilationError pkgs.callPackage ./emacsPkgs/uniline.nix {
           #   inherit (pkgs) fetchFromGitHub;
