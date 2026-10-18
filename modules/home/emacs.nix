@@ -251,8 +251,6 @@ in
     delta
     aspell
     aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
     # (aspellWithDicts (
     #   dicts: with dicts; [
     #     en
@@ -302,8 +300,8 @@ in
     #   p.tree-sitter-d2
     # ])
 
-    lean4
-    leanPackages.Cli
+    #lean4
+    #leanPackages.Cli
     swi-prolog-gui
     scryer-prolog
     # The following is requried, but is currently in ./bones.nix

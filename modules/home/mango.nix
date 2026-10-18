@@ -31,11 +31,11 @@ in
         # echo "Xft.dpi: 140" | xrdb -merge &
         # gsettings set org.gnome.desktop.interface text-scaling-factor 1.4 &
       '';
-      topPrefixes = [ "exec-once" ];
+      topPrefixes = [ "exec_once" ];
       # extraConfig = "exec-once=${pkgs.swaybg}/bin/swaybg -c 11111b ";
       extraConfig = ''
-        exec-once=${pkgs.swaybg}/bin/swaybg -c ${config.lib.stylix.colors.base00}
-        exec-once=noctalia
+        exec_once=${pkgs.swaybg}/bin/swaybg -c ${config.lib.stylix.colors.base00}
+        exec_once=noctalia
       '';
 
       settings = {
@@ -64,8 +64,8 @@ in
         shadows_blur = 12;
         shadows_position_x = 2;
         shadows_position_y = 2;
-        shadowscolor = "0x000000ff";
-        borderpx = 0;
+        shadows_color = "0x000000ff";
+        border_px = 0;
         tag_num = 10;
         # Animations - use underscores for multi-part keys
         animations = 1;
@@ -81,13 +81,13 @@ in
           open = "0.46,1.0,0.29,1";
           close = "0.08,0.92,0,1";
         };
-        windowrule = [
-          "tags:3,appid:emacs"
-          "tags:2,appid:firefox"
-          "tags:4,appid:spotify"
-          "tags:5,appid:discord"
+        window_rule = [
+          "tags:3,app_id:emacs"
+          "tags:2,app_id:firefox"
+          "tags:4,app_id:spotify"
+          "tags:5,app_id:discord"
         ];
-        tagrule = [
+        tag_rule = [
           "id:1,layout_name:dwindle"
           "id:2,layout_name:dwindle"
           "id:3,layout_name:dwindle"
@@ -181,7 +181,7 @@ in
         ];
 
         # Keymodes (submaps) for modal keybindings
-        keymode = {
+        key_mode = {
           resize = {
             bind = [
               "NONE,Left,resizewin,-10,0"
