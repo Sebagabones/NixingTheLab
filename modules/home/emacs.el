@@ -759,7 +759,6 @@
   :commands (cape-file cape-elisp-block)
   :bind ("C-c p" . cape-prefix-map)
   :init
-
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
@@ -1456,6 +1455,9 @@
              apheleia-global-mode)
   :hook ((prog-mode . apheleia-mode))
   :config
+  ;; (add-to-list 'apheleia-formatters '(cool-rdf "cool-rdf" "write" file))
+  ;; (add-to-list 'apheleia-mode-alist '(turtle-mode . cool-rdf))
+
   ;; Replace default (black) to use ruff for sorting import and formatting.
   (setf (alist-get 'python-mode apheleia-mode-alist)
         '(ruff-isort ruff))
@@ -2718,12 +2720,29 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
   (add-to-list 'auto-mode-alist '("\\.rq$" . sparql-mode)))
 
-(use-package ttl-mode
+;; (use-package ttl-mode
+;;   :mode ("\\.ttl" . ttl-mode)
+;;   :ensure t
+;;   :config
+;;   (autoload 'ttl-mode "ttl-mode.el" "Major mode for OWL or Turtle files" t)
+;;   (add-hook 'ttl-mode-hook    ; Turn on font lock when in ttl mode
+;;             'turn-on-font-lock)
+;;   )
+
+;; (use-package turtle-mode
+;;   :mode ("\\.ttl" .  turtle-mode)
+;;   :ensure t
+;;   :hook (turtle-mode . (lambda ()
+;;                          (setq-local comment-start "# ")
+;;                          (setq-local comment-end ""))
+;;                      ))
+
+(use-package yasnippet
   :ensure t
-  :config
-  (autoload 'ttl-mode "ttl-mode" "Major mode for OWL or Turtle files" t)
-  (add-hook 'ttl-mode-hook    ; Turn on font lock when in ttl mode
-            'turn-on-font-lock)
-  (add-to-list 'auto-mode-alist '("\\.ttl" . ttl-mode))
-  (add-to-list 'auto-mode-alist '("\\.n3" . ttl-mode))
-  )
+  :custom
+  (yas-global-mode 1))
+
+
+;; (use-package snippets
+;;   :ensure t
+;;   )

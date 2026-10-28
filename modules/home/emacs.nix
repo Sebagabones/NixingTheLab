@@ -94,6 +94,12 @@ let
             inherit (epkgs) melpaBuild;
           };
 
+          # turtle-mode
+          turtle-mode = pkgs.callPackage ./emacsPkgs/turtle-mode.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) melpaBuild;
+          };
+
           # uniline
           # uniline = pkgs.ignoreCompilationError pkgs.callPackage ./emacsPkgs/uniline.nix {
           #   inherit (pkgs) fetchFromGitHub;
@@ -138,11 +144,14 @@ let
           });
 
         };
-      extraEmacsPackages = epkgs: [
-        epkgs.comment-dwim-2
-        epkgs.org
-        epkgs.d2-ts-mode
-      ];
+      extraEmacsPackages = (
+        epkgs: with epkgs; [
+          # snippets
+          comment-dwim-2
+          org
+          d2-ts-mode
+        ]
+      );
     }
   );
 
@@ -253,6 +262,7 @@ in
   # };
 
   home.packages = with pkgs; [
+    perSystem.self.cool-rdf-cli
     tex
     delta
     aspell
