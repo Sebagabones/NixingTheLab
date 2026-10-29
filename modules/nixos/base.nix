@@ -97,6 +97,7 @@
       home = "/home/bones";
       description = "Seb Gazey";
       extraGroups = [
+	"video"
         "i2c"
         "seat"
         "audio"
