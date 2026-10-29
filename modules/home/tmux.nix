@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  perSystem,
   ...
 }:
 let
@@ -71,6 +72,7 @@ let
 in
 {
   programs.tmux = {
+    package = perSystem.self.opentmux;
     enable = true;
     clock24 = true;
     plugins =
