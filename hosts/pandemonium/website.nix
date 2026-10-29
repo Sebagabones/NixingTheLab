@@ -64,7 +64,7 @@ in
       webroot = "/var/lib/acme/acme-challenge/";
     };
     certs = {
-      domain = {
+      "${domain}" = {
         extraDomainNames = [
           "cache.${domain}"
           "thymis-testing.${domain}"
@@ -72,7 +72,7 @@ in
       };
     };
   };
-
+  systemd.services.ddclient.after = [ "nss-user-lookup.target" ];
   services = {
 
     harmonia.cache = {
