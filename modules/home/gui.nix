@@ -155,7 +155,7 @@
   };
 
   programs.ghostty = {
-    enable = true;
+    enable = false;
     installBatSyntax = true;
     enableZshIntegration = true;
     # enableFishIntegration = true;
@@ -764,13 +764,14 @@
     brightnessctl
     libreoffice-qt-stable
     kdePackages.spectacle # for emacs
+    mpv
     # For ELEC3020:
     jre8 # For RETRO
     platformio
     esptool
     # End ELEC3020
     # kdePackages.dolphin
-    # freecad
+    freecad
     povray
     # openscad-unstable
     prusa-slicer
