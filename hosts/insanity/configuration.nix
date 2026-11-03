@@ -75,9 +75,9 @@ in
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.graphics = {
     enable = true;
-  #   enable32Bit = true;
+    #   enable32Bit = true;
   };
-  hardware.graphics.extraPackages = with pkgs; [pkgs.amf ];
+  hardware.graphics.extraPackages = with pkgs; [ pkgs.amf ];
   # hardware.bluetooth.enable = true;
   programs.steam = {
     enable = true;
@@ -89,7 +89,10 @@ in
     openrgb-with-all-plugins
     protonup-qt
     wineWow64Packages.waylandFull
-  (pkgs.ffmpeg-headless.override { withUnfree = true; withAmf = true;})
+    (pkgs.ffmpeg-headless.override {
+      withUnfree = true;
+      withAmf = true;
+    })
   ];
 
   # environment.pathsToLink =

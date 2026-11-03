@@ -772,6 +772,7 @@
     # End ELEC3020
     # kdePackages.dolphin
     freecad
+    scribus
     povray
     # openscad-unstable
     prusa-slicer

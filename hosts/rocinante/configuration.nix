@@ -95,7 +95,6 @@ in
     };
 
     initrd = {
-      systemd.enable = true;
       kernelModules = [
         "nvidia"
         "i915"
@@ -167,8 +166,14 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    (pkgs.ffmpeg-headless.override {
+      withUnfree = true;
+      withCuda = true;
+    })
     gpu-burn
+    nvitop
     nvtopPackages.nvidia
+    xmrig-cuda
   ];
 
   # Networking

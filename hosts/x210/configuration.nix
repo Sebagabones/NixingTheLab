@@ -94,6 +94,20 @@
   boot.initrd.systemd.network.wait-online.enable = false;
   systemd.tpm2.enable = false;
   systemd.oomd.enable = false;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      cups-filters
+      cups-browsed
+      cups-brother-hl3150cdn
+    ];
+  };
   services.mpd.startWhenNeeded = true;
   services.openssh.startWhenNeeded = true;
   services.system76-scheduler.enable = true;
@@ -126,6 +140,7 @@
     iw
     wirelesstools
     intel-npu-driver
+    system-config-printer
   ];
   boot.initrd.availableKernelModules = [
     "xhci_pci"

@@ -98,6 +98,7 @@
       description = "Seb Gazey";
       extraGroups = [
         "video"
+        "lpadmin"
         "i2c"
         "seat"
         "audio"
@@ -213,7 +214,7 @@
        port 7656
 
      Host rocinante
-       hostname rocinante.lab.mahoosively.gay
+       hostname mahoosively.gay
        port 8909
 
      Host ucc

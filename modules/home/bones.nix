@@ -175,11 +175,11 @@
             controlPersist = "no";
           };
           pandemonium = {
-            hostname = "pandemonium.${domain}";
+            hostname = "${domain}";
             port = 7656;
           };
           rocinante = {
-            hostname = "rocinante.${domain}";
+            hostname = "${domain}";
             port = 8909;
           };
           insanity = {
